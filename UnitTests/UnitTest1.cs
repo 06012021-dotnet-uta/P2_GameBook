@@ -14,7 +14,17 @@ namespace UnitTests
         [Fact]
         public void Test1()
         {
+            // Arrange
+            // Act
+            // Assert
+        }
 
+        [Fact]
+        public void Test2()
+        {
+            // Arrange
+            // Act
+            // Assert
         }
     }
 }
