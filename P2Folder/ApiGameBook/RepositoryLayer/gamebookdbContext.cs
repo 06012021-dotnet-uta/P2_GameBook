@@ -31,11 +31,6 @@ namespace RepositoryLayer
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=tcp:gamebookserver.database.windows.net,1433;Initial Catalog=gamebookdb;Persist Security Info=False;User ID=gamebookadmin;Password=gb4PA$$w;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -82,7 +77,8 @@ namespace RepositoryLayer
 
             modelBuilder.Entity<Friend>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.User1Id, e.User2Id })
+                    .HasName("PK__friend__AAA434A6A6D38D00");
 
                 entity.ToTable("friend");
 
@@ -91,13 +87,13 @@ namespace RepositoryLayer
                 entity.Property(e => e.User2Id).HasColumnName("user2_id");
 
                 entity.HasOne(d => d.User1)
-                    .WithMany()
+                    .WithMany(p => p.FriendUser1s)
                     .HasForeignKey(d => d.User1Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__friend__user1_id__5DCAEF64");
 
                 entity.HasOne(d => d.User2)
-                    .WithMany()
+                    .WithMany(p => p.FriendUser2s)
                     .HasForeignKey(d => d.User2Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__friend__user2_id__5EBF139D");
@@ -195,22 +191,23 @@ namespace RepositoryLayer
 
             modelBuilder.Entity<PlayHistory>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.UserId, e.GameId })
+                    .HasName("PK__play_his__564026F3D11D6314");
 
                 entity.ToTable("play_history");
 
-                entity.Property(e => e.GameId).HasColumnName("game_id");
-
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
+                entity.Property(e => e.GameId).HasColumnName("game_id");
+
                 entity.HasOne(d => d.Game)
-                    .WithMany()
+                    .WithMany(p => p.PlayHistories)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__play_hist__game___68487DD7");
 
                 entity.HasOne(d => d.User)
-                    .WithMany()
+                    .WithMany(p => p.PlayHistories)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__play_hist__user___6754599E");
