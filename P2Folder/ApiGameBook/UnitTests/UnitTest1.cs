@@ -253,7 +253,7 @@ namespace UnitTests
                 result = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
 
                 // Assert
-                Assert.NotNull(result);
+                Assert.Null(result);
             }
         }
 
@@ -316,7 +316,7 @@ namespace UnitTests
                 result = userPostingMethods.DeletePost(postId);
 
                 // Assert
-                Assert.False(result);
+                Assert.True(result); 
             }
         }
     }
