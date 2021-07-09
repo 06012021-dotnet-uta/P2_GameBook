@@ -32,17 +32,20 @@ namespace BusinessLayer
                 {
                     Post newPost = new Post();
                     newPost.UserId = user.UserId;
-                    if (newPost.CommentParent != null)
-                    {
-                        newPost.CommentParentId = newPost.CommentParent.PostId;
-                    }
+
+                    // this isn't needed, this method makes review posts only, we are making a comment method elsewhere
+                    //if (newPost.CommentParent != null)
+                    //{
+                    //    newPost.CommentParentId = newPost.CommentParent.PostId;
+                    //}
+
                     newPost.Content = content;
-                    newPost.PostDate = DateTime.Now;
+                    newPost.PostDate = DateTime.Now; // database setup to automatically add date, we can remove this if types are not matching up
 
                     _context.Posts.Add(newPost);
                     _context.SaveChanges();
 
-                    newPostId = newPost.PostId;
+                    newPostId = newPost.PostId; 
 
                     return newPostId;
                 }
@@ -71,10 +74,13 @@ namespace BusinessLayer
                 {
                     Post newPost = new Post();
                     newPost.UserId = user.UserId;
-                    if (newPost.CommentParent != null)
-                    {
-                        newPost.CommentParentId = newPost.CommentParent.PostId;
-                    }
+
+                    // this isn't needed, this method makes review posts only, we are making a comment method elsewhere
+                    //if (newPost.CommentParent != null)
+                    //{
+                    //    newPost.CommentParentId = newPost.CommentParent.PostId;
+                    //}
+
                     newPost.Content = content;
                     newPost.Rating = rating;
                     newPost.PostDate = DateTime.Now;
@@ -135,8 +141,19 @@ namespace BusinessLayer
             // change post content to newcontent and change success to true
             try
             {
-                post.Content = newContent;
-                success = true;
+                // search to see if post exists
+                if (SearchPostById(post.PostId) == null)
+                {
+                    Console.WriteLine("Post could not be found");
+                    return success;
+                }
+                else
+                {
+                    post.Content = newContent;
+                    _context.Posts.Update(post); // update post and save changes to db
+                    _context.SaveChanges();
+                    success = true;
+                }
             }
             catch
             {

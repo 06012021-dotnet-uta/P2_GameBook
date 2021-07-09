@@ -22,8 +22,8 @@ namespace BusinessLayer
 
             try
             {
-                var username = _context.Users.Where(x => x.Username == user.Username).FirstOrDefault(); //Find if a username is already taken
-                if (username == null)
+                User searchUser = SearchUserByUsername(user.Username); //Find if a username is already taken
+                if (searchUser == null)
                 {
                     // add user to db, change success to true if successful
                     _context.Users.Add(user);
@@ -51,11 +51,20 @@ namespace BusinessLayer
 
             try
             {
-                // delete user from db, change success to true if successful
-                _context.Users.Remove(user);
-                _context.SaveChanges();
-                success = true;
-                return success;
+                //check if user exists in database
+                if (SearchUserByUsername(user.Username) == null)
+                {
+                    Console.WriteLine("User not found");
+                    return success;
+                }
+                else
+                {
+                    // delete user from db, change success to true if successful
+                    _context.Users.Remove(user);
+                    _context.SaveChanges();
+                    success = true;
+                    return success;
+                }
             }
             catch
             {
