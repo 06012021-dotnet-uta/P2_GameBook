@@ -65,6 +65,7 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    arguments: '--collect "Code Coverage"'
     
 - task: PublishCodeCoverageResults@1
   inputs:
@@ -72,4 +73,6 @@ steps:
     summaryFileLocation: '**/coburtura/coverage.xml'
 - task: SonarCloudAnalyze@1
 
-
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
