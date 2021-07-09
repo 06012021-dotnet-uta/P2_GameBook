@@ -20,16 +20,47 @@ namespace BusinessLayer
         {
             bool success = false;
 
-            // add user to db, change success to true if successful
+            try
+            {
+                var username = _context.Users.Where(x => x.Username == user.Username).FirstOrDefault(); //Find if a username is already taken
+                if (username == null)
+                {
+                    // add user to db, change success to true if successful
+                    _context.Users.Add(user);
+                    _context.SaveChanges();
+                    success = true;
+                    return success;
+                }
+                else
+                {
+                    Console.WriteLine("Error, that username already exists");
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Error, user not created");
+            }
 
             return success;
+
         }
 
         public bool DeleteUser(User user)
         {
             bool success = false;
 
-            // delete user from db, change success to true if successful
+            try
+            {
+                // delete user from db, change success to true if successful
+                _context.Users.Remove(user);
+                _context.SaveChanges();
+                success = true;
+                return success;
+            }
+            catch
+            {
+                Console.WriteLine("Error, user not deleted");
+            }
 
             return success;
         }
@@ -39,6 +70,7 @@ namespace BusinessLayer
             User temp = null;
 
             // Search users table for user with matching name, returns null if not found
+            temp = _context.Users.Where(x => x.Username == username).FirstOrDefault();
 
             return temp;
         }
