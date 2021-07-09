@@ -31,7 +31,11 @@ namespace RepositoryLayer
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=tcp:gamebookserver.database.windows.net,1433;Initial Catalog=gamebookdb;Persist Security Info=False;User ID=gamebookadmin;Password=gb4PA$$w;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -54,7 +58,8 @@ namespace RepositoryLayer
 
             modelBuilder.Entity<CollectionJunction>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.CollectionId, e.GameId })
+                    .HasName("PK__collecti__BC2DB4362A010B60");
 
                 entity.ToTable("collection_junction");
 
@@ -63,13 +68,13 @@ namespace RepositoryLayer
                 entity.Property(e => e.GameId).HasColumnName("game_id");
 
                 entity.HasOne(d => d.Collection)
-                    .WithMany()
+                    .WithMany(p => p.CollectionJunctions)
                     .HasForeignKey(d => d.CollectionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__collectio__colle__70DDC3D8");
 
                 entity.HasOne(d => d.Game)
-                    .WithMany()
+                    .WithMany(p => p.CollectionJunctions)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__collectio__game___71D1E811");
@@ -128,22 +133,23 @@ namespace RepositoryLayer
 
             modelBuilder.Entity<GenreJunction>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.GenreId, e.GameId })
+                    .HasName("PK__genre_ju__F7BC9CBE3492656C");
 
                 entity.ToTable("genre_junction");
 
-                entity.Property(e => e.GameId).HasColumnName("game_id");
-
                 entity.Property(e => e.GenreId).HasColumnName("genre_id");
 
+                entity.Property(e => e.GameId).HasColumnName("game_id");
+
                 entity.HasOne(d => d.Game)
-                    .WithMany()
+                    .WithMany(p => p.GenreJunctions)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__genre_jun__game___6D0D32F4");
 
                 entity.HasOne(d => d.Genre)
-                    .WithMany()
+                    .WithMany(p => p.GenreJunctions)
                     .HasForeignKey(d => d.GenreId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__genre_jun__genre__6C190EBB");
@@ -165,22 +171,23 @@ namespace RepositoryLayer
 
             modelBuilder.Entity<KeywordJunction>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.KeywordId, e.GameId })
+                    .HasName("PK__keyword___EC16C63392D04595");
 
                 entity.ToTable("keyword_junction");
 
-                entity.Property(e => e.GameId).HasColumnName("game_id");
-
                 entity.Property(e => e.KeywordId).HasColumnName("keyword_id");
 
+                entity.Property(e => e.GameId).HasColumnName("game_id");
+
                 entity.HasOne(d => d.Game)
-                    .WithMany()
+                    .WithMany(p => p.KeywordJunctions)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__keyword_j__game___76969D2E");
 
                 entity.HasOne(d => d.Keyword)
-                    .WithMany()
+                    .WithMany(p => p.KeywordJunctions)
                     .HasForeignKey(d => d.KeywordId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__keyword_j__keywo__75A278F5");
