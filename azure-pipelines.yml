@@ -60,9 +60,16 @@ steps:
 #     command: 'custom'
 #     customCommand: 'run build'    
 ####################
-- task: SonarCloudAnalyze@1
 
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '**/coburtura/coverage.xml'
+- task: SonarCloudAnalyze@1
+
+
