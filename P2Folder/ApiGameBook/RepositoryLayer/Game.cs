@@ -12,6 +12,7 @@ namespace RepositoryLayer
             CollectionJunctions = new HashSet<CollectionJunction>();
             GenreJunctions = new HashSet<GenreJunction>();
             KeywordJunctions = new HashSet<KeywordJunction>();
+            PlayHistories = new HashSet<PlayHistory>();
         }
 
         public int GameId { get; set; }
@@ -20,5 +21,6 @@ namespace RepositoryLayer
         public virtual ICollection<CollectionJunction> CollectionJunctions { get; set; }
         public virtual ICollection<GenreJunction> GenreJunctions { get; set; }
         public virtual ICollection<KeywordJunction> KeywordJunctions { get; set; }
+        public virtual ICollection<PlayHistory> PlayHistories { get; set; }
     }
 }
