@@ -28,6 +28,10 @@ namespace BusinessLayer
                 {
                     Console.WriteLine("User must add content to create post");
                 }
+                else if(content.Length>=1000)
+                {
+                    Console.WriteLine("Content too long.");
+                }
                 else
                 {
                     Post newPost = new Post();
@@ -146,6 +150,14 @@ namespace BusinessLayer
                 {
                     Console.WriteLine("Post could not be found");
                     return success;
+                }
+                else if(newContent == "" || newContent == null)
+                {
+                    Console.WriteLine("Must include content with edit");
+                }
+                else if(newContent == post.Content)
+                {
+                    Console.WriteLine("Post content must be different");
                 }
                 else
                 {
