@@ -15,7 +15,7 @@ namespace BusinessLayer
         {
             _context = context;
         }
-        // Create Friend from two users
+        // Create play history
         public bool CreatePlayHistory(User user, Game game)
         {
             bool success = false;
@@ -51,7 +51,7 @@ namespace BusinessLayer
             }
             catch
             {
-                Console.WriteLine("Error, friend not removed");
+                Console.WriteLine("Error, play hisotry not removed");
             }
             return success;
         }

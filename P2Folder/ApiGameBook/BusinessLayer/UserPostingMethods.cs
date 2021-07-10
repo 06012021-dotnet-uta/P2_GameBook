@@ -37,11 +37,6 @@ namespace BusinessLayer
                     Post newPost = new Post();
                     newPost.UserId = user.UserId;
 
-                    // this isn't needed, this method makes review posts only, we are making a comment method elsewhere
-                    //if (newPost.CommentParent != null)
-                    //{
-                    //    newPost.CommentParentId = newPost.CommentParent.PostId;
-                    //}
 
                     newPost.Content = content;
                     newPost.PostDate = DateTime.Now; // database setup to automatically add date, we can remove this if types are not matching up
@@ -78,12 +73,6 @@ namespace BusinessLayer
                 {
                     Post newPost = new Post();
                     newPost.UserId = user.UserId;
-
-                    // this isn't needed, this method makes review posts only, we are making a comment method elsewhere
-                    //if (newPost.CommentParent != null)
-                    //{
-                    //    newPost.CommentParentId = newPost.CommentParent.PostId;
-                    //}
 
                     newPost.Content = content;
                     newPost.Rating = rating;
