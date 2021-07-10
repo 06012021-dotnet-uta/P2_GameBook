@@ -267,7 +267,6 @@ namespace UnitTests
                 int? postId;
                 string content = "test content string";
                 string newContent = "new string";
-                var date1 = new DateTime(2013, 6, 1, 12, 32, 30);
                 User user = new User()
                 {
                     Username = "username",
@@ -275,24 +274,15 @@ namespace UnitTests
                     LastName = "last",
                     Email = "email@email.com"
                 };
-                Post post = new Post()
-                {
-                    UserId = user.UserId,
-                    Content = content,
-                    Rating = 4,
-                    PostDate = date1,
-
-                };
                 UserMethods userMethods = new UserMethods(context);
                 UserPostingMethods userPostingMethods = new UserPostingMethods(context);
 
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                Post post2 = context.Posts.Find(post.PostId);
-                //userMethods.CreateUser(user);
-                //postId = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
-                //result = userPostingMethods.EditPost(userPostingMethods.SearchPostById(postId), newContent);
+                userMethods.CreateUser(user);
+                postId = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
+                result = userPostingMethods.EditPost(userPostingMethods.SearchPostById(postId), newContent);
 
                 // Assert
                 Assert.True(result);
@@ -326,7 +316,7 @@ namespace UnitTests
                 result = userPostingMethods.DeletePost(postId);
 
                 // Assert
-                Assert.False(result);
+                Assert.True(result);
             }
         }
         [Fact]
