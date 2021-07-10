@@ -316,8 +316,80 @@ namespace UnitTests
                 result = userPostingMethods.DeletePost(postId);
 
                 // Assert
-                Assert.True(result); 
+                Assert.True(result);
             }
         }
+        [Fact]
+        public void CreateFriendPass()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                bool result;
+                User user1 = new User()
+                {
+                    Username = "user1",
+                    FirstName = "first",
+                    LastName = "last",
+                    Email = "email@email.com"
+                };
+                User user2 = new User()
+                {
+                    Username = "user2",
+                    FirstName = "first",
+                    LastName = "last",
+                    Email = "email@email.com"
+                };
+                UserMethods userMethods = new UserMethods(context);
+                UserFriendMethods friendMethods = new UserFriendMethods(context);
+
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                userMethods.CreateUser(user1);
+                userMethods.CreateUser(user2);
+                result = friendMethods.CreateFriend(userMethods.SearchUserByUsername("user1"), userMethods.SearchUserByUsername("user2"));
+
+                // Assert
+                Assert.True(result);
+            }
+        }
+        [Fact]
+        public void DeleteFriendPass()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                bool result;
+                User user1 = new User()
+                {
+                    Username = "user1",
+                    FirstName = "first",
+                    LastName = "last",
+                    Email = "email@email.com"
+                };
+                User user2 = new User()
+                {
+                    Username = "user2",
+                    FirstName = "first",
+                    LastName = "last",
+                    Email = "email@email.com"
+                };
+                UserMethods userMethods = new UserMethods(context);
+                UserFriendMethods friendMethods = new UserFriendMethods(context);
+
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                userMethods.CreateUser(user1);
+                userMethods.CreateUser(user2);
+                friendMethods.CreateFriend(user2, user1);
+                result = friendMethods.DeleteFriend(friendMethods.SearchFriend(user1.UserId, user2.UserId));
+
+                // Assert
+                Assert.True(result);
+            }
+        }
+
     }
 }
