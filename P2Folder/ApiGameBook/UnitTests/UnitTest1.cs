@@ -355,6 +355,33 @@ namespace UnitTests
             }
         }
         [Fact]
+        public void CreateSameFriend()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                bool result;
+                User user1 = new User()
+                {
+                    Username = "user1",
+                    FirstName = "first",
+                    LastName = "last",
+                    Email = "email@email.com"
+                };
+                UserMethods userMethods = new UserMethods(context);
+                UserFriendMethods friendMethods = new UserFriendMethods(context);
+
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                userMethods.CreateUser(user1);
+                result = friendMethods.CreateFriend(userMethods.SearchUserByUsername("user1"), userMethods.SearchUserByUsername("user1"));
+
+                // Assert
+                Assert.False(result);
+            }
+        }
+        [Fact]
         public void DeleteFriendPass()
         {
             using (var context = new gamebookdbContext(options))
@@ -388,6 +415,26 @@ namespace UnitTests
 
                 // Assert
                 Assert.True(result);
+            }
+        }
+        [Fact]
+        public void DeleteNullFriend()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                bool result;
+                Friend friend = new Friend();
+                UserMethods userMethods = new UserMethods(context);
+                UserFriendMethods friendMethods = new UserFriendMethods(context);
+
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                result = friendMethods.DeleteFriend(friend);
+
+                // Assert
+                Assert.False(result);
             }
         }
 

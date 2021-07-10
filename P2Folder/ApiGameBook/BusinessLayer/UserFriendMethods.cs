@@ -19,7 +19,10 @@ namespace BusinessLayer
         public bool CreateFriend(User user1, User user2)
         {
             bool success = false;
-
+            if(user1.UserId==user2.UserId)
+            {
+                return false;
+            }
             try
             {
                 Friend friend = new Friend()
