@@ -253,7 +253,7 @@ namespace UnitTests
                 result = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
 
                 // Assert
-                Assert.NotNull(result);
+                Assert.Null(result);
             }
         }
 
@@ -263,7 +263,7 @@ namespace UnitTests
             using (var context = new gamebookdbContext(options))
             {
                 // Arrange
-                bool result=false;
+                bool result;
                 int? postId;
                 string content = "test content string";
                 string newContent = "new string";
