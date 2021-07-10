@@ -25,9 +25,7 @@ namespace BusinessLayer
                 Friend friend = new Friend()
                 {
                     User1Id = user1.UserId,
-                    User2Id = user2.UserId,
-                    User1 = user1,
-                    User2 = user2,
+                    User2Id = user2.UserId
                 };
                 _context.Friends.Add(friend);
                 _context.SaveChanges();
@@ -61,7 +59,7 @@ namespace BusinessLayer
         public Friend SearchFriend(int id1, int id2)
         {
             Friend temp = null;
-            temp = _context.Friends.Where(x => (x.User1Id == id1 && x.User2Id == id2) || (x.User1Id == id2 && x.User2Id == id1)).Single();
+            temp = _context.Friends.Where(x => (x.User1Id == id1 && x.User2Id == id2) || (x.User1Id == id2 && x.User2Id == id1)).FirstOrDefault();
             return temp;
         }
 
