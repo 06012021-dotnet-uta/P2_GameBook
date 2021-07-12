@@ -16,7 +16,6 @@ namespace RepositoryLayer
         public int UserId { get; set; }
         public int? CommentParentId { get; set; }
         public string Content { get; set; }
-        public int? Rating { get; set; }
         public DateTime PostDate { get; set; }
 
         public virtual Post CommentParent { get; set; }

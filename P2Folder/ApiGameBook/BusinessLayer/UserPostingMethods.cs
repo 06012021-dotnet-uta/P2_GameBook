@@ -57,43 +57,6 @@ namespace BusinessLayer
             return newPostId;
         }
 
-        public int? CreatePost(User user, string content, int rating) //overloaded CreatePost Method that takes a rating
-        {
-            int? newPostId = null;
-            // create a post by the given user with the content and rating provided, return id of post that was just made
-            // leave newPostId null if post could not be made
-
-            try
-            {
-                if (content == null || content == "") //Tests if user is trying to create a post with no content
-                {
-                    Console.WriteLine("User must add content to create post");
-                }
-                else
-                {
-                    Post newPost = new Post();
-                    newPost.UserId = user.UserId;
-
-                    newPost.Content = content;
-                    newPost.Rating = rating;
-                    newPost.PostDate = DateTime.Now;
-
-                    _context.Posts.Add(newPost);
-                    _context.SaveChanges();
-
-                    newPostId = newPost.PostId;
-
-                    return newPostId;
-                }
-            }
-            catch
-            {
-                Console.WriteLine("Error, post not created");
-            }
-
-            return newPostId;
-        }
-
         public bool DeletePost(int? postId)
         {
             bool success = false;
