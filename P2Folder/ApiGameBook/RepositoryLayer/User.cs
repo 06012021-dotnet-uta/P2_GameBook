@@ -13,6 +13,7 @@ namespace RepositoryLayer
             FriendUser2s = new HashSet<Friend>();
             PlayHistories = new HashSet<PlayHistory>();
             Posts = new HashSet<Post>();
+            Ratings = new HashSet<Rating>();
         }
 
         public int UserId { get; set; }
@@ -26,5 +27,6 @@ namespace RepositoryLayer
         public virtual ICollection<Friend> FriendUser2s { get; set; }
         public virtual ICollection<PlayHistory> PlayHistories { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
     }
 }

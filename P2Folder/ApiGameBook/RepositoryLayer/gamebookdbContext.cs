@@ -27,6 +27,7 @@ namespace RepositoryLayer
         public virtual DbSet<KeywordJunction> KeywordJunctions { get; set; }
         public virtual DbSet<PlayHistory> PlayHistories { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<Rating> Ratings { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -231,8 +232,6 @@ namespace RepositoryLayer
                     .HasColumnName("post_date")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.Rating).HasColumnName("rating");
-
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.CommentParent)
@@ -245,6 +244,32 @@ namespace RepositoryLayer
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__post__user_id__619B8048");
+            });
+
+            modelBuilder.Entity<Rating>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.GameId })
+                    .HasName("PK__rating__564026F3D2AE7FDD");
+
+                entity.ToTable("rating");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.Property(e => e.GameId).HasColumnName("game_id");
+
+                entity.Property(e => e.Rating1).HasColumnName("rating");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.Ratings)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__rating__game_id__7F2BE32F");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Ratings)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__rating__user_id__7E37BEF6");
             });
 
             modelBuilder.Entity<User>(entity =>
