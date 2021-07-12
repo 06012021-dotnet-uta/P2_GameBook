@@ -25,7 +25,7 @@ namespace UnitTests
                     LastName = "last",
                     Email = "email@email.com"
                 };
-                UserMethods userMethods = new UserMethods(context);                
+                UserMethods userMethods = new UserMethods(context);
 
                 // Act
                 context.Database.EnsureCreated();
@@ -116,7 +116,7 @@ namespace UnitTests
 
                 // Act
                 context.Database.EnsureCreated();
-                context.Database.EnsureDeleted();                
+                context.Database.EnsureDeleted();
                 result = userMethods.DeleteUser(user);
 
                 // Assert
@@ -813,5 +813,56 @@ namespace UnitTests
             }
         }
 
+        [Fact]
+        public void doesUserExistUser()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                bool result;
+                User user1 = new User()
+                {
+                    Username = "user1",
+                    FirstName = "first",
+                    LastName = "last",
+                    Email = "email@email.com"
+                };
+                UserMethods userMethods = new UserMethods(context);
+                UserFriendMethods friendMethods = new UserFriendMethods(context);
+
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                userMethods.CreateUser(user1);
+                result = friendMethods.DoesUserExist(user1);
+
+                // Assert
+                Assert.True(result); // result should be true if friend exist
+            }
+        }
+
+        [Fact]
+        public void doesUserExistNull()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                bool result;
+              
+                UserMethods userMethods = new UserMethods(context);
+                UserFriendMethods friendMethods = new UserFriendMethods(context);
+
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                
+                result = friendMethods.DoesUserExist(null);
+
+                // Assert
+                Assert.False(result); // result should be false if friend is imaginary
+            }
+        }
+
     }
 }
+
