@@ -9,7 +9,7 @@ namespace UnitTests
     public class PlayHistoryMethodsTests
     {
         //create in-memory DB
-        DbContextOptions<gamebookdbContext> options = new DbContextOptionsBuilder<gamebookdbContext>().UseInMemoryDatabase(databaseName: "TestingDb").Options;
+        DbContextOptions<gamebookdbContext> options = new DbContextOptionsBuilder<gamebookdbContext>().UseInMemoryDatabase(databaseName: "TestingDb1").Options;
 
         [Fact]
         public void CreatePlayHistoryPass()
