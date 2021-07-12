@@ -21,6 +21,11 @@ namespace BusinessLayer
             bool success = false;
             try
             {
+                if (_context.Games.Where(x => x.GameId == game.GameId).FirstOrDefault() == null)
+                {
+                    Console.WriteLine("Game not found.");
+                    return success;
+                }
                 PlayHistory history = new PlayHistory()
                 {
                     UserId = user.UserId,
