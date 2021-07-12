@@ -16,7 +16,7 @@ namespace BusinessLayer
             _context = context;
         }
 
-        public int? CreatePost(User user, string content) //Create a Post with no rating attached
+        public int? CreatePost(User user, string content) //Create a Post 
         {
             int? newPostId = null;
             // create a post by the given user with the content provided, return id of post that was just made
@@ -125,6 +125,47 @@ namespace BusinessLayer
             }
 
             return success;
+        }
+
+        public int? CreateComment(User user, string content, Post parent) //Create a Comment
+        {
+            int? newPostId = null;
+            // create a comment by the given user with the content provided, return id of post that was just made
+            // leaves newPostId null if post could not be made
+
+            try
+            {
+                if (content == null || content == "") //Tests if user is trying to create a post with no content
+                {
+                    Console.WriteLine("User must add content to create comment");
+                }
+                else if (content.Length >= 1000)
+                {
+                    Console.WriteLine("Content too long.");
+                }
+                else
+                {
+                    Post newComment = new Post();
+                    newComment.UserId = user.UserId;
+
+                    newComment.CommentParentId = parent.PostId;
+                    newComment.Content = content;
+                    newComment.PostDate = DateTime.Now; // database setup to automatically add date, we can remove this if types are not matching up
+
+                    _context.Posts.Add(newComment);
+                    _context.SaveChanges();
+
+                    newPostId = newComment.PostId;
+
+                    return newPostId;
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Error, comment not created");
+            }
+
+            return newPostId;
         }
     }
 }
