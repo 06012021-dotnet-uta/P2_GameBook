@@ -9,7 +9,7 @@ namespace UnitTests
     public class PostMethodsTests
     {
         //create in-memory DB
-        DbContextOptions<gamebookdbContext> options = new DbContextOptionsBuilder<gamebookdbContext>().UseInMemoryDatabase(databaseName: "TestingDb").Options;
+        DbContextOptions<gamebookdbContext> options = new DbContextOptionsBuilder<gamebookdbContext>().UseInMemoryDatabase(databaseName: "TestingDb2").Options;
         [Fact]
 
         public void CreatePostPass()
