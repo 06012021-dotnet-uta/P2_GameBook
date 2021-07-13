@@ -21,7 +21,7 @@ steps:
     cliSources: '.'
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    versionSpec: '14.x'
   displayName: 'Install Node.js'
 
 - task: Npm@1
@@ -31,11 +31,11 @@ steps:
 - task: Npm@1
   inputs:
     command: 'custom'
-    customCommand: 'run build-prod'
+    customCommand: 'run build'
 - task: Npm@1
   inputs:
     command: 'custom'
-    customCommand: 'run test-headless'
+    customCommand: 'run test'
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
 
