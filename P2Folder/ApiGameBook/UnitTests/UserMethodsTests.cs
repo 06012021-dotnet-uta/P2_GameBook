@@ -267,7 +267,41 @@ namespace UnitTests
                 Assert.Null(result); // result is null if no user if found with matching username
             }
         }
+        [Fact]
+        public void EditUserPass()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                bool result;
+                User oldUser = new User()
+                {
+                    Username = "username1",
+                    Password = "1234",
+                    FirstName = "first",
+                    LastName = "last",
+                    Email = "email@email.com"
+                };
+                User newUser = new User()
+                {
+                    Username = "username2",
+                    Password = "1234",
+                    FirstName = "first2",
+                    LastName = "last2",
+                    Email = "email2@email.com"
+                };
+                UserMethods userMethods = new UserMethods(context);
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                userMethods.CreateUser(oldUser);
+                result = userMethods.EditUser(oldUser, newUser);
 
+                // Assert
+                Assert.True(result); // result should be true if user edit passed
+                Assert.NotNull(userMethods.SearchUserByUsername(newUser.Username)); // result should be not null if edited user exist in database
+            }
+        }
 
     }
 }
