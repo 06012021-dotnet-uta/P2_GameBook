@@ -41,6 +41,12 @@ steps:
 #     workingDir: $(solution)
 #     customCommand: 'run test-headless'
 
+- task: Npm@1
+  displayName: 'npm test'
+  inputs:
+    command: 'custom'
+    customCommand: 'ng test'
+
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
 
