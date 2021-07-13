@@ -24,29 +24,20 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-# - task: Npm@1
-#   displayName: 'NPM Install'
-#   inputs:
-#     command: 'install'
-#     workingDir: $(solution)
+
 
 - task: Npm@1
   inputs:
     command: 'install'
-- task: Npm@1
-  displayName: 'NPM Build Angular'
-  inputs:
-    command: 'custom'
-    workingDir: $(solution)
-    customCommand: 'run build-prod'
 
 - task: Npm@1
-  displayName: 'NPM Test'
   inputs:
     command: 'custom'
-    workingDir: $(solution)
-    customCommand: 'run test-headless'
-
+    customCommand: 'run build'
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'run test'
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
 
