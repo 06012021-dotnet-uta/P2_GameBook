@@ -10,15 +10,26 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+# - task: SonarCloudPrepare@1
+#   displayName: sonarclour prepare
+#   inputs:
+#     SonarCloud: 'SonarCloud'
+#     organization: 'project2-gamebook'
+#     scannerMode: 'CLI'
+#     configMode: 'manual'
+#     cliProjectKey: 'Project2-GameBook_AngularGameBook'
+#     cliProjectName: 'AngularGameBook'
+#     cliSources: '$(solution)/src'
+#     extraProperties: 'sonar.javascript.lcov.reportPaths=$(solution)/coverage/memesaver/lcov.info'
 - task: SonarCloudPrepare@1
   inputs:
-    SonarCloud: 'SonarCloud'
+    SonarCloud: 'SonarcloudAngular'
     organization: 'project2-gamebook'
-    scannerMode: 'MSBuild'
-    projectKey: 'Project2-GameBook_AngularGameBook'
-    projectName: 'AngularGameBook'
-
-
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'Project2-GameBook_AngularGameBook'
+    cliProjectName: 'AngularGameBook'
+    cliSources: '.'
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
