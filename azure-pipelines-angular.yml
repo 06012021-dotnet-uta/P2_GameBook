@@ -1,10 +1,6 @@
 trigger:
 - main
 
-paths:
-  include:
-  - Project2
-
 pool:
   vmImage: 'windows-latest'
 
