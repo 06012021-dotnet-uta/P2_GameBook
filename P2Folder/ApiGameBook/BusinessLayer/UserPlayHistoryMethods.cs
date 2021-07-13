@@ -10,12 +10,18 @@ namespace BusinessLayer
     public class UserPlayHistoryMethods
     {
         private gamebookdbContext _context;
-
+      
         public UserPlayHistoryMethods(gamebookdbContext context)
         {
             _context = context;
         }
         // Create play history
+        /// <summary>
+        /// Construction of play history of specific games
+        /// </summary>
+        /// <param name="user">The user who is adding the game</param>
+        /// <param name="game">The game to add</param>
+        /// <returns>True if able to add game</returns>
         public bool CreatePlayHistory(User user, Game game)
         {
             bool success = false;
@@ -44,6 +50,11 @@ namespace BusinessLayer
 
             return success;
         }
+        /// <summary>
+        /// Deletes a game from the history 
+        /// </summary>
+        /// <param name="history">Takes in the history to delete</param>
+        /// <returns>True if able to be deleted</returns>
         public bool DeletePlayHistory(PlayHistory history)
         {
             bool success = false;
@@ -60,6 +71,12 @@ namespace BusinessLayer
             }
             return success;
         }
+        /// <summary>
+        /// Allows search of play history 
+        /// </summary>
+        /// <param name="userid">User who's Id we are searching</param>
+        /// <param name="gameid">Game id for the game searching</param>
+        /// <returns></returns>
         public PlayHistory SearchPlayHistory(int userid, int gameid)
         {
             PlayHistory temp = null;

@@ -20,8 +20,8 @@ namespace BusinessLayer
         /// <summary>
         /// This checks if friend exist then adds to database the id of friend in friend
         /// </summary>
-        /// <param name="currentUser">this is the ser who is trying to make a friend</param>
-        /// <param name="userToBefriend">this is the user who the current user is trying to befriend</param>
+        /// <param name="currentUser">This is the user who is trying to make a friend</param>
+        /// <param name="userToBefriend">This is the user who the current user is trying to befriend</param>
         /// <returns>Returns true or false based on if save was succeful</returns>
         public bool CreateFriend(User currentUser, User userToBefriend)
         {
@@ -55,7 +55,7 @@ namespace BusinessLayer
         /// <summary>
         /// DeleteFriend removes the id of a friend from your database however this has no effect if they friended you
         /// </summary>
-        /// <param name="friend">this will take the logged in user and pass the friend id associated to deleted it</param>
+        /// <param name="friend">This will take the logged in user and pass the friend id associated to deleted it</param>
         /// <returns>True if succesfull else false</returns>
         public bool DeleteFriend(Friend friend)
         {
