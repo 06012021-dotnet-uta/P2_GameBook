@@ -307,7 +307,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void CreateCommemtPass()
+        public void CreateCommentPass()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -334,6 +334,37 @@ namespace UnitTests
 
                 // Assert
                 Assert.NotNull(result); // result is not null if creating a post is successfull
+            }
+        }
+
+        [Fact]
+        public void CreateCommentNullParent()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                int? result;
+                string content = "demo content to test";
+                User user = new User()
+                {
+                    Username = "username",
+                    FirstName = "first",
+                    LastName = "last",
+                    Email = "email@email.com"
+                };
+                UserMethods userMethods = new UserMethods(context);
+                UserPostingMethods userPostingMethods = new UserPostingMethods(context);
+
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                userMethods.CreateUser(user);
+                int? parentID = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
+                Post parentPost = null;
+                result = userPostingMethods.CreateComment(userMethods.SearchUserByUsername("username"), content, parentPost);
+
+                // Assert
+                Assert.Null(result); // result is null if comment not made
             }
         }
     }
