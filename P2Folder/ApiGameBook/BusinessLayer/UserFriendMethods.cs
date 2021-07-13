@@ -25,7 +25,6 @@ namespace BusinessLayer
         /// <returns>Returns true or false based on if save was succeful</returns>
         public bool CreateFriend(User currentUser, User userToBefriend)
         {
-            //bool doYouHaveFriends = DoesUserExist(userToBefriend);
 
             bool success = false;
 
