@@ -32,15 +32,8 @@ steps:
     npm install -g @angular/cli
     npm install
     ng build --prod
-    ng test
+    ng test --code-coverage
   displayName: 'npm install, build, and test'
-    
-# - task: Npm@1
-#   displayName: 'NPM Test'
-#   inputs:
-#     command: 'custom'
-#     workingDir: $(solution)
-#     customCommand: 'ng test'
 
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
