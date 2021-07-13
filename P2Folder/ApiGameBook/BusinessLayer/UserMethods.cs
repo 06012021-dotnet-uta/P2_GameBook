@@ -16,7 +16,7 @@ namespace BusinessLayer
             _context = context;
         }
         /// <summary>
-        /// Searches for users based on user name then allows creeation of one if there is no double
+        /// Searches for users based on user name then allows creation of one if there is no double
         /// </summary>
         /// <param name="user">It takes a user object</param>
         /// <returns>Returns true if no other user with the same username exist and the user was succesfully created</returns>
@@ -94,6 +94,42 @@ namespace BusinessLayer
             temp = _context.Users.Where(x => x.Username == username).FirstOrDefault();
 
             return temp;
+        }
+        /// <summary>
+        /// Updates previous user data with new user data
+        /// </summary>
+        /// <param name="oldUser">User to be changed</param>
+        /// <param name="newUser">User model that replaces old user's data</param>
+        /// <returns>Returns true if old user's data was updated</returns>
+        public bool EditUser(User oldUser, User newUser)
+        {
+            bool success = false;
+
+            try
+            {
+                if (newUser.Username==null || newUser.Password==null || newUser.FirstName == null || newUser.LastName == null || newUser.Email == null)
+                {
+                    Console.WriteLine("Error, the user model entered has missing data");
+                    return success;
+                }
+                else
+                {
+                    oldUser.Username = newUser.Username;
+                    oldUser.Password = newUser.Password;
+                    oldUser.FirstName = newUser.FirstName;
+                    oldUser.LastName = newUser.LastName;
+                    oldUser.Email = newUser.Email;
+                    _context.SaveChanges();
+                    success = true;
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Error, user not created");
+            }
+
+            return success;
+
         }
     }
 }
