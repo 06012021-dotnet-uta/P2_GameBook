@@ -31,11 +31,16 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
+# - task: Npm@1
+#   displayName: 'NPM Install'
+#   inputs:
+#     command: 'install'
+#     workingDir: $(solution)
+
 - task: Npm@1
   displayName: 'NPM Install'
   inputs:
     command: 'install'
-    workingDir: $(solution)
 
 - task: Npm@1
   displayName: 'NPM Build Angular'
@@ -43,7 +48,7 @@ steps:
     command: 'custom'
     workingDir: $(solution)
     customCommand: 'run build-prod'
-
+    
 - task: Npm@1
   displayName: 'NPM Test'
   inputs:
