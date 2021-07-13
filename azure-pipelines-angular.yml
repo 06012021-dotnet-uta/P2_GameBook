@@ -1,15 +1,11 @@
 trigger:
   - main
 
-# paths:
-#   include:
-#   - Project2Folder/AngularGameBook
-
 pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: 'Project2Folder/AngularGameBook'
+  solution: 'P2Folder/AngularGameBook'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
