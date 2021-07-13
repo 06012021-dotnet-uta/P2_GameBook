@@ -24,8 +24,6 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-
-
 - task: Npm@1
   inputs:
     command: 'install'
@@ -33,11 +31,11 @@ steps:
 - task: Npm@1
   inputs:
     command: 'custom'
-    customCommand: 'run build'
+    customCommand: 'run build-prod'
 - task: Npm@1
   inputs:
     command: 'custom'
-    customCommand: 'run test'
+    customCommand: 'run test-headless'
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
 
