@@ -1,16 +1,23 @@
 trigger:
-- main
+  branches:
+    include:
+    - main
+
+  paths:
+    include:
+    - Project2Folder/AngularGameBook
 
 pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
+  solution: 'Project2Folder/AngularGameBook'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
 steps:
 - task: SonarCloudPrepare@1
+  displayName: sonarclour prepare
   inputs:
     SonarCloud: 'SonarcloudAngular'
     organization: 'project2-gamebook'
@@ -18,24 +25,34 @@ steps:
     configMode: 'manual'
     cliProjectKey: 'Project2-GameBook_AngularGameBook'
     cliProjectName: 'AngularGameBook'
-    cliSources: '.'
+    cliSources: '$(solution)/src'
+    extraProperties: 'sonar.javascript.lcov.reportPaths=$(solution)/coverage/AngularGameBook/lcov.info'
+
 - task: NodeTool@0
   inputs:
-    versionSpec: '14.x'
+    versionSpec: '10.x'
   displayName: 'Install Node.js'
 
 - task: Npm@1
+  displayName: 'NPM Install'
   inputs:
     command: 'install'
+    workingDir: $(solution)
 
 - task: Npm@1
+  displayName: 'NPM Build Angular'
   inputs:
     command: 'custom'
-    customCommand: 'run build'
+    workingDir: $(solution)
+    customCommand: 'run build-prod'
+
 - task: Npm@1
+  displayName: 'NPM Test'
   inputs:
     command: 'custom'
-    customCommand: 'run test'
+    workingDir: $(solution)
+    customCommand: 'run test-headless'
+
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
 
