@@ -15,7 +15,12 @@ namespace BusinessLayer
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Adds a post
+        /// </summary>
+        /// <param name="user">The user commenting</param>
+        /// <param name="content">The users comment</param>
+        /// <returns>The post ID is returned</returns>
         public int? CreatePost(User user, string content) //Create a Post 
         {
             int? newPostId = null;
@@ -57,6 +62,11 @@ namespace BusinessLayer
             return newPostId;
         }
 
+        /// <summary>
+        /// Delete's post that are made
+        /// </summary>
+        /// <param name="postId">The post id</param>
+        /// <returns>Deletes if true</returns>
         public bool DeletePost(int? postId)
         {
             bool success = false;
@@ -80,6 +90,11 @@ namespace BusinessLayer
             return success;
         }
 
+        /// <summary>
+        /// Searches post by ID
+        /// </summary>
+        /// <param name="postId">Takes the id your looking for</param>
+        /// <returns>True if able to find</returns>
         public Post SearchPostById(int? postId)
         {
             Post post = null;
@@ -89,7 +104,12 @@ namespace BusinessLayer
 
             return post;
         }
-
+        /// <summary>
+        /// Allows the ability to edit post
+        /// </summary>
+        /// <param name="post">The original post object</param>
+        /// <param name="newContent">The edited comment</param>
+        /// <returns>true if able to return</returns>
         public bool EditPost(Post post, string newContent)
         {
             bool success = false;
@@ -126,7 +146,13 @@ namespace BusinessLayer
 
             return success;
         }
-
+        /// <summary>
+        /// Creates a user comment
+        /// </summary>
+        /// <param name="user">The user commenting</param>
+        /// <param name="content">The content of the comment</param>
+        /// <param name="parent">The parent comment</param>
+        /// <returns>returns the post id</returns>
         public int? CreateComment(User user, string content, Post parent) //Create a Comment
         {
             int? newPostId = null;

@@ -15,7 +15,11 @@ namespace BusinessLayer
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Searches for users based on user name then allows creeation of one if there is no double
+        /// </summary>
+        /// <param name="user">It takes a user object</param>
+        /// <returns>Returns true if no other user with the same username exist and the user was succesfully created</returns>
         public bool CreateUser(User user)
         {
             bool success = false;
@@ -44,7 +48,11 @@ namespace BusinessLayer
             return success;
 
         }
-
+        /// <summary>
+        /// Allows the ability to delete user
+        /// </summary>
+        /// <param name="user">Takes the name of the user to delete</param>
+        /// <returns>Returns true on success</returns>
         public bool DeleteUser(User user)
         {
             bool success = false;
@@ -73,7 +81,11 @@ namespace BusinessLayer
 
             return success;
         }
-
+        /// <summary>
+        /// Searches type users by username
+        /// </summary>
+        /// <param name="username">Username property of user</param>
+        /// <returns>Type user</returns>
         public User SearchUserByUsername(string username)
         {
             User temp = null;
