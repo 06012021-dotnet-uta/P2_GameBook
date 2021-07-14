@@ -30,7 +30,7 @@ module.exports = function (config) {
       reporters: [
         { type: 'html' },
         { type: 'text-summary' },
-        {type: "lcov"} // FOR SONARCLOUD?????
+        {type: 'lcov'} // FOR SONARCLOUD?????
       ]
     },
     reporters: ['progress', 'kjhtml'],
