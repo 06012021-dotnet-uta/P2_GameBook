@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer
 {
-    public class GameRatingMethods
-    {
-        private gamebookdbContext _context;
+	public class GameRatingMethods
+	{
+		private gamebookdbContext _context;
 
-        public GameRatingMethods(gamebookdbContext context)
-        {
-            _context = context;
-        }
+		public GameRatingMethods(gamebookdbContext context)
+		{
+			_context = context;
+		}
 		/// <summary>
 		/// This will either do the initial rating or update a rating
 		/// </summary>
@@ -22,10 +22,10 @@ namespace BusinessLayer
 		/// <param name="game">Tracks the game to be rated</param>
 		/// <param name="rating">Tracks the rating for the game by user</param>
 		/// <returns>Only returns false if something terrible happens</returns>
-        public bool RateGame(int user, int game, int rating)
+		public bool RateGame(int user, int game, int rating)
 		{
 			//never question MALIA 
-			if (rating > 10 || rating < 0) 
+			if (rating > 10 || rating < 0)
 			{
 				return false;
 			}
@@ -60,46 +60,58 @@ namespace BusinessLayer
 				}
 			}
 			//if for some reason the crash happens it wil just return false
-			catch(SystemException)
+			catch (SystemException)
 			{
 				return false;
 			}
 		}
 
-	/// <summary>
-	/// Allows the ability to delete rating
-	/// </summary>
-	/// <param name="rating">Takes the rating to delete</param>
-	/// <returns>Returns true on success</returns>
-	public bool DeleteRating(Rating rating)
-	{
-		bool success = false;
-
-		try
+		/// <summary>
+		/// Allows the ability to delete rating
+		/// </summary>
+		/// <param name="rating">Takes the rating to delete</param>
+		/// <returns>Returns true on success</returns>
+		public bool DeleteRating(Rating rating)
 		{
-			//check if user exists in database
-			if (rating == null)
+			bool success = false;
+
+			try
 			{
-				Console.WriteLine("Rating connot be null");
-				return success;
+				//check if user exists in database
+				if (rating == null)
+				{
+					Console.WriteLine("Rating connot be null");
+					return success;
+				}
+				else
+				{
+					// delete user from db, change success to true if successful
+					_context.Ratings.Remove(rating);
+					_context.SaveChanges();
+					success = true;
+					return success;
+				}
 			}
-			else
+			catch
 			{
-				// delete user from db, change success to true if successful
-				_context.Ratings.Remove(rating);
-				_context.SaveChanges();
-				success = true;
-				return success;
+				Console.WriteLine("Error, rating not deleted");
 			}
+
+			return success;
 		}
-		catch
+
+		/// <summary>
+		/// Allows search of ratings 
+		/// </summary>
+		/// <param name="userid">User who's Id we are searching</param>
+		/// <param name="gameid">Game id for the game searching</param>
+		/// <returns></returns>
+		public Rating SearchRatings(int userid, int gameid)
 		{
-			Console.WriteLine("Error, rating not deleted");
+			Rating temp = null;
+			temp = _context.Ratings.Where(x => (x.UserId == userid && x.GameId == gameid)).FirstOrDefault();
+			return temp;
 		}
 
-		return success;
-	}
-
-
-	}
+	}	
 }

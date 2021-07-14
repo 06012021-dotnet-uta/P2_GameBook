@@ -142,10 +142,7 @@ namespace UnitTests
                 gameMethods.RateGame(user.UserId, game.GameId, userRating);
 
                 //finds rating to delete
-                Rating temp = (from x in context.Ratings
-                               where x.GameId == game.GameId &&
-                               x.UserId == user.UserId
-                               select x).FirstOrDefault();
+                Rating temp = gameMethods.SearchRatings(user.UserId, game.GameId);
 
                 //runs test
                 result = gameMethods.DeleteRating(temp);
@@ -191,19 +188,14 @@ namespace UnitTests
                 context.Games.Add(game);
                 gameMethods.RateGame(user.UserId, game.GameId, userRating);
 
-                //finds rating to delete
-                Rating temp = (from x in context.Ratings
-                               where x.GameId == 2 &&
-                               x.UserId == 2
-                               select x).FirstOrDefault();
-
+                //finds non-existant rating
+                Rating temp = gameMethods.SearchRatings(-1, -1);
                 //runs test
                 result = gameMethods.DeleteRating(temp);
 
                 //Asserts
                 Assert.False(result);
             }
-
         }
 
     }
