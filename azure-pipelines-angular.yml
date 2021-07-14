@@ -21,23 +21,12 @@ steps:
     cliSources: '$(solution)/src'
     extraProperties: 'sonar.javascript.lcov.reportPaths=$(solution)/coverage/AngularGameBook/lcov.info'
 
-# - task: SonarCloudPrepare@1
-#   displayName: sonarclour prepare
-#   inputs:
-#     SonarCloud: 'SonarcloudAngular'
-#     organization: 'project2-gamebook'
-#     scannerMode: 'CLI'
-#     configMode: 'manual'
-#     cliProjectKey: 'Project2-GameBook_AngularGameBook'
-#     cliProjectName: 
-#     cliSources: '$(solution)/src'
-#     #extraProperties: 'sonar.javascript.lcov.reportPaths=D:\a\1\s\P2Folder\AngularGameBook\coverage\AngularGameBook\lcov.info'
-#     extraProperties: 'sonar.javascript.lcov.reportPaths=$(solution)/coverage/AngularGameBook/lcov.info'
-
 - task: NodeTool@0
   inputs:
     versionSpec: '14.x'
   displayName: 'Install Node.js'
+
+
 
 - task: Npm@1
   displayName: 'NPM Install'
@@ -66,19 +55,3 @@ steps:
   displayName: 'SonarCloud Publish'
   inputs:
     pollingTimeoutSec: '300'
-
-
-# - script: |
-#     npm install -g @angular/cli
-#     npm install
-#     ng build --prod
-#     ng test --watch=false --code-coverage --browsers=ChromeHeadless
-#   displayName: 'npm install, build, and test'
-
-# - task: SonarCloudAnalyze@1
-#   displayName: 'SonarCloud Analyze'
-
-# - task: SonarCloudPublish@1
-#   displayName: 'SonarCloud Publish'
-#   inputs:
-#     pollingTimeoutSec: '300'
