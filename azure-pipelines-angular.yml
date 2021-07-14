@@ -11,17 +11,27 @@ variables:
 
 steps:
 - task: SonarCloudPrepare@1
-  displayName: sonarclour prepare
   inputs:
     SonarCloud: 'SonarcloudAngular'
     organization: 'project2-gamebook'
-    scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: 'Project2-GameBook_AngularGameBook'
-    cliProjectName: 'AngularGameBook'
+    scannerMode: 'MSBuild'
+    projectKey: 'Project2-GameBook_AngularGameBook'
+    projectName: 'AngularGameBook'
     cliSources: '$(solution)/src'
-    extraProperties: 'sonar.javascript.lcov.reportPaths=D:\a\1\s\P2Folder\AngularGameBook\coverage\AngularGameBook\lcov.info'
-    #extraProperties: 'sonar.javascript.lcov.reportPaths=$(solution)/coverage/AngularGameBook/lcov.info'
+    extraProperties: 'sonar.javascript.lcov.reportPaths=$(solution)/coverage/AngularGameBook/lcov.info'
+
+# - task: SonarCloudPrepare@1
+#   displayName: sonarclour prepare
+#   inputs:
+#     SonarCloud: 'SonarcloudAngular'
+#     organization: 'project2-gamebook'
+#     scannerMode: 'CLI'
+#     configMode: 'manual'
+#     cliProjectKey: 'Project2-GameBook_AngularGameBook'
+#     cliProjectName: 'A- task: SonarCloudPrepare@1
+#     cliSources: '$(solution)/src'
+#     #extraProperties: 'sonar.javascript.lcov.reportPaths=D:\a\1\s\P2Folder\AngularGameBook\coverage\AngularGameBook\lcov.info'
+#     extraProperties: 'sonar.javascript.lcov.reportPaths=$(solution)/coverage/AngularGameBook/lcov.info'
 
 - task: NodeTool@0
   inputs:
