@@ -66,6 +66,39 @@ namespace BusinessLayer
 			}
 		}
 
+	/// <summary>
+	/// Allows the ability to delete rating
+	/// </summary>
+	/// <param name="rating">Takes the rating to delete</param>
+	/// <returns>Returns true on success</returns>
+	public bool DeleteRating(Rating rating)
+	{
+		bool success = false;
+
+		try
+		{
+			//check if user exists in database
+			if (rating == null)
+			{
+				Console.WriteLine("Rating connot be null");
+				return success;
+			}
+			else
+			{
+				// delete user from db, change success to true if successful
+				_context.Ratings.Remove(rating);
+				_context.SaveChanges();
+				success = true;
+				return success;
+			}
+		}
+		catch
+		{
+			Console.WriteLine("Error, rating not deleted");
+		}
+
+		return success;
+	}
 
 
 	}
