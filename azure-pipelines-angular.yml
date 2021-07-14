@@ -16,8 +16,8 @@ steps:
     organization: 'project2-gamebook'
     scannerMode: 'CLI'
     configMode: 'manual'
-    projectKey: 'Project2-GameBook_AngularGameBook'
-    projectName: 'AngularGameBook'
+    cliProjectKey: 'Project2-GameBook_AngularGameBook'
+    cliProjectName: 'AngularGameBook'
     cliSources: '$(solution)/src'
     extraProperties: 'sonar.javascript.lcov.reportPaths=$(solution)/coverage/AngularGameBook/lcov.info'
 
