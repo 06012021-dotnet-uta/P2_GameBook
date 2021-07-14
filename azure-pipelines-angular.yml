@@ -14,7 +14,8 @@ steps:
   inputs:
     SonarCloud: 'SonarcloudAngular'
     organization: 'project2-gamebook'
-    scannerMode: 'MSBuild'
+    scannerMode: 'CLI'
+    configMode: 'manual'
     projectKey: 'Project2-GameBook_AngularGameBook'
     projectName: 'AngularGameBook'
     cliSources: '$(solution)/src'
@@ -28,7 +29,7 @@ steps:
 #     scannerMode: 'CLI'
 #     configMode: 'manual'
 #     cliProjectKey: 'Project2-GameBook_AngularGameBook'
-#     cliProjectName: 'A- task: SonarCloudPrepare@1
+#     cliProjectName: 
 #     cliSources: '$(solution)/src'
 #     #extraProperties: 'sonar.javascript.lcov.reportPaths=D:\a\1\s\P2Folder\AngularGameBook\coverage\AngularGameBook\lcov.info'
 #     extraProperties: 'sonar.javascript.lcov.reportPaths=$(solution)/coverage/AngularGameBook/lcov.info'
@@ -37,6 +38,36 @@ steps:
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
+
+- task: Npm@1
+  displayName: 'NPM Install'
+  inputs:
+    command: 'install'
+    workingDir: $(solution)
+- task: Npm@1
+  displayName: 'NPM Build Angular'
+  inputs:
+    command: 'custom'
+    workingDir: $(solution)
+    customCommand: 'ng build --prod'
+
+- task: Npm@1
+  displayName: 'NPM Test'
+  inputs:
+    command: 'custom'
+    workingDir: $(solution)
+    customCommand: 'ng test --watch=false --code-coverage --browsers=ChromeHeadless'
+
+
+- task: SonarCloudAnalyze@1
+  displayName: 'SonarCloud Analyze'
+
+- task: SonarCloudPublish@1
+  displayName: 'SonarCloud Publish'
+  inputs:
+    pollingTimeoutSec: '300'
+
+
 
 # - task: Npm@1
 #   displayName: 'NPM Install'
@@ -58,17 +89,17 @@ steps:
 #     workingDir: $(solution)
 #     customCommand: 'run test-headless'
 
-- script: |
-    npm install -g @angular/cli
-    npm install
-    ng build --prod
-    ng test
-  displayName: 'npm install, build, and test'
+# - script: |
+#     npm install -g @angular/cli
+#     npm install
+#     ng build --prod
+#     ng test test-headless
+#   displayName: 'npm install, build, and test'
 
-- task: SonarCloudAnalyze@1
-  displayName: 'SonarCloud Analyze'
+# - task: SonarCloudAnalyze@1
+#   displayName: 'SonarCloud Analyze'
 
-- task: SonarCloudPublish@1
-  displayName: 'SonarCloud Publish'
-  inputs:
-    pollingTimeoutSec: '300'
+# - task: SonarCloudPublish@1
+#   displayName: 'SonarCloud Publish'
+#   inputs:
+#     pollingTimeoutSec: '300'
