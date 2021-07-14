@@ -20,7 +20,8 @@ steps:
     cliProjectKey: 'Project2-GameBook_AngularGameBook'
     cliProjectName: 'AngularGameBook'
     cliSources: '$(solution)/src'
-    extraProperties: 'sonar.javascript.lcov.reportPaths=$(solution)/coverage/AngularGameBook/lcov.info'
+    extraProperties: 'sonar.javascript.lcov.reportPaths=$D:\a\1\s\P2Folder\AngularGameBook\coverage\AngularGameBook\lcov.info'
+    #extraProperties: 'sonar.javascript.lcov.reportPaths=$(solution)/coverage/AngularGameBook/lcov.info'
 
 - task: NodeTool@0
   inputs:
