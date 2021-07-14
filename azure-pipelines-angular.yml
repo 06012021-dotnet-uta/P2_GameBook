@@ -36,7 +36,7 @@ steps:
 
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    versionSpec: '14.x'
   displayName: 'Install Node.js'
 
 - task: Npm@1
@@ -67,22 +67,6 @@ steps:
   inputs:
     pollingTimeoutSec: '300'
 
-
-
-
-# - task: Npm@1
-#   displayName: 'NPM Build Angular'
-#   inputs:
-#     command: 'custom'
-#     workingDir: $(solution)
-#     customCommand: 'run build-prod'
-
-# - task: Npm@1
-#   displayName: 'NPM Test'
-#   inputs:
-#     command: 'custom'
-#     workingDir: $(solution)
-#     customCommand: 'run test-headless'
 
 # - script: |
 #     npm install -g @angular/cli
