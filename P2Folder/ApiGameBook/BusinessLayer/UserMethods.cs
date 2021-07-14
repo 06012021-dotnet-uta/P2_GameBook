@@ -119,6 +119,8 @@ namespace BusinessLayer
                     oldUser.FirstName = newUser.FirstName;
                     oldUser.LastName = newUser.LastName;
                     oldUser.Email = newUser.Email;
+                    
+                    _context.Users.Update(oldUser);
                     _context.SaveChanges();
                     success = true;
                 }

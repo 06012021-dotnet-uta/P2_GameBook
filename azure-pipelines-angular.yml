@@ -11,7 +11,6 @@ variables:
 
 steps:
 - task: SonarCloudPrepare@1
-  displayName: sonarclour prepare
   inputs:
     SonarCloud: 'SonarcloudAngular'
     organization: 'project2-gamebook'
@@ -24,35 +23,30 @@ steps:
 
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    versionSpec: '14.x'
   displayName: 'Install Node.js'
 
-# - task: Npm@1
-#   displayName: 'NPM Install'
-#   inputs:
-#     command: 'install'
-#     workingDir: $(solution)
 
-# - task: Npm@1
-#   displayName: 'NPM Build Angular'
-#   inputs:
-#     command: 'custom'
-#     workingDir: $(solution)
-#     customCommand: 'run build-prod'
 
-# - task: Npm@1
-#   displayName: 'NPM Test'
-#   inputs:
-#     command: 'custom'
-#     workingDir: $(solution)
-#     customCommand: 'run test-headless'
+- task: Npm@1
+  displayName: 'NPM Install'
+  inputs:
+    command: 'install'
+    workingDir: $(solution)
 
-- script: |
-    npm install -g @angular/cli
-    npm install
-    ng build --prod
-    ng test --code-coverage
-  displayName: 'npm install, build, and test'
+- task: Npm@1
+  displayName: 'NPM Build Angular'
+  inputs:
+    command: 'custom'
+    workingDir: $(solution)
+    customCommand: 'run build-prod'
+
+- task: Npm@1
+  displayName: 'NPM Test'
+  inputs:
+    command: 'custom'
+    workingDir: $(solution)
+    customCommand: 'run test-headless'
 
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
