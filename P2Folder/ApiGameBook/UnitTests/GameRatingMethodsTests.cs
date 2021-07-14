@@ -10,7 +10,7 @@ using Xunit;
 
 namespace UnitTests
 {
-	public class GameMethodsTests
+	public class GameRatingMethodsTests
 	{
 
         //create in-memory DB
@@ -36,11 +36,10 @@ namespace UnitTests
 				};
                 Game game = new()
                 {
-                    GameId = 101,
                     Name = "Halo"
                 };
                 //the methods we will be using belond to these classes
-                GameMethods gameMethods = new GameMethods(context);
+                GameRatingMethods gameMethods = new GameRatingMethods(context);
                 UserMethods userMethods = new UserMethods(context);
 
                 //Act
@@ -50,8 +49,9 @@ namespace UnitTests
                 context.Database.EnsureDeleted();
                 //creates things need creating
                 userMethods.CreateUser(user);
+                context.Games.Add(game);
                 //runs test
-                result = gameMethods.RateGame(user, game, userRating);
+                result = gameMethods.RateGame(user.UserId, game.GameId, userRating);
 
 
                 //Assert
@@ -82,11 +82,10 @@ namespace UnitTests
                 };
                 Game game = new()
                 {
-                    GameId = 101,
                     Name = "Halo"
                 };
                 //the methods we will be using belond to these classes
-                GameMethods gameMethods = new GameMethods(context);
+                GameRatingMethods gameMethods = new GameRatingMethods(context);
                 UserMethods userMethods = new UserMethods(context);
 
                 //Act
@@ -96,11 +95,12 @@ namespace UnitTests
                 context.Database.EnsureDeleted();
                 //creates things need creating
                 userMethods.CreateUser(user);
-                gameMethods.RateGame(user, game, userRating);
+                context.Games.Add(game);
+                gameMethods.RateGame(user.UserId, game.GameId, userRating);
 
 
                 //Assert
-                result = gameMethods.RateGame(user, game, trueRating);
+                result = gameMethods.RateGame(user.UserId, game.GameId, trueRating);
                 //Asserts ;p
                 Assert.True(result);
             }

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer
 {
-    public class GameMethods
+    public class GameRatingMethods
     {
         private gamebookdbContext _context;
 
-        public GameMethods(gamebookdbContext context)
+        public GameRatingMethods(gamebookdbContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace BusinessLayer
 		/// <param name="game">Tracks the game to be rated</param>
 		/// <param name="rating">Tracks the rating for the game by user</param>
 		/// <returns>Only returns false if something terrible happens</returns>
-        public bool RateGame(User user, Game game, int rating)
+        public bool RateGame(int user, int game, int rating)
 		{
 			//never question MALIA 
 			if (rating > 10 || rating < 0) 
@@ -34,16 +34,14 @@ namespace BusinessLayer
 				//fills the object rate with everything it needs
 				Rating rate = new Rating()
 				{
-					UserId = user.UserId,
-					GameId = game.GameId,
-					Rating1 = rating,
-					Game = game,
-					User = user
+					UserId = user,
+					GameId = game,
+					Rating1 = rating
 				};
 				//checks if this user already rated said game
 				Rating temp = (from x in _context.Ratings
-							   where x.GameId == game.GameId &&
-							   x.UserId == user.UserId
+							   where x.GameId == game &&
+							   x.UserId == user
 							   select x).FirstOrDefault();
 				//if the user hasn't it will create a new rating
 				if (temp == null)
