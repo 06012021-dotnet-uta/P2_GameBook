@@ -44,36 +44,32 @@ steps:
   inputs:
     command: 'install'
     workingDir: $(solution)
-- task: Npm@1
-  displayName: 'NPM Build Angular'
-  inputs:
-    command: 'custom'
-    workingDir: $(solution)
-    customCommand: 'ng build --prod'
-
-- task: Npm@1
-  displayName: 'NPM Test'
-  inputs:
-    command: 'custom'
-    workingDir: $(solution)
-    customCommand: 'ng test --watch=false --code-coverage --browsers=ChromeHeadless'
-
-
-- task: SonarCloudAnalyze@1
-  displayName: 'SonarCloud Analyze'
-
-- task: SonarCloudPublish@1
-  displayName: 'SonarCloud Publish'
-  inputs:
-    pollingTimeoutSec: '300'
-
-
 
 # - task: Npm@1
-#   displayName: 'NPM Install'
+#   displayName: 'NPM Build Angular'
 #   inputs:
-#     command: 'install'
+#     command: 'custom'
 #     workingDir: $(solution)
+#     customCommand: 'npm build --prod'
+
+# - task: Npm@1
+#   displayName: 'NPM Test'
+#   inputs:
+#     command: 'custom'
+#     workingDir: $(solution)
+#     customCommand: 'npm test --watch=false --code-coverage --browsers=ChromeHeadless'
+
+
+# - task: SonarCloudAnalyze@1
+#   displayName: 'SonarCloud Analyze'
+
+# - task: SonarCloudPublish@1
+#   displayName: 'SonarCloud Publish'
+#   inputs:
+#     pollingTimeoutSec: '300'
+
+
+
 
 # - task: Npm@1
 #   displayName: 'NPM Build Angular'
@@ -89,17 +85,17 @@ steps:
 #     workingDir: $(solution)
 #     customCommand: 'run test-headless'
 
-# - script: |
-#     npm install -g @angular/cli
-#     npm install
-#     ng build --prod
-#     ng test test-headless
-#   displayName: 'npm install, build, and test'
+- script: |
+    npm install -g @angular/cli
+    npm install
+    ng build --prod
+    ng test --watch=false --code-coverage --browsers=ChromeHeadless
+  displayName: 'npm install, build, and test'
 
-# - task: SonarCloudAnalyze@1
-#   displayName: 'SonarCloud Analyze'
+- task: SonarCloudAnalyze@1
+  displayName: 'SonarCloud Analyze'
 
-# - task: SonarCloudPublish@1
-#   displayName: 'SonarCloud Publish'
-#   inputs:
-#     pollingTimeoutSec: '300'
+- task: SonarCloudPublish@1
+  displayName: 'SonarCloud Publish'
+  inputs:
+    pollingTimeoutSec: '300'
