@@ -10,30 +10,30 @@ using Xunit;
 
 namespace UnitTests
 {
-	public class GameRatingMethodsTests
-	{
+    public class GameRatingMethodsTests
+    {
 
         //create in-memory DB
         DbContextOptions<gamebookdbContext> options = new DbContextOptionsBuilder<gamebookdbContext>().UseInMemoryDatabase(databaseName: "TestingDb4").Options;
 
         [Fact]
-        public void RateGameTestNewRating()
+        public void RateGameNewRatingPass()
         {
             using (var context = new gamebookdbContext(options))
-			{
+            {
                 //Arange
 
                 //return bool
                 bool result;
                 //needed for method
                 int userRating = 5;
-                User user = new() 
+                User user = new()
                 {
                     Username = "user1",
                     FirstName = "first",
                     LastName = "last",
                     Email = "email@email.com"
-				};
+                };
                 Game game = new()
                 {
                     Name = "Halo"
@@ -43,7 +43,7 @@ namespace UnitTests
                 UserMethods userMethods = new UserMethods(context);
 
                 //Act
-                
+
                 //ensure Db's are created and deleted for they are test Db's
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
@@ -61,6 +61,7 @@ namespace UnitTests
             }
 
         }
+
         [Fact]
         public void RateGameTestupdateRating()
         {
@@ -106,9 +107,6 @@ namespace UnitTests
             }
 
         }
-
-
-
     }
 
 }
