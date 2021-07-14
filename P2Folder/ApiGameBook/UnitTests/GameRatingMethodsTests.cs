@@ -17,7 +17,7 @@ namespace UnitTests
         DbContextOptions<gamebookdbContext> options = new DbContextOptionsBuilder<gamebookdbContext>().UseInMemoryDatabase(databaseName: "TestingDb4").Options;
 
         [Fact]
-        public void RateGameTestNewRating()
+        public void RateGameNewRatingPass()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -61,6 +61,7 @@ namespace UnitTests
             }
 
         }
+
         [Fact]
         public void RateGameTestupdateRating()
         {
@@ -151,53 +152,6 @@ namespace UnitTests
                 Assert.True(result);
             }
         }
-
-        [Fact]
-        public void DeleteNonExistantRatingPass()
-        {
-            using (var context = new gamebookdbContext(options))
-            {
-                //Arange
-
-                //return bool
-                bool result;
-                //needed for method
-                int userRating = 5;
-                User user = new()
-                {
-                    Username = "user1",
-                    FirstName = "first",
-                    LastName = "last",
-                    Email = "email@email.com"
-                };
-                Game game = new()
-                {
-                    Name = "Halo"
-                };
-                //the methods we will be using belond to these classes
-                GameRatingMethods gameMethods = new GameRatingMethods(context);
-                UserMethods userMethods = new UserMethods(context);
-
-                //Act
-
-                //ensure Db's are created and deleted for they are test Db's
-                context.Database.EnsureCreated();
-                context.Database.EnsureDeleted();
-                //creates things need creating
-                userMethods.CreateUser(user);
-                context.Games.Add(game);
-                gameMethods.RateGame(user.UserId, game.GameId, userRating);
-
-                //finds non-existant rating
-                Rating temp = gameMethods.SearchRatings(-1, -1);
-                //runs test
-                result = gameMethods.DeleteRating(temp);
-
-                //Asserts
-                Assert.False(result);
-            }
-        }
-
     }
 
 }
