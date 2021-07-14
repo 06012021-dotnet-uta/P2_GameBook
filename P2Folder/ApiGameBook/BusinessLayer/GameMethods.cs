@@ -24,6 +24,10 @@ namespace BusinessLayer
 		/// <returns>Only returns false if something terrible happens</returns>
         public bool RateGame(User user, Game game, int rating)
 		{
+			if (rating > 10 && rating < 0) 
+			{
+				return false;
+			}
 			try
 			{
 				//fills the object rate with everything it needs
