@@ -104,6 +104,7 @@ namespace UnitTests
                 result = gameMethods.RateGame(user.UserId, game.GameId, trueRating);
                 //Asserts ;p
                 Assert.True(result);
+                Assert.Equal(10, trueRating);
             }
         }
         [Fact]

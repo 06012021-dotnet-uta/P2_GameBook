@@ -24,7 +24,7 @@ namespace BusinessLayer
 		/// <returns>Only returns false if something terrible happens</returns>
 		public bool RateGame(int user, int game, int rating)
 		{
-			//never question MALIA 
+			// check if rating is in range
 			if (rating > 10 || rating < 0)
 			{
 				return false;
@@ -53,7 +53,7 @@ namespace BusinessLayer
 				else
 				{
 					temp.Rating1 = rating;
-					//else it will updayte the rating
+					//else it will update the rating
 					_context.Ratings.Update(temp);
 					_context.SaveChanges();
 					return true;

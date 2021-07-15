@@ -2,15 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RepositoryLayer;
 
 namespace GameBook
 {
@@ -26,12 +29,32 @@ namespace GameBook
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors((options) =>
+            {
+                options.AddPolicy(name: "dev", builder =>
+                {
+                    builder.WithOrigins("http://127.0.0.1:5500", "http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GameBook", Version = "v1" });
             });
+            services.AddDbContext<gamebookdbContext>(options =>
+            {
+                if (!options.IsConfigured)
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("MyConnectionString"));
+                }
+            });
+            services.AddScoped<GameRatingMethods>();
+            services.AddScoped<UserFriendMethods>();
+            services.AddScoped<UserMethods>();
+            services.AddScoped<UserPlayHistoryMethods>();
+            services.AddScoped<UserPostingMethods>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +70,8 @@ namespace GameBook
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("dev");
 
             app.UseAuthorization();
 
