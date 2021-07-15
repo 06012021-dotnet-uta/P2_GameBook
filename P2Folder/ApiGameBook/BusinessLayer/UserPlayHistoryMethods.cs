@@ -1,4 +1,5 @@
-﻿using RepositoryLayer;
+﻿using Microsoft.EntityFrameworkCore;
+using RepositoryLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace BusinessLayer
         /// <param name="user">The user who is adding the game</param>
         /// <param name="game">The game to add</param>
         /// <returns>True if able to add game</returns>
-        public bool CreatePlayHistory(User user, Game game)
+        public async Task <bool> CreatePlayHistoryAsync(User user, Game game)
         {
             bool success = false;
             try
@@ -37,8 +38,8 @@ namespace BusinessLayer
                     UserId = user.UserId,
                     GameId = game.GameId,
                 };
-                _context.PlayHistories.Add(history);
-                _context.SaveChanges();
+                await _context.PlayHistories.AddAsync(history);
+                await _context.SaveChangesAsync();
                 success = true;
                 return success;
             }
@@ -55,13 +56,13 @@ namespace BusinessLayer
         /// </summary>
         /// <param name="history">Takes in the history to delete</param>
         /// <returns>True if able to be deleted</returns>
-        public bool DeletePlayHistory(PlayHistory history)
+        public async Task<bool> DeletePlayHistoryAsync(PlayHistory history)
         {
             bool success = false;
             try
             {
                 _context.Remove(history);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 success = true;
                 return success;
             }
@@ -77,10 +78,10 @@ namespace BusinessLayer
         /// <param name="userid">User who's Id we are searching</param>
         /// <param name="gameid">Game id for the game searching</param>
         /// <returns></returns>
-        public PlayHistory SearchPlayHistory(int userid, int gameid)
+        public async Task< PlayHistory> SearchPlayHistoryAsync(int userid, int gameid)
         {
             PlayHistory temp = null;
-            temp = _context.PlayHistories.Where(x => (x.UserId == userid && x.GameId == gameid) ).FirstOrDefault();
+            temp = await _context.PlayHistories.Where(x => (x.UserId == userid && x.GameId == gameid) ).FirstOrDefaultAsync();
             return temp;
         }
     }

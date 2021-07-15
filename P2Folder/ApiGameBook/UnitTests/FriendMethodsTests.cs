@@ -39,9 +39,9 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                userMethods.CreateUser(user1);
-                userMethods.CreateUser(user2);
-                result = await friendMethods.CreateFriendAsync(userMethods.SearchUserByUsername("user1"), userMethods.SearchUserByUsername("user2"));
+                await userMethods .CreateUserAsync(user1);
+                await userMethods .CreateUserAsync(user2);
+                result = await friendMethods.CreateFriendAsync(await userMethods.SearchUserByUsernameAsync("user1"), await userMethods .SearchUserByUsernameAsync("user2"));
 
                 // Assert
                 Assert.True(result); // result should be true if friend added was successful
@@ -68,8 +68,8 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                userMethods.CreateUser(user1);
-                result = await friendMethods.CreateFriendAsync(userMethods.SearchUserByUsername("user1"), userMethods.SearchUserByUsername("user1"));
+                await userMethods .CreateUserAsync(user1);
+                result = await friendMethods.CreateFriendAsync(await userMethods.SearchUserByUsernameAsync("user1"), await userMethods.SearchUserByUsernameAsync("user1"));
 
                 // Assert
                 Assert.False(result); // result should be false if user tries to friend itself
@@ -103,8 +103,8 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                userMethods.CreateUser(user1);
-                userMethods.CreateUser(user2);
+                await userMethods .CreateUserAsync(user1);
+                await userMethods .CreateUserAsync(user2);
                 await friendMethods .CreateFriendAsync(user2, user1);
                 result = await friendMethods.DeleteFriendAsync(await friendMethods.SearchFriendAsync(user1.UserId, user2.UserId));
 

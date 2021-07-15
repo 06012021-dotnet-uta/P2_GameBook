@@ -48,7 +48,7 @@ namespace UnitTests
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
                 //creates things need creating
-                userMethods.CreateUser(user);
+                await userMethods .CreateUserAsync(user);
                 context.Games.Add(game);
                 //runs test
                 result = await gameMethods.RateGameAsync(user.UserId, game.GameId, userRating);
@@ -95,7 +95,7 @@ namespace UnitTests
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
                 //creates things need creating
-                userMethods.CreateUser(user);
+                await userMethods .CreateUserAsync(user);
                 context.Games.Add(game);
                 await gameMethods.RateGameAsync(user.UserId, game.GameId, userRating);
 
@@ -139,7 +139,7 @@ namespace UnitTests
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
                 //creates things need creating
-                userMethods.CreateUser(user);
+                await userMethods.CreateUserAsync(user);
                 context.Games.Add(game);
                 await gameMethods.RateGameAsync(user.UserId, game.GameId, userRating);
 
