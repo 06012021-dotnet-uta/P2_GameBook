@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RepositoryLayer;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace UnitTests
@@ -12,7 +13,7 @@ namespace UnitTests
         DbContextOptions<gamebookdbContext> options = new DbContextOptionsBuilder<gamebookdbContext>().UseInMemoryDatabase(databaseName: "TestingDb2").Options;
         [Fact]
 
-        public void CreatePostPass()
+        public async Task CreatePostPassAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -32,8 +33,8 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                userMethods.CreateUser(user);
-                result = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
+                await userMethods.CreateUserAsync(user);
+                result = await userPostingMethods.CreatePostAsync(await userMethods.SearchUserByUsernameAsync("username"), content);
 
                 // Assert
                 Assert.NotNull(result); // result is not null if creating a post is successfull
@@ -41,7 +42,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void CreatePostEmptyString()
+        public async Task CreatePostEmptyStringAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -61,8 +62,8 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                userMethods.CreateUser(user);
-                result = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
+                await userMethods.CreateUserAsync(user);
+                result = await userPostingMethods.CreatePostAsync(await userMethods.SearchUserByUsernameAsync("username"), content);
 
                 // Assert
                 Assert.Null(result); // result should be null if post has no content
@@ -70,7 +71,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void CreatePostNullString()
+        public async Task CreatePostNullStringAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -90,8 +91,8 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                userMethods.CreateUser(user);
-                result = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
+                await userMethods .CreateUserAsync(user);
+                result = await userPostingMethods.CreatePostAsync(await userMethods.SearchUserByUsernameAsync("username"), content);
 
                 // Assert
                 Assert.Null(result); // result should be null if post has no content
@@ -99,7 +100,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void CreatePostStringTooLong()
+        public async Task CreatePostStringTooLongAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -120,8 +121,8 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                userMethods.CreateUser(user);
-                result = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
+                await userMethods.CreateUserAsync(user);
+                result = await userPostingMethods.CreatePostAsync(await userMethods.SearchUserByUsernameAsync("username"), content);
 
                 // Assert
                 Assert.Null(result); // result should be null if post content is too long
@@ -129,7 +130,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EditPostPass()
+        public async Task EditPostPassAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -151,9 +152,9 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                userMethods.CreateUser(user);
-                postId = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
-                result = userPostingMethods.EditPost(userPostingMethods.SearchPostById(postId), newContent);
+                await userMethods.CreateUserAsync(user);
+                postId = await userPostingMethods.CreatePostAsync(await userMethods.SearchUserByUsernameAsync("username"), content);
+                result = await userPostingMethods.EditPostAsync(await userPostingMethods.SearchPostByIdAsync(postId), newContent);
 
                 // Assert
                 Assert.True(result); // result should be true if edit content was successful
@@ -161,7 +162,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EditPostSameContent()
+        public async Task EditPostSameContentAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -182,9 +183,9 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                userMethods.CreateUser(user);
-                postId = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
-                result = userPostingMethods.EditPost(userPostingMethods.SearchPostById(postId), content);
+                await userMethods.CreateUserAsync(user);
+                postId = await userPostingMethods.CreatePostAsync(await userMethods.SearchUserByUsernameAsync("username"), content);
+                result = await userPostingMethods.EditPostAsync(await userPostingMethods.SearchPostByIdAsync(postId), content);
 
                 // Assert
                 Assert.False(result); // result should be false if content is the same
@@ -192,7 +193,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EditPostEmptyString()
+        public async Task EditPostEmptyStringAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -214,9 +215,9 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                userMethods.CreateUser(user);
-                postId = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
-                result = userPostingMethods.EditPost(userPostingMethods.SearchPostById(postId), newContent);
+                await userMethods .CreateUserAsync(user);
+                postId = await userPostingMethods.CreatePostAsync(await userMethods.SearchUserByUsernameAsync("username"), content);
+                result = await userPostingMethods.EditPostAsync(await userPostingMethods.SearchPostByIdAsync(postId), newContent);
 
                 // Assert
                 Assert.False(result); // result should be false if content is empty string
@@ -224,7 +225,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EditPostNullString()
+        public async Task EditPostNullStringAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -246,9 +247,9 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                userMethods.CreateUser(user);
-                postId = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
-                result = userPostingMethods.EditPost(userPostingMethods.SearchPostById(postId), newContent);
+                await userMethods .CreateUserAsync(user);
+                postId = await userPostingMethods.CreatePostAsync(await userMethods.SearchUserByUsernameAsync("username"), content);
+                result = await userPostingMethods.EditPostAsync(await userPostingMethods.SearchPostByIdAsync(postId), newContent);
 
                 // Assert
                 Assert.False(result); // result should be false if content is null string
@@ -256,7 +257,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void DeletePostPass()
+        public async Task DeletePostPassAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -277,9 +278,9 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                userMethods.CreateUser(user);
-                postId = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
-                result = userPostingMethods.DeletePost(postId);
+                await userMethods .CreateUserAsync(user);
+                postId = await userPostingMethods.CreatePostAsync(await userMethods.SearchUserByUsernameAsync("username"), content);
+                result = await userPostingMethods.DeletePostAsync(postId);
 
                 // Assert
                 Assert.True(result); // result should be true if delete was successful
@@ -287,7 +288,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void DeletePostNotFound()
+        public async Task DeletePostNotFoundAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -299,7 +300,7 @@ namespace UnitTests
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
 
-                result = userPostingMethods.DeletePost(1);
+                result = await userPostingMethods.DeletePostAsync(1);
 
                 // Assert
                 Assert.False(result); // result should be false if post is not found
@@ -307,7 +308,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void CreateCommentPass()
+        public async Task CreateCommentPassAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -327,10 +328,10 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                userMethods.CreateUser(user);
-                int? parentID = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
-                Post parentPost = userPostingMethods.SearchPostById(parentID);
-                result = userPostingMethods.CreateComment(userMethods.SearchUserByUsername("username"), content, parentPost);
+                await userMethods.CreateUserAsync(user);
+                int? parentID = await userPostingMethods.CreatePostAsync(await userMethods.SearchUserByUsernameAsync("username"), content);
+                Post parentPost = await userPostingMethods.SearchPostByIdAsync(parentID);
+                result = await userPostingMethods.CreateCommentAsync(await userMethods .SearchUserByUsernameAsync("username"), content, parentPost);
 
                 // Assert
                 Assert.NotNull(result); // result is not null if creating a post is successfull
@@ -338,7 +339,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void CreateCommentNullParent()
+        public async Task CreateCommentNullParentAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -358,10 +359,10 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                userMethods.CreateUser(user);
-                int? parentID = userPostingMethods.CreatePost(userMethods.SearchUserByUsername("username"), content);
+                await userMethods .CreateUserAsync(user);
+                int? parentID = await userPostingMethods.CreatePostAsync(await userMethods .SearchUserByUsernameAsync("username"), content);
                 Post parentPost = null;
-                result = userPostingMethods.CreateComment(userMethods.SearchUserByUsername("username"), content, parentPost);
+                result = await userPostingMethods.CreateCommentAsync(await userMethods.SearchUserByUsernameAsync("username"), content, parentPost);
 
                 // Assert
                 Assert.Null(result); // result is null if comment not made
