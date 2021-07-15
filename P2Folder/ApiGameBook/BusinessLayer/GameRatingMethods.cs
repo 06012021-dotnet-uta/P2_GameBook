@@ -1,4 +1,5 @@
-﻿using RepositoryLayer;
+﻿using Microsoft.EntityFrameworkCore;
+using RepositoryLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +23,9 @@ namespace BusinessLayer
 		/// <param name="game">Tracks the game to be rated</param>
 		/// <param name="rating">Tracks the rating for the game by user</param>
 		/// <returns>Only returns false if something terrible happens</returns>
-		public bool RateGame(int user, int game, int rating)
+		public async Task<bool> RateGameAsync(int user, int game, int rating)
 		{
+
 			// check if rating is in range
 			if (rating > 10 || rating < 0)
 			{
@@ -46,8 +48,8 @@ namespace BusinessLayer
 				//if the user hasn't it will create a new rating
 				if (temp == null)
 				{
-					_context.Ratings.Add(rate);
-					_context.SaveChanges();
+					await _context.Ratings.AddAsync(rate);
+					await _context.SaveChangesAsync();
 					return true;
 				}
 				else
@@ -55,7 +57,7 @@ namespace BusinessLayer
 					temp.Rating1 = rating;
 					//else it will update the rating
 					_context.Ratings.Update(temp);
-					_context.SaveChanges();
+					await _context.SaveChangesAsync();
 					return true;
 				}
 			}
@@ -71,7 +73,7 @@ namespace BusinessLayer
 		/// </summary>
 		/// <param name="rating">Takes the rating to delete</param>
 		/// <returns>Returns true on success</returns>
-		public bool DeleteRating(Rating rating)
+		public async Task<bool> DeleteRatingAsync(Rating rating)
 		{
 			bool success = false;
 
@@ -87,7 +89,7 @@ namespace BusinessLayer
 				{
 					// delete user from db, change success to true if successful
 					_context.Ratings.Remove(rating);
-					_context.SaveChanges();
+					await _context.SaveChangesAsync();
 					success = true;
 					return success;
 				}
@@ -106,10 +108,10 @@ namespace BusinessLayer
 		/// <param name="userid">User who's Id we are searching</param>
 		/// <param name="gameid">Game id for the game searching</param>
 		/// <returns></returns>
-		public Rating SearchRatings(int userid, int gameid)
+		public async Task<Rating> SearchRatingsAsync(int userid, int gameid)
 		{
 			Rating temp = null;
-			temp = _context.Ratings.Where(x => (x.UserId == userid && x.GameId == gameid)).FirstOrDefault();
+			temp = await _context.Ratings.Where(x => (x.UserId == userid && x.GameId == gameid)).FirstOrDefaultAsync();
 			return temp;
 		}
 

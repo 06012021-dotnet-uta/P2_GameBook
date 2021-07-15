@@ -17,7 +17,7 @@ namespace UnitTests
         DbContextOptions<gamebookdbContext> options = new DbContextOptionsBuilder<gamebookdbContext>().UseInMemoryDatabase(databaseName: "TestingDb4").Options;
 
         [Fact]
-        public void RateGameNewRatingPass()
+        public async Task RateGameNewRatingPassAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -51,7 +51,7 @@ namespace UnitTests
                 userMethods.CreateUser(user);
                 context.Games.Add(game);
                 //runs test
-                result = gameMethods.RateGame(user.UserId, game.GameId, userRating);
+                result = await gameMethods.RateGameAsync(user.UserId, game.GameId, userRating);
 
 
                 //Assert
@@ -63,7 +63,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void RateGameTestupdateRating()
+        public async Task RateGameTestupdateRatingAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -97,18 +97,18 @@ namespace UnitTests
                 //creates things need creating
                 userMethods.CreateUser(user);
                 context.Games.Add(game);
-                gameMethods.RateGame(user.UserId, game.GameId, userRating);
+                await gameMethods.RateGameAsync(user.UserId, game.GameId, userRating);
 
 
                 //Assert
-                result = gameMethods.RateGame(user.UserId, game.GameId, trueRating);
+                result = await gameMethods.RateGameAsync(user.UserId, game.GameId, trueRating);
                 //Asserts ;p
                 Assert.True(result);
                 Assert.Equal(10, trueRating);
             }
         }
         [Fact]
-        public void DeleteRatingPass()
+        public async Task DeleteRatingPassAsync()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -141,13 +141,13 @@ namespace UnitTests
                 //creates things need creating
                 userMethods.CreateUser(user);
                 context.Games.Add(game);
-                gameMethods.RateGame(user.UserId, game.GameId, userRating);
+                await gameMethods.RateGameAsync(user.UserId, game.GameId, userRating);
 
                 //finds rating to delete
-                Rating temp = gameMethods.SearchRatings(user.UserId, game.GameId);
+                Rating temp = await gameMethods.SearchRatingsAsync(user.UserId, game.GameId);
 
                 //runs test
-                result = gameMethods.DeleteRating(temp);
+                result = await gameMethods.DeleteRatingAsync(temp);
 
                 //Asserts
                 Assert.True(result);
