@@ -1,0 +1,26 @@
+body{
+    background-color: #3a3a3a;
+    font-family: Arial, Helvetica, sans-serif;
+}
+nav a {
+    padding: 1rem;
+    text-decoration: none;
+    margin-top: 10px;
+    margin-right: 15px;
+    display: inline-block;
+    background-color: #222222;
+    color: #b1b1b1;
+    border-radius: 10px;
+}
+  
+nav a:hover {
+    color: white;
+    background-color: #575757;
+}
+nav a.active {
+    background-color: black;
+}
+
+#demoId {
+    color: #b1b1b1;
+}
