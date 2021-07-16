@@ -96,6 +96,21 @@ namespace BusinessLayer
 
             return temp;
         }
+
+        /// <summary>
+        /// Searches type Id by username
+        /// </summary>
+        /// <param name="username">Id property of user</param>
+        /// <returns>Type user</returns>
+        public async Task<User> SearchUserByIDAsync(int username)
+        {
+            User temp = null;
+
+            // Search users table for user with matching name, returns null if not found
+            temp = await _context.Users.Where(x => x.UserId == username).FirstOrDefaultAsync();
+
+            return temp;
+        }
         /// <summary>
         /// Updates previous user data with new user data
         /// </summary>
