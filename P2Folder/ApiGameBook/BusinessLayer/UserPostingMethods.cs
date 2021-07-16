@@ -20,7 +20,7 @@ namespace BusinessLayer
         /// <param name="user">The user commenting</param>
         /// <param name="content">The users comment</param>
         /// <returns>The post ID is returned</returns>
-        public async Task< int?> CreatePostAsync(User user, string content) //Create a Post 
+        public int? CreatePost(User user, string content) //Create a Post 
         {
             int? newPostId = null;
             // create a post by the given user with the content provided, return id of post that was just made
@@ -45,8 +45,8 @@ namespace BusinessLayer
                     newPost.Content = content;
                     newPost.PostDate = DateTime.Now; // database setup to automatically add date, we can remove this if types are not matching up
 
-                    await _context.Posts.AddAsync(newPost);
-                    await _context.SaveChangesAsync();
+                    _context.Posts.Add(newPost);
+                    _context.SaveChanges();
 
                     newPostId = newPost.PostId; 
 
@@ -66,7 +66,7 @@ namespace BusinessLayer
         /// </summary>
         /// <param name="postId">The post id</param>
         /// <returns>Deletes if true</returns>
-        public async Task< bool> DeletePostAsync(int? postId)
+        public bool DeletePost(int? postId)
         {
             bool success = false;
 
@@ -74,10 +74,10 @@ namespace BusinessLayer
 
             try
             {
-                Post post  = await SearchPostByIdAsync(postId);
+                Post post = SearchPostById(postId);
 
                 _context.Posts.Remove(post);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 success = true;
                 return success;
             }
@@ -94,12 +94,12 @@ namespace BusinessLayer
         /// </summary>
         /// <param name="postId">Takes the id your looking for</param>
         /// <returns>True if able to find</returns>
-        public async Task <Post> SearchPostByIdAsync(int? postId)
+        public Post SearchPostById(int? postId)
         {
             Post post = null;
 
             // find and return post with matching id, or null if doesnt exist
-            post = await _context.Posts.Where(x => x.PostId == postId).FirstOrDefaultAsync();
+            post = _context.Posts.Where(x => x.PostId == postId).FirstOrDefault();
 
             return post;
         }
@@ -109,7 +109,7 @@ namespace BusinessLayer
         /// <param name="post">The original post object</param>
         /// <param name="newContent">The edited comment</param>
         /// <returns>true if able to return</returns>
-        public async Task<bool> EditPostAsync(Post post, string newContent)
+        public bool EditPost(Post post, string newContent)
         {
             bool success = false;
 
@@ -117,7 +117,7 @@ namespace BusinessLayer
             try
             {
                 // search to see if post exists
-                if (SearchPostByIdAsync(post.PostId) == null)
+                if (SearchPostById(post.PostId) == null)
                 {
                     Console.WriteLine("Post could not be found");
                     return success;
@@ -134,7 +134,7 @@ namespace BusinessLayer
                 {
                     post.Content = newContent;
                     _context.Posts.Update(post); // update post and save changes to db
-                    await _context.SaveChangesAsync();
+                    _context.SaveChanges();
                     success = true;
                 }
             }
@@ -152,7 +152,7 @@ namespace BusinessLayer
         /// <param name="content">The content of the comment</param>
         /// <param name="parent">The parent comment</param>
         /// <returns>returns the post id</returns>
-        public async Task <int?> CreateCommentAsync(User user, string content, Post parent) //Create a Comment
+        public int? CreateComment(User user, string content, Post parent) //Create a Comment
         {
             int? newPostId = null;
             // create a comment by the given user with the content provided, return id of post that was just made
@@ -177,8 +177,8 @@ namespace BusinessLayer
                     newComment.Content = content;
                     newComment.PostDate = DateTime.Now; // database setup to automatically add date, we can remove this if types are not matching up
 
-                    await _context.Posts.AddAsync(newComment);
-                    await _context.SaveChangesAsync();
+                    _context.Posts.Add(newComment);
+                    _context.SaveChanges();
 
                     newPostId = newComment.PostId;
 

@@ -13,7 +13,7 @@ namespace UnitTests
         DbContextOptions<gamebookdbContext> options = new DbContextOptionsBuilder<gamebookdbContext>().UseInMemoryDatabase(databaseName: "TestingDb1").Options;
 
         [Fact]
-        public async Task CreatePlayHistoryPassAsync()
+        public void CreatePlayHistoryPass()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -38,8 +38,8 @@ namespace UnitTests
                 context.Database.EnsureDeleted();
                 context.Games.Add(game);
                 context.SaveChanges();
-                await userMethods .CreateUserAsync(user);
-                result = await playHistoryMethods.CreatePlayHistoryAsync(user, game);
+                userMethods.CreateUser(user);
+                result = playHistoryMethods.CreatePlayHistory(user, game);
 
                 // Assert
                 Assert.True(result); // result should be true if creation of a new play history entry was successful
@@ -47,7 +47,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task CreatePlayHistoryGameNotFoundAsync()
+        public void CreatePlayHistoryGameNotFound()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -70,8 +70,8 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                await userMethods.CreateUserAsync(user);
-                result = await playHistoryMethods.CreatePlayHistoryAsync(user, game);
+                userMethods.CreateUser(user);
+                result = playHistoryMethods.CreatePlayHistory(user, game);
 
                 // Assert
                 Assert.False(result); // result should be false if game not found in db
@@ -79,7 +79,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task CreatePlayHistoryUserNotFoundAsync()
+        public void CreatePlayHistoryUserNotFound()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -104,7 +104,7 @@ namespace UnitTests
                 context.Database.EnsureDeleted();
                 context.Games.Add(game);
                 context.SaveChanges();
-                result = await playHistoryMethods.CreatePlayHistoryAsync(user, game);
+                result = playHistoryMethods.CreatePlayHistory(user, game);
 
                 // Assert
                 Assert.False(result); // result should be false if user not found in db
@@ -112,7 +112,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task DeletePlayHistoryPassAsync()
+        public void DeletePlayHistoryPass()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -137,9 +137,9 @@ namespace UnitTests
                 context.Database.EnsureDeleted();
                 context.Games.Add(game);
                 context.SaveChanges();
-                await userMethods.CreateUserAsync(user);
-                await playHistoryMethods.CreatePlayHistoryAsync(user, game);
-                result = await playHistoryMethods.DeletePlayHistoryAsync(await playHistoryMethods.SearchPlayHistoryAsync(user.UserId, game.GameId));
+                userMethods.CreateUser(user);
+                playHistoryMethods.CreatePlayHistory(user, game);
+                result = playHistoryMethods.DeletePlayHistory(playHistoryMethods.SearchPlayHistory(user.UserId, game.GameId));
 
                 // Assert
                 Assert.True(result); // result should be true if deletion of a play history entry was successful
@@ -147,7 +147,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task DeletePlayHistoryNotFoundAsync()
+        public void DeletePlayHistoryNotFound()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -172,8 +172,8 @@ namespace UnitTests
                 context.Database.EnsureDeleted();
                 context.Games.Add(game);
                 context.SaveChanges();
-                await userMethods.CreateUserAsync(user);
-                result = await playHistoryMethods.DeletePlayHistoryAsync(await playHistoryMethods.SearchPlayHistoryAsync(user.UserId, game.GameId));
+                userMethods.CreateUser(user);
+                result = playHistoryMethods.DeletePlayHistory(playHistoryMethods.SearchPlayHistory(user.UserId, game.GameId));
 
                 // Assert
                 Assert.False(result); // result should be false if history was not found

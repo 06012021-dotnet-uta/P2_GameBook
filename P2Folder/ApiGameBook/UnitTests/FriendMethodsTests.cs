@@ -13,7 +13,7 @@ namespace UnitTests
         DbContextOptions<gamebookdbContext> options = new DbContextOptionsBuilder<gamebookdbContext>().UseInMemoryDatabase(databaseName: "TestingDb").Options;
 
         [Fact]
-        public async Task CreateFriendPassAsync()
+        public void CreateFriendPass()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -39,9 +39,9 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                await userMethods .CreateUserAsync(user1);
-                await userMethods .CreateUserAsync(user2);
-                result = await friendMethods.CreateFriendAsync(await userMethods.SearchUserByUsernameAsync("user1"), await userMethods .SearchUserByUsernameAsync("user2"));
+                userMethods.CreateUser(user1);
+                userMethods.CreateUser(user2);
+                result = friendMethods.CreateFriend(userMethods.SearchUserByUsername("user1"), userMethods.SearchUserByUsername("user2"));
 
                 // Assert
                 Assert.True(result); // result should be true if friend added was successful
@@ -49,7 +49,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task CreateFriendSameUserAsync()
+        public void CreateFriendSameUser()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -68,8 +68,8 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                await userMethods .CreateUserAsync(user1);
-                result = await friendMethods.CreateFriendAsync(await userMethods.SearchUserByUsernameAsync("user1"), await userMethods.SearchUserByUsernameAsync("user1"));
+                userMethods.CreateUser(user1);
+                result = friendMethods.CreateFriend(userMethods.SearchUserByUsername("user1"), userMethods.SearchUserByUsername("user1"));
 
                 // Assert
                 Assert.False(result); // result should be false if user tries to friend itself
@@ -77,7 +77,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task DeleteFriendPassAsync()
+        public void DeleteFriendPass()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -103,10 +103,10 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                await userMethods .CreateUserAsync(user1);
-                await userMethods .CreateUserAsync(user2);
-                await friendMethods .CreateFriendAsync(user2, user1);
-                result = await friendMethods.DeleteFriendAsync(await friendMethods.SearchFriendAsync(user1.UserId, user2.UserId));
+                userMethods.CreateUser(user1);
+                userMethods.CreateUser(user2);
+                friendMethods.CreateFriend(user2, user1);
+                result = friendMethods.DeleteFriend(friendMethods.SearchFriend(user1.UserId, user2.UserId));
 
                 // Assert
                 Assert.True(result); // result should be true if friend delete was successful
@@ -114,7 +114,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task CreateNullFriendAsync()
+        public void CreateNullFriend()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -128,7 +128,7 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                result = await friendMethods.CreateFriendAsync(user1, user2);
+                result = friendMethods.CreateFriend(user1, user2);
 
                 // Assert
                 Assert.False(result); // result is false if friend pair is null
@@ -137,7 +137,7 @@ namespace UnitTests
 
 
         [Fact]
-        public async Task DeleteNullFriendAsync()
+        public void DeleteNullFriend()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -150,7 +150,7 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                result = await friendMethods.DeleteFriendAsync(friend);
+                result = friendMethods.DeleteFriend(friend);
 
                 // Assert
                 Assert.False(result); // result is false if friend pair is null
@@ -158,7 +158,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task DeleteFriendNotFoundAsync()
+        public void DeleteFriendNotFound()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -189,8 +189,8 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                await friendMethods .CreateFriendAsync(user1, user2);
-                result = await friendMethods.DeleteFriendAsync(friend);
+                friendMethods.CreateFriend(user1, user2);
+                result = friendMethods.DeleteFriend(friend);
 
                 // Assert
                 Assert.False(result); // result is false if friend does not exist

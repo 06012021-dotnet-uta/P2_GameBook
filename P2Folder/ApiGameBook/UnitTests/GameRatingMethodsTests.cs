@@ -17,7 +17,7 @@ namespace UnitTests
         DbContextOptions<gamebookdbContext> options = new DbContextOptionsBuilder<gamebookdbContext>().UseInMemoryDatabase(databaseName: "TestingDb4").Options;
 
         [Fact]
-        public async Task RateGameNewRatingPassAsync()
+        public void RateGameNewRatingPass()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -48,10 +48,10 @@ namespace UnitTests
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
                 //creates things need creating
-                await userMethods .CreateUserAsync(user);
+                userMethods.CreateUser(user);
                 context.Games.Add(game);
                 //runs test
-                result = await gameMethods.RateGameAsync(user.UserId, game.GameId, userRating);
+                result = gameMethods.RateGame(user.UserId, game.GameId, userRating);
 
 
                 //Assert
@@ -63,7 +63,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task RateGameTestupdateRatingAsync()
+        public void RateGameTestupdateRating()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -95,20 +95,20 @@ namespace UnitTests
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
                 //creates things need creating
-                await userMethods .CreateUserAsync(user);
+                userMethods.CreateUser(user);
                 context.Games.Add(game);
-                await gameMethods.RateGameAsync(user.UserId, game.GameId, userRating);
+                gameMethods.RateGame(user.UserId, game.GameId, userRating);
 
 
                 //Assert
-                result = await gameMethods.RateGameAsync(user.UserId, game.GameId, trueRating);
+                result = gameMethods.RateGame(user.UserId, game.GameId, trueRating);
                 //Asserts ;p
                 Assert.True(result);
                 Assert.Equal(10, trueRating);
             }
         }
         [Fact]
-        public async Task DeleteRatingPassAsync()
+        public void DeleteRatingPass()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -139,15 +139,15 @@ namespace UnitTests
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
                 //creates things need creating
-                await userMethods.CreateUserAsync(user);
+                userMethods.CreateUser(user);
                 context.Games.Add(game);
-                await gameMethods.RateGameAsync(user.UserId, game.GameId, userRating);
+                gameMethods.RateGame(user.UserId, game.GameId, userRating);
 
                 //finds rating to delete
-                Rating temp = await gameMethods.SearchRatingsAsync(user.UserId, game.GameId);
+                Rating temp = gameMethods.SearchRatings(user.UserId, game.GameId);
 
                 //runs test
-                result = await gameMethods.DeleteRatingAsync(temp);
+                result = gameMethods.DeleteRating(temp);
 
                 //Asserts
                 Assert.True(result);

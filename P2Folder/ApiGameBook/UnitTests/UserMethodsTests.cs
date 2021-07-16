@@ -13,7 +13,7 @@ namespace UnitTests
         DbContextOptions<gamebookdbContext> options = new DbContextOptionsBuilder<gamebookdbContext>().UseInMemoryDatabase(databaseName: "TestingDb3").Options;
 
         [Fact]
-        public async Task CreateUserPassAsync()
+        public void CreateUserPass()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -31,7 +31,7 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                result = await userMethods.CreateUserAsync(user);
+                result = userMethods.CreateUser(user);
 
                 // Assert
                 Assert.True(result); // result should be true if user create was successful
@@ -39,7 +39,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task CreateUserWithMatchingUsernameAsync()
+        public void CreateUserWithMatchingUsername()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -64,8 +64,8 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                await userMethods .CreateUserAsync(user1);
-                result = await userMethods.CreateUserAsync(user2);
+                userMethods.CreateUser(user1);
+                result =userMethods.CreateUser(user2);
 
                 // Assert
                 Assert.False(result); // result should be false if user has matching username
@@ -73,7 +73,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task DeleteUserPassAsync()
+        public void DeleteUserPass()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -91,8 +91,8 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                await userMethods .CreateUserAsync(user);
-                result = await userMethods.DeleteUserAsync(user);
+                userMethods.CreateUser(user);
+                result = userMethods.DeleteUser(user);
 
                 // Assert
                 Assert.True(result); // result is true if delete was successful
@@ -100,7 +100,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task DeleteUserNoUserFoundAsync()
+        public void DeleteUserNoUserFound()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -118,7 +118,7 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                result = await userMethods.DeleteUserAsync(user);
+                result = userMethods.DeleteUser(user);
 
                 // Assert
                 Assert.False(result); // result should be false if no user is found in database
@@ -126,7 +126,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task SearchUserByUsernamePassAsync()
+        public void SearchUserByUsernamePass()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -152,9 +152,9 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                await userMethods.CreateUserAsync(user1);
-                await userMethods.CreateUserAsync(user2);
-                result = await userMethods.SearchUserByUsernameAsync(searchName);
+                userMethods.CreateUser(user1);
+                userMethods.CreateUser(user2);
+                result = userMethods.SearchUserByUsername(searchName);
 
                 // Assert
                 Assert.NotNull(result); // result is not null if a match is found
@@ -162,7 +162,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task SearchUserByUsernameEmptyStringAsync()
+        public void SearchUserByUsernameEmptyString()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -188,9 +188,9 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                await userMethods.CreateUserAsync(user1);
-                await userMethods.CreateUserAsync(user2);
-                result = await userMethods.SearchUserByUsernameAsync(searchName);
+                userMethods.CreateUser(user1);
+                userMethods.CreateUser(user2);
+                result = userMethods.SearchUserByUsername(searchName);
 
                 // Assert
                 Assert.Null(result); // result should be null if search string not provided
@@ -198,7 +198,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task SearchUserByUsernameNullSearchStringAsync()
+        public void SearchUserByUsernameNullSearchString()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -224,9 +224,9 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                await userMethods .CreateUserAsync(user1);
-                await userMethods .CreateUserAsync(user2);
-                result = await userMethods.SearchUserByUsernameAsync(searchName);
+                userMethods.CreateUser(user1);
+                userMethods.CreateUser(user2);
+                result = userMethods.SearchUserByUsername(searchName);
 
                 // Assert
                 Assert.Null(result); // result should be null if search string not provided
@@ -234,7 +234,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public async Task SearchUserByUsernameNoResultsAsync()
+        public void SearchUserByUsernameNoResults()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -260,16 +260,16 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                await userMethods .CreateUserAsync(user1);
-                await userMethods .CreateUserAsync(user2);
-                result = await userMethods.SearchUserByUsernameAsync(searchName);
+                userMethods.CreateUser(user1);
+                userMethods.CreateUser(user2);
+                result = userMethods.SearchUserByUsername(searchName);
 
                 // Assert
                 Assert.Null(result); // result is null if no user if found with matching username
             }
         }
         [Fact]
-        public async Task EditUserPassAsync()
+        public void EditUserPass()
         {
             using (var context = new gamebookdbContext(options))
             {
@@ -295,12 +295,12 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                await userMethods.CreateUserAsync(oldUser);
-                result = await userMethods.EditUserAsync(oldUser, newUser);
+                userMethods.CreateUser(oldUser);
+                result = userMethods.EditUser(oldUser, newUser);
 
                 // Assert
                 Assert.True(result); // result should be true if user edit passed
-                Assert.NotNull(userMethods.SearchUserByUsernameAsync(newUser.Username)); // result should be not null if edited user exist in database
+                Assert.NotNull(userMethods.SearchUserByUsername(newUser.Username)); // result should be not null if edited user exist in database
             }
         }
 
