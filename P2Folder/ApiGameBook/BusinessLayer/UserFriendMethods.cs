@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RepositoryLayer;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,11 @@ namespace BusinessLayer
     public class UserFriendMethods : IUserFriendMethods
     {
         private gamebookdbContext _context;
+        private readonly ILogger<UserFriendMethods> _logger;
 
-        public UserFriendMethods(gamebookdbContext context)
+        public UserFriendMethods(ILogger<UserFriendMethods> logger, gamebookdbContext context)
         {
+            _logger = logger;
             _context = context;
         }
         
@@ -23,10 +26,13 @@ namespace BusinessLayer
             try
             {
                 friendsList = _context.Friends.Where(x => (x.User1Id == userId || x.User2Id == userId)).ToList();
+                if (friendsList.Count < 1)
+                    _logger.LogWarning("WARNING: Friends list is empty");
                 return friendsList;
             }
-            catch
+            catch (Exception e)
             {
+                _logger.LogError(e.Message);
                 return friendsList;
             }
         }
@@ -39,15 +45,20 @@ namespace BusinessLayer
         /// <returns>Returns true or false based on if save was succeful</returns>
         public bool CreateFriend(User currentUser, User userToBefriend)
         {
-
             bool success = false;
-
-            if (currentUser.UserId == userToBefriend.UserId)
-            {
-                return false;
-            }
+                        
             try
             {
+                if(currentUser == null || userToBefriend == null)
+                {
+                    _logger.LogError("ERROR: null user");
+                    return false;
+                }
+                if (currentUser.UserId == userToBefriend.UserId)
+                {
+                    _logger.LogError("ERROR: Users must be different");
+                    return false;
+                }
                 Friend friend = new Friend()
                 {
                     User1Id = currentUser.UserId,
@@ -58,9 +69,9 @@ namespace BusinessLayer
                 success = true;
                 return success;
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine("Error, friend not added");
+                _logger.LogError(e.Message);
             }
 
             return success;
@@ -80,9 +91,9 @@ namespace BusinessLayer
                 success = true;
                 return success;
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine("Error, friend not removed");
+                _logger.LogError(e.Message);
             }
             return success;
         }
@@ -96,6 +107,8 @@ namespace BusinessLayer
         {
             Friend temp = null;
             temp = _context.Friends.Where(x => (x.User1Id == id1 && x.User2Id == id2) || (x.User1Id == id2 && x.User2Id == id1)).FirstOrDefault();
+            if (temp == null)
+                _logger.LogWarning("WARNING: Friend pair not found");
             return temp;
         }
     } //end of class

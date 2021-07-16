@@ -39,11 +39,7 @@ namespace GameBook.Controllers
         [HttpGet("{id}")]
         public List<Friend> Get(int id)
         {
-            _logger.LogInformation("Getting Friends for user {Id}", id);
-            List<Friend> friendsList = _friendMethods.FriendsList(id);
-            if (friendsList.Count < 1) // friends list is empty
-                _logger.LogWarning("WARNING: Friends list is null for user {id}", id);
-            return friendsList;
+            return _friendMethods.FriendsList(id);
         }
 
         // POST api/<FriendController>/1/5
