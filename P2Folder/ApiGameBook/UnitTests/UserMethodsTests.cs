@@ -2,6 +2,7 @@ using BusinessLayer;
 using Microsoft.EntityFrameworkCore;
 using RepositoryLayer;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -11,6 +12,40 @@ namespace UnitTests
     {
         //create in-memory DB
         DbContextOptions<gamebookdbContext> options = new DbContextOptionsBuilder<gamebookdbContext>().UseInMemoryDatabase(databaseName: "TestingDb3").Options;
+
+        [Fact]
+        public void UserListPass()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                List<User> userList = null;
+                User user1 = new User()
+                {
+                    Username = "username1",
+                    FirstName = "first",
+                    LastName = "last",
+                    Email = "email@email.com"
+                };
+                User user2 = new User()
+                {
+                    Username = "username2",
+                    FirstName = "first",
+                    LastName = "last",
+                    Email = "email@email.com"
+                };
+                UserMethods userMethods = new UserMethods(context);
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                userMethods.CreateUser(user1);
+                userMethods.CreateUser(user2);
+                userList = userMethods.UsersList();
+
+                // Assert
+                Assert.NotNull(userList);
+            }
+        }
 
         [Fact]
         public void CreateUserPass()
@@ -65,7 +100,7 @@ namespace UnitTests
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
                 userMethods.CreateUser(user1);
-                result =userMethods.CreateUser(user2);
+                result = userMethods.CreateUser(user2);
 
                 // Assert
                 Assert.False(result); // result should be false if user has matching username
