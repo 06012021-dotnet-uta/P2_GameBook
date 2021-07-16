@@ -18,20 +18,22 @@ namespace GameBook.Controllers
     {
 
         private readonly IUserFriendMethods _friendMethods;
+        private readonly IUserMethods _userMethods;
         private readonly ILogger<FriendController> _logger;
 
-        public FriendController(IUserFriendMethods friendMethods, ILogger<FriendController> logger)
+        public FriendController(IUserFriendMethods friendMethods, IUserMethods userMethods, ILogger<FriendController> logger)
         {
             _logger = logger;
             _friendMethods = friendMethods;
+            _userMethods = userMethods;
         }
 
         // GET: api/<FriendController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //[HttpGet]
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         // GET api/<FriendController>/5
         [HttpGet("{id}")]
@@ -40,22 +42,25 @@ namespace GameBook.Controllers
             return _friendMethods.FriendsList(id);
         }
 
-        // POST api/<FriendController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        // POST api/<FriendController>/1/5
+        [HttpPost("{user1id}/{user2id}")]
+        public bool Post(int user1id, int user2id)
         {
+            return _friendMethods.CreateFriend(_userMethods.SearchUserByID(user1id), _userMethods.SearchUserByID(user2id));
         }
 
         // PUT api/<FriendController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
-        // DELETE api/<FriendController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE api/<FriendController>/5/1
+        [HttpDelete(("{user1id}/{user2id}"))]
+        public bool Delete(int user1id, int user2id)
         {
+            Friend friend = _friendMethods.SearchFriend(user1id, user2id);
+            return _friendMethods.DeleteFriend(friend);
         }
     }
 }
