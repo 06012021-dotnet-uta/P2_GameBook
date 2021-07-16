@@ -1,4 +1,5 @@
 ﻿using RepositoryLayer;
+using System.Collections.Generic;
 
 namespace BusinessLayer
 {
@@ -7,5 +8,6 @@ namespace BusinessLayer
         bool CreateFriend(User currentUser, User userToBefriend);
         bool DeleteFriend(Friend friend);
         Friend SearchFriend(int id1, int id2);
+        List<Friend> FriendsList(int? userId);
     }
 }

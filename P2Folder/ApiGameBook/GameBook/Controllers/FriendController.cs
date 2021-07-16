@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using BusinessLayer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RepositoryLayer;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,6 +16,7 @@ namespace GameBook.Controllers
     [ApiController]
     public class FriendController : ControllerBase
     {
+
         private readonly IUserFriendMethods _friendMethods;
         private readonly ILogger<FriendController> _logger;
 
@@ -22,6 +25,7 @@ namespace GameBook.Controllers
             _logger = logger;
             _friendMethods = friendMethods;
         }
+
         // GET: api/<FriendController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -31,9 +35,9 @@ namespace GameBook.Controllers
 
         // GET api/<FriendController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public List<Friend> Get(int id)
         {
-            return "value";
+            return _friendMethods.FriendsList(id);
         }
 
         // POST api/<FriendController>
