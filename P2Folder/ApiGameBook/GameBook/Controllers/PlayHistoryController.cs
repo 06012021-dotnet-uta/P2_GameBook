@@ -44,7 +44,7 @@ namespace GameBook.Controllers
         }
 
         // DELETE api/<PlayHistoryController>/5
-        [HttpDelete("{userId}/{gameId)"]
+        [HttpDelete("{userId}/{gameId}")]
         public bool Delete(int userId, int gameId)
         {
             var result = _playHistoryMethods.SearchPlayHistory(userId, gameId);
