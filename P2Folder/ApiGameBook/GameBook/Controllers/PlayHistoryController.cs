@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BusinessLayer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RepositoryLayer;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,28 +31,24 @@ namespace GameBook.Controllers
         }
 
         // GET api/<PlayHistoryController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{userId}/{gameId}")]
+        public PlayHistory Get(int userId, int gameId)
         {
-            return "value";
+            return _playHistoryMethods.SearchPlayHistory(userId,gameId);
         }
 
         // POST api/<PlayHistoryController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<PlayHistoryController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost("{userId}/{gameId}")]
+        public void Post(int userId, int gameId)
         {
         }
 
         // DELETE api/<PlayHistoryController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{userId}/{gameId)"]
+        public bool Delete(int userId, int gameId)
         {
+            var result = _playHistoryMethods.SearchPlayHistory(userId, gameId);
+            return _playHistoryMethods.DeletePlayHistory(result);
         }
     }
 }
