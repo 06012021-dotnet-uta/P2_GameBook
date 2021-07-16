@@ -16,7 +16,20 @@ namespace BusinessLayer
         {
             _context = context;
         }
-        // Create Friend from two users
+        
+        public List<Friend> FriendsList(int? userId)
+        {
+            List<Friend> friendsList = null;
+            try
+            {
+                friendsList = _context.Friends.Where(x => (x.User1Id == userId || x.User2Id == userId)).ToList();
+                return friendsList;
+            }
+            catch
+            {
+                return friendsList;
+            }
+        }
 
         /// <summary>
         /// This checks if friend exist then adds to database the id of friend in friend
