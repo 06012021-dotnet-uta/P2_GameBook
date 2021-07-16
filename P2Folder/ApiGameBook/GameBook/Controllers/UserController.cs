@@ -36,9 +36,17 @@ namespace GameBook.Controllers
         }
 
         // POST api/<UserController>
-        [HttpPost]
-        public bool Post(User user)
+        [HttpPost("{username}/{password}/{firstName}/{lastName}/{email}")]
+        public bool Post(string username, string password, string firstName, string lastName, string email)
         {
+            User user = new User()
+            {
+                Username = username,
+                Password = password,
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email
+            };
             return _userMethods.CreateUser(user);
         }
 
@@ -52,7 +60,7 @@ namespace GameBook.Controllers
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
-            User user = _userMethods.SearchUserByID(id); // doesnt work right now
+            User user = _userMethods.SearchUserByID(id); 
             return _userMethods.DeleteUser(user);
         }
     }
