@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer
 {
-    public class UserFriendMethods
+    public class UserFriendMethods : IUserFriendMethods
     {
         private gamebookdbContext _context;
 

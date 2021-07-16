@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer
 {
-    public class UserPostingMethods
+    public class UserPostingMethods : IUserPostingMethods
     {
         private gamebookdbContext _context;
 
@@ -25,14 +25,14 @@ namespace BusinessLayer
             int? newPostId = null;
             // create a post by the given user with the content provided, return id of post that was just made
             // leaves newPostId null if post could not be made
-            
+
             try
             {
                 if (content == null || content == "") //Tests if user is trying to create a post with no content
                 {
                     Console.WriteLine("User must add content to create post");
                 }
-                else if(content.Length>=1000)
+                else if (content.Length >= 1000)
                 {
                     Console.WriteLine("Content too long.");
                 }
@@ -48,7 +48,7 @@ namespace BusinessLayer
                     _context.Posts.Add(newPost);
                     _context.SaveChanges();
 
-                    newPostId = newPost.PostId; 
+                    newPostId = newPost.PostId;
 
                     return newPostId;
                 }
@@ -122,11 +122,11 @@ namespace BusinessLayer
                     Console.WriteLine("Post could not be found");
                     return success;
                 }
-                else if(newContent == "" || newContent == null)
+                else if (newContent == "" || newContent == null)
                 {
                     Console.WriteLine("Must include content with edit");
                 }
-                else if(newContent == post.Content)
+                else if (newContent == post.Content)
                 {
                     Console.WriteLine("Post content must be different");
                 }

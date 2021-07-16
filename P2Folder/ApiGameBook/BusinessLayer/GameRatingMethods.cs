@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer
 {
-    public class GameRatingMethods
+    public class GameRatingMethods : IGameRatingMethods
     {
         private gamebookdbContext _context;
 
