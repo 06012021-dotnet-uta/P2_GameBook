@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLayer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,6 +14,15 @@ namespace GameBook.Controllers
     [ApiController]
     public class RatingController : ControllerBase
     {
+        private readonly IGameRatingMethods _gameRatingMethods;
+        private readonly ILogger<RatingController> _logger;
+
+        public RatingController(IGameRatingMethods gameRatingMethods, ILogger<RatingController> logger)
+        {
+            _logger = logger;
+            _gameRatingMethods = gameRatingMethods;
+        }
+
         // GET: api/<RatingController>
         [HttpGet]
         public IEnumerable<string> Get()

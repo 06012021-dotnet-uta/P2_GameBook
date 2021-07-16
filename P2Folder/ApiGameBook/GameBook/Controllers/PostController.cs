@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLayer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,6 +14,14 @@ namespace GameBook.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
+        private readonly IUserPostingMethods _postMethods;
+        private readonly ILogger<PostController> _logger;
+
+        public PostController(IUserPostingMethods postMethods, ILogger<PostController> logger)
+        {
+            _logger = logger;
+            _postMethods =  postMethods;
+        }
         // GET: api/<PostController>
         [HttpGet]
         public IEnumerable<string> Get()
