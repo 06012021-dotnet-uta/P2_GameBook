@@ -100,17 +100,38 @@ namespace BusinessLayer
         /// <summary>
         /// Searches type Id by username
         /// </summary>
-        /// <param name="username">Id property of user</param>
+        /// <param name="userId">Id property of user</param>
         /// <returns>Type user</returns>
-        public async Task<User> SearchUserByIDAsync(int username)
+        public async Task<User> SearchUserByIDAsync(int userId)
         {
             User temp = null;
+            try
+            {
+                // Search users table for user with matching name, returns null if not found
+                temp = await _context.Users.Where(x => x.UserId == userId).FirstOrDefaultAsync();
+                return temp;
 
-            // Search users table for user with matching name, returns null if not found
-            temp = await _context.Users.Where(x => x.UserId == username).FirstOrDefaultAsync();
+            }
+            catch
+            {
 
-            return temp;
+                return temp;
+            }
         }
+
+        public async Task<List<User>> UsersList()
+        {
+            try
+            {
+                return await _context.Users.ToListAsync();
+            }
+            catch
+            {
+
+                return null;
+            }
+        }
+
         /// <summary>
         /// Updates previous user data with new user data
         /// </summary>
@@ -145,9 +166,7 @@ namespace BusinessLayer
             {
                 Console.WriteLine("Error, user not created");
             }
-
             return success;
-
         }
     }
 }

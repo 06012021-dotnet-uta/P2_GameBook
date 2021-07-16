@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLayer;
 using Microsoft.AspNetCore.Mvc;
+using RepositoryLayer;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,18 +14,25 @@ namespace GameBook.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly UserMethods _userMethods;
+
+        public UserController(UserMethods userMethods)
+        {
+            _userMethods = userMethods;
+        }
+
         // GET: api/<UserController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<List<User>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return await _userMethods.UsersList();
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<User> Get(int id)
         {
-            return "value";
+            return await _userMethods.SearchUserByIDAsync(id);
         }
 
         // POST api/<UserController>
