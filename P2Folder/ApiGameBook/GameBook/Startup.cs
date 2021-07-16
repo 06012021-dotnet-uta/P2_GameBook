@@ -50,11 +50,11 @@ namespace GameBook
                     options.UseSqlServer(Configuration.GetConnectionString("MyConnectionString"));
                 }
             });
-            services.AddScoped<GameRatingMethods>();
-            services.AddScoped<UserFriendMethods>();
-            services.AddScoped<UserMethods>();
-            services.AddScoped<UserPlayHistoryMethods>();
-            services.AddScoped<UserPostingMethods>();
+            services.AddScoped<IGameRatingMethods, GameRatingMethods>();
+            services.AddScoped<IUserFriendMethods, UserFriendMethods>();
+            services.AddScoped<IUserMethods, UserMethods>();
+            services.AddScoped<IUserPlayHistoryMethods, UserPlayHistoryMethods>();
+            services.AddScoped<IUserPostingMethods, UserPostingMethods>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
