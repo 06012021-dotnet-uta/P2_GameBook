@@ -23,22 +23,23 @@ namespace GameBook.Controllers
 
         // GET: api/<UserController>
         [HttpGet]
-        public async Task<List<User>> Get()
+        public List<User> Get()
         {
-            return await _userMethods.UsersList();
+            return _userMethods.UsersList();
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public async Task<User> Get(int id)
+        public User Get(int id)
         {
-            return await _userMethods.SearchUserByIDAsync(id);
+            return _userMethods.SearchUserByID(id);
         }
 
         // POST api/<UserController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public bool Post(User user)
         {
+            return _userMethods.CreateUser(user);
         }
 
         // PUT api/<UserController>/5
@@ -49,8 +50,10 @@ namespace GameBook.Controllers
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            User user = _userMethods.SearchUserByID(id); // doesnt work right now
+            return _userMethods.DeleteUser(user);
         }
     }
 }

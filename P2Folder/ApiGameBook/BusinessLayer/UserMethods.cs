@@ -21,18 +21,18 @@ namespace BusinessLayer
         /// </summary>
         /// <param name="user">It takes a user object</param>
         /// <returns>Returns true if no other user with the same username exist and the user was succesfully created</returns>
-        public async Task<bool> CreateUserAsync(User user)
+        public bool CreateUser(User user)
         {
             bool success = false;
 
             try
             {
-                User searchUser = await SearchUserByUsernameAsync(user.Username); //Find if a username is already taken
+                User searchUser = SearchUserByUsername(user.Username); //Find if a username is already taken
                 if (searchUser == null)
                 {
                     // add user to db, change success to true if successful
-                    await _context.Users.AddAsync(user);
-                    await _context.SaveChangesAsync();
+                    _context.Users.Add(user);
+                    _context.SaveChanges();
                     success = true;
                     return success;
                 }
@@ -54,14 +54,14 @@ namespace BusinessLayer
         /// </summary>
         /// <param name="user">Takes the name of the user to delete</param>
         /// <returns>Returns true on success</returns>
-        public async Task<bool> DeleteUserAsync(User user)
+        public bool DeleteUser(User user)
         {
             bool success = false;
 
             try
             {
                 //check if user exists in database
-                if (SearchUserByUsernameAsync(user.Username) == null)
+                if (SearchUserByUsername(user.Username) == null)
                 {
                     Console.WriteLine("User not found");
                     return success;
@@ -70,7 +70,7 @@ namespace BusinessLayer
                 {
                     // delete user from db, change success to true if successful
                     _context.Users.Remove(user);
-                    await _context.SaveChangesAsync();
+                    _context.SaveChanges(); //works if used synchronously
                     success = true;
                     return success;
                 }
@@ -87,12 +87,12 @@ namespace BusinessLayer
         /// </summary>
         /// <param name="username">Username property of user</param>
         /// <returns>Type user</returns>
-        public async Task<User> SearchUserByUsernameAsync(string username)
+        public User SearchUserByUsername(string username)
         {
             User temp = null;
 
             // Search users table for user with matching name, returns null if not found
-            temp = await _context.Users.Where(x => x.Username == username).FirstOrDefaultAsync();
+            temp = _context.Users.Where(x => x.Username == username).FirstOrDefault();
 
             return temp;
         }
@@ -102,13 +102,13 @@ namespace BusinessLayer
         /// </summary>
         /// <param name="userId">Id property of user</param>
         /// <returns>Type user</returns>
-        public async Task<User> SearchUserByIDAsync(int userId)
+        public User SearchUserByID(int userId)
         {
             User temp = null;
             try
             {
                 // Search users table for user with matching name, returns null if not found
-                temp = await _context.Users.Where(x => x.UserId == userId).FirstOrDefaultAsync();
+                temp = _context.Users.Where(x => x.UserId == userId).FirstOrDefault();
                 return temp;
 
             }
@@ -119,15 +119,14 @@ namespace BusinessLayer
             }
         }
 
-        public async Task<List<User>> UsersList()
+        public List<User> UsersList()
         {
             try
             {
-                return await _context.Users.ToListAsync();
+                return _context.Users.ToList();
             }
             catch
             {
-
                 return null;
             }
         }
@@ -138,7 +137,7 @@ namespace BusinessLayer
         /// <param name="oldUser">User to be changed</param>
         /// <param name="newUser">User model that replaces old user's data</param>
         /// <returns>Returns true if old user's data was updated</returns>
-        public async Task<bool> EditUserAsync(User oldUser, User newUser)
+        public bool EditUser(User oldUser, User newUser)
         {
             bool success = false;
 
@@ -158,7 +157,7 @@ namespace BusinessLayer
                     oldUser.Email = newUser.Email;
 
                     _context.Users.Update(oldUser);
-                    await _context.SaveChangesAsync();
+                    _context.SaveChanges();
                     success = true;
                 }
             }
