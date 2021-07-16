@@ -54,9 +54,22 @@ namespace GameBook.Controllers
         }
 
         // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{id}/{username}/{password}/{firstName}/{lastName}/{email}")]
+        public bool Put(int id, string username, string password, string firstName, string lastName, string email)
         {
+            User newUser = new User()
+            {
+                Username = username,
+                Password = password,
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email
+            };
+
+            var oldUser = _userMethods.SearchUserByID(id);
+
+            return _userMethods.EditUser(oldUser, newUser);
+
         }
 
         // DELETE api/<UserController>/5

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BusinessLayer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RepositoryLayer;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,28 +32,30 @@ namespace GameBook.Controllers
         }
 
         // GET api/<RatingController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{userId}/{gameId}")]
+        public Rating Get(int userId, int gameId)
         {
-            return "value";
+            return _gameRatingMethods.SearchRatings(userId, gameId);
         }
 
         // POST api/<RatingController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("{userId}/{gameId}/{rating}")]
+        public void Post(int userId, int gameId, int rating)
         {
         }
 
         // PUT api/<RatingController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{userId}/{gameId}/{rating}")]
+        public void Put(int userId, int gameId, int rating)
         {
         }
 
         // DELETE api/<RatingController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{userId}/{gameId}")]
+        public bool Delete(int userId, int gameId)
         {
+            var result = _gameRatingMethods.SearchRatings(userId, gameId);
+            return _gameRatingMethods.DeleteRating(result);
         }
     }
 }
