@@ -197,6 +197,41 @@ namespace UnitTests
         }
 
         [Fact]
+        public void SearchUserByIdPass()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                User result;
+                User user1 = new User()
+                {
+                    Username = "username",
+                    FirstName = "first",
+                    LastName = "last",
+                    Email = "email@email.com"
+                };
+                User user2 = new User()
+                {
+                    Username = "username2",
+                    FirstName = "first2",
+                    LastName = "last2",
+                    Email = "email2@email.com"
+                };
+                UserMethods userMethods = new UserMethods(context);
+
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                userMethods.CreateUser(user1);
+                userMethods.CreateUser(user2);
+                result = userMethods.SearchUserByID(1);
+
+                // Assert
+                Assert.NotNull(result); // result is not null if a match is found
+            }
+        }
+
+        [Fact]
         public void SearchUserByUsernameEmptyString()
         {
             using (var context = new gamebookdbContext(options))
