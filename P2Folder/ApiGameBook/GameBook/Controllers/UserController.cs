@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using RepositoryLayer;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,10 +15,12 @@ namespace GameBook.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly UserMethods _userMethods;
+        private readonly IUserMethods _userMethods;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(UserMethods userMethods)
+        public UserController(IUserMethods userMethods, ILogger<UserController> logger)
         {
+            _logger = logger;
             _userMethods = userMethods;
         }
 
