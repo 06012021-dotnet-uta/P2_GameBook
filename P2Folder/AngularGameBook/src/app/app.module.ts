@@ -11,6 +11,7 @@ import { ForumsComponent } from './forums/forums.component';
 import { GamesComponent } from './games/games.component';
 import { GenreDiscussionComponent } from './genre-discussion/genre-discussion.component';
 import { GameDiscussionComponent } from './game-discussion/game-discussion.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { GameDiscussionComponent } from './game-discussion/game-discussion.compo
     ForumsComponent,
     GamesComponent,
     GenreDiscussionComponent,
-    GameDiscussionComponent
+    GameDiscussionComponent,
+    UserListComponent,
   ],
   imports: [
     BrowserModule,

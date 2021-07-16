@@ -1,1 +1,25 @@
-<p>signup works!</p>
+<h1>Sign up for a new account</h1>
+
+<!-- <button (click)="AddNewPlayer()">Submit this new player!</button> -->
+<div>
+    <form >
+        <label for="FirstName">First name: </label>
+        <!-- <input type="text" id="FirstName" placeholder="FirstName"> -->
+        <input type="text" class="form-control" formControlName="FirstName" placeholder="FirstName">
+        <br><br>
+        <label for="LastName">Last name: </label>
+        <input type="text" class="form-control" formControlName="LastName" placeholder="LastName">
+        <br><br>
+        <label for="Username">Username: </label>
+        <input type="text" class="form-control" formControlName="Username" placeholder="Username">
+        <br><br>
+        <label for="Password">Password: </label>
+        <input type="text" class="form-control" formControlName="Password" placeholder="Password">
+        <br><br>
+        <label for="Email">Email:     .......</label>
+        <input type="text" class="form-control" formControlName="Email" placeholder="Email">
+        <!-- <div><span>id: </span>{{newUser.FirstName}}</div> -->
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+  </div>
