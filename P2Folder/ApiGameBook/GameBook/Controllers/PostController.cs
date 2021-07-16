@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BusinessLayer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RepositoryLayer;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,12 +16,14 @@ namespace GameBook.Controllers
     public class PostController : ControllerBase
     {
         private readonly IUserPostingMethods _postMethods;
+        private readonly IUserMethods _userMethods;
         private readonly ILogger<PostController> _logger;
 
-        public PostController(IUserPostingMethods postMethods, ILogger<PostController> logger)
+        public PostController(IUserPostingMethods postMethods, IUserMethods userMethods, ILogger<PostController> logger)
         {
             _logger = logger;
             _postMethods =  postMethods;
+            _userMethods = userMethods;
         }
         // GET: api/<PostController>
         [HttpGet]
@@ -31,27 +34,42 @@ namespace GameBook.Controllers
 
         // GET api/<PostController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Post Get(int id)
         {
-            return "value";
+            return _postMethods.SearchPostById(id);
         }
 
         // POST api/<PostController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("{userId}/{content}")]
+        public IActionResult PostPost(int userId, string content)
         {
+            User user = _userMethods.SearchUserByID(userId);
+            var result = _postMethods.CreatePost(user, content);
+
+
+            if (user == null)
+            {
+                return StatusCode(400);
+            }
+            else
+            {
+                return StatusCode(201, result);
+            }
         }
 
         // PUT api/<PostController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public bool Put(int id, string contnet)
         {
+            Post post = _postMethods.SearchPostById(id);
+            return _postMethods.EditPost(post, contnet);
         }
 
         // DELETE api/<PostController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            return _postMethods.DeletePost(id);
         }
     }
 }
