@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RepositoryLayer;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,15 @@ namespace BusinessLayer
     public class GameRatingMethods : IGameRatingMethods
     {
         private gamebookdbContext _context;
+        private readonly ILogger<GameRatingMethods> _logger;
 
         public GameRatingMethods(gamebookdbContext context)
         {
+            _context = context;
+        }
+        public GameRatingMethods(ILogger<GameRatingMethods> logger, gamebookdbContext context)
+        {
+            _logger = logger;
             _context = context;
         }
         /// <summary>
@@ -29,6 +36,7 @@ namespace BusinessLayer
             // check if rating is in range
             if (rating > 10 || rating < 0)
             {
+                _logger.LogWarning("WARNING: Rating not in range.");
                 return false;
             }
             try
@@ -62,8 +70,9 @@ namespace BusinessLayer
                 }
             }
             //if for some reason the crash happens it wil just return false
-            catch (SystemException)
+            catch (Exception e)
             {
+                _logger.LogError(e.Message);
                 return false;
             }
         }
@@ -82,7 +91,7 @@ namespace BusinessLayer
                 //check if user exists in database
                 if (rating == null)
                 {
-                    Console.WriteLine("Rating connot be null");
+                    _logger.LogWarning("WARNING: Rating connot be null");
                     return success;
                 }
                 else
@@ -94,9 +103,9 @@ namespace BusinessLayer
                     return success;
                 }
             }
-            catch
+            catch(Exception e)
             {
-                Console.WriteLine("Error, rating not deleted");
+                _logger.LogError(e.Message);
             }
 
             return success;
@@ -112,6 +121,8 @@ namespace BusinessLayer
         {
             Rating temp = null;
             temp = _context.Ratings.Where(x => (x.UserId == userid && x.GameId == gameid)).FirstOrDefault();
+            if (temp == null)
+                _logger.LogWarning("WARNING: No rating pair found.");
             return temp;
         }
 

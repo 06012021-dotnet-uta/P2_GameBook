@@ -14,6 +14,10 @@ namespace BusinessLayer
         private gamebookdbContext _context;
         private readonly ILogger<UserFriendMethods> _logger;
 
+        public UserFriendMethods(gamebookdbContext context)
+        {
+            _context = context;
+        }
         public UserFriendMethods(ILogger<UserFriendMethods> logger, gamebookdbContext context)
         {
             _logger = logger;
