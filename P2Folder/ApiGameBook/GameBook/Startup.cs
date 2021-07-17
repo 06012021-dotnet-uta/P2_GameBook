@@ -55,6 +55,7 @@ namespace GameBook
             services.AddScoped<IUserMethods, UserMethods>();
             services.AddScoped<IUserPlayHistoryMethods, UserPlayHistoryMethods>();
             services.AddScoped<IUserPostingMethods, UserPostingMethods>();
+            services.AddScoped<PopulateDBRealQuickMethod>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
