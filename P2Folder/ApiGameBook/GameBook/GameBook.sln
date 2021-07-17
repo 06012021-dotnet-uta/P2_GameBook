@@ -11,7 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "..\UnitTests\U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "..\BusinessLayer\BusinessLayer.csproj", "{7CA4AF6A-0BFA-4402-AE4D-5BA2397BD4F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedConsole", "..\SeedConsole\SeedConsole.csproj", "{D4D801DF-51B2-4830-84D6-B90B307DF013}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeedConsole", "..\SeedConsole\SeedConsole.csproj", "{D4D801DF-51B2-4830-84D6-B90B307DF013}"
+	ProjectSection(ProjectDependencies) = postProject
+		{506736DA-5720-4A09-A61E-13A0DAE9E3C6} = {506736DA-5720-4A09-A61E-13A0DAE9E3C6}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

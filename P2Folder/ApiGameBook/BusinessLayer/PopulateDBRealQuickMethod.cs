@@ -13,9 +13,7 @@ namespace BusinessLayer
 	{
 		private gamebookdbContext _context;
 
-		public PopulateDBRealQuickMethod()
-		{
-		}
+
 
 		public PopulateDBRealQuickMethod(gamebookdbContext context)
 		{
@@ -37,13 +35,13 @@ namespace BusinessLayer
 				request.AddHeader("Client-ID", " q17vg91zyii02i7r72jjohbf0d6ggc");
 				request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
 				request.AddHeader("Content-Type", "text/plain");
-				var body = @"fields id,name; limit 500; where id < " + 5 + " & id > " + 1 + ";";
+				var body = @"fields id, name; limit 50 ; sort rating asc; where rating > 97 & rating < 100  ;";
 				request.AddParameter("text/plain", body, ParameterType.RequestBody);
 				IRestResponse response = client.Execute(request);
 				//Console.WriteLine(response.Content);
 				//Console.WriteLine(response.Content.GetType());
 				string doSomething = response.Content;
-				//Console.WriteLine(doSomething);
+				Console.WriteLine(doSomething);
 				string bracketsGoneDoSomething = doSomething.Replace("[","");
 				string startBracketsGoneDoSomething = bracketsGoneDoSomething.Replace("{","");
 				string endBracketsGoneDoSomething = startBracketsGoneDoSomething.Replace("}","");
@@ -60,12 +58,14 @@ namespace BusinessLayer
 
 					if (i % 2 == 0) 
 					{
+						Console.WriteLine(temp);
 						string temp1 = temp.Remove(0, 4);
 						//Console.WriteLine(temp1);
 						gameID = Int32.Parse(temp1);
 					}
 					else
 					{
+						Console.WriteLine(temp);
 						string temp1 = temp.Remove(0, 6);
 						Console.WriteLine(temp1);
 						Console.WriteLine(gameID);
@@ -73,10 +73,10 @@ namespace BusinessLayer
 						try
 						{
 
-							Game temp2 = null;
+							//Game temp2 = null;
 
 							// Search game table for game with matching name, returns null if not found
-							//Game temp2 = _context.Games.Where(x => x.Name == temp1).FirstOrDefault();
+							Game temp2 = _context.Games.Where(x => x.Name == temp1).FirstOrDefault();
 
 
 							if (temp2 == null)
@@ -95,9 +95,10 @@ namespace BusinessLayer
 								Console.WriteLine("Error, that game already exists");
 							}
 						}	
-						catch(SystemException)
+						catch(Exception e)
 						{
 							Console.WriteLine("*******something bad happened******");
+							Console.WriteLine(e);
 							Console.WriteLine(temp1 + "** **" + gameID);
 						}
 
