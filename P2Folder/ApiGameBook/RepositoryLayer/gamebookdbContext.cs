@@ -28,6 +28,7 @@ namespace RepositoryLayer
         public virtual DbSet<PlayHistory> PlayHistories { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Rating> Ratings { get; set; }
+        public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -109,8 +110,7 @@ namespace RepositoryLayer
                     .HasColumnName("game_id");
 
                 entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(40)
+                    .HasMaxLength(100)
                     .HasColumnName("name");
             });
 
@@ -270,6 +270,30 @@ namespace RepositoryLayer
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__rating__user_id__7E37BEF6");
+            });
+
+            modelBuilder.Entity<Review>(entity =>
+            {
+                entity.HasKey(e => new { e.GameId, e.PostId })
+                    .HasName("PK__reviews__8C0C67B9F0C74160");
+
+                entity.ToTable("reviews");
+
+                entity.Property(e => e.GameId).HasColumnName("game_id");
+
+                entity.Property(e => e.PostId).HasColumnName("post_id");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.Reviews)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__reviews__game_id__05D8E0BE");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.Reviews)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__reviews__post_id__06CD04F7");
             });
 
             modelBuilder.Entity<User>(entity =>
