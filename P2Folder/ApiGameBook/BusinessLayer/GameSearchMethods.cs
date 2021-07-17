@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer
 {
-    public class GameMethods
+    public class GameSearchMethods : IGameSearchMethods
     {
         private gamebookdbContext _context;
         private readonly ILogger<GameRatingMethods> _logger;
 
-        public GameMethods(gamebookdbContext context)
+        public GameSearchMethods(gamebookdbContext context)
         {
             _context = context;
         }
-        public GameMethods(ILogger<GameRatingMethods> logger, gamebookdbContext context)
+        public GameSearchMethods(ILogger<GameRatingMethods> logger, gamebookdbContext context)
         {
             _logger = logger;
             _context = context;

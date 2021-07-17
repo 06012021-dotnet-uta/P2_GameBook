@@ -40,14 +40,16 @@ namespace GameBook.Controllers
 
         // POST api/<RatingController>
         [HttpPost("{userId}/{gameId}/{rating}")]
-        public void Post(int userId, int gameId, int rating)
+        public bool Post(int userId, int gameId, int rating)
         {
+            return _gameRatingMethods.RateGame(userId, gameId, rating);
         }
 
         // PUT api/<RatingController>/5
         [HttpPut("{userId}/{gameId}/{rating}")]
-        public void Put(int userId, int gameId, int rating)
+        public bool Put(int userId, int gameId, int rating)
         {
+            return _gameRatingMethods.RateGame(userId, gameId, rating);
         }
 
         // DELETE api/<RatingController>/5

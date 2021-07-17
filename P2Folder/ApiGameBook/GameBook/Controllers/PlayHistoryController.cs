@@ -16,12 +16,16 @@ namespace GameBook.Controllers
     public class PlayHistoryController : ControllerBase
     {
         private readonly IUserPlayHistoryMethods _playHistoryMethods;
+        private readonly IUserMethods _userMethods;
+        private readonly IGameSearchMethods _gameSearchMethods;
         private readonly ILogger<PlayHistoryController> _logger;
 
-        public PlayHistoryController(IUserPlayHistoryMethods playHistoryMethods, ILogger<PlayHistoryController> logger)
+        public PlayHistoryController(IUserPlayHistoryMethods playHistoryMethods, IUserMethods userMethods, IGameSearchMethods gameSearchMethods, ILogger<PlayHistoryController> logger)
         {
             _logger = logger;
             _playHistoryMethods = playHistoryMethods;
+            _userMethods = userMethods;
+            _gameSearchMethods = gameSearchMethods;
         }
         // GET: api/<PlayHistoryController>
         [HttpGet]
@@ -39,8 +43,9 @@ namespace GameBook.Controllers
 
         // POST api/<PlayHistoryController>
         [HttpPost("{userId}/{gameId}")]
-        public void Post(int userId, int gameId)
+        public bool Post(int userId, int gameId)
         {
+            return _playHistoryMethods.CreatePlayHistory(_userMethods.SearchUserByID(userId), _gameSearchMethods.SearchGame(gameId));
         }
 
         // DELETE api/<PlayHistoryController>/5

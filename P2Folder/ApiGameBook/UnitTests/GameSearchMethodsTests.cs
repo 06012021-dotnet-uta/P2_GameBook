@@ -30,7 +30,7 @@ namespace UnitTests
                 {
                     Name = "Final Fantasy"
                 };
-                GameMethods gameMethods = new GameMethods(context);
+                GameSearchMethods gameMethods = new GameSearchMethods(context);
 
                 // Act
                 context.Database.EnsureCreated();
@@ -56,7 +56,7 @@ namespace UnitTests
                     GameId = searchNum,
                     Name = "Zelda"
                 };
-                GameMethods gameMethods = new GameMethods(context);
+                GameSearchMethods gameMethods = new GameSearchMethods(context);
 
                 // Act
                 context.Database.EnsureCreated();
@@ -81,7 +81,7 @@ namespace UnitTests
                 {
                     Name = searchName
                 };
-                GameMethods gameMethods = new GameMethods(context);
+                GameSearchMethods gameMethods = new GameSearchMethods(context);
 
                 // Act
                 context.Database.EnsureCreated();
@@ -116,7 +116,7 @@ namespace UnitTests
                     GameId = 20,
                     GenreId = 20
                 };
-                GameMethods gameMethods = new GameMethods(context);
+                GameSearchMethods gameMethods = new GameSearchMethods(context);
 
                 // Act
                 context.Database.EnsureCreated();
@@ -153,7 +153,7 @@ namespace UnitTests
                     GameId = 20,
                     CollectionId = 20
                 };
-                GameMethods gameMethods = new GameMethods(context);
+                GameSearchMethods gameMethods = new GameSearchMethods(context);
 
                 // Act
                 context.Database.EnsureCreated();
@@ -190,7 +190,7 @@ namespace UnitTests
                     GameId = 20,
                     KeywordId = 20
                 };
-                GameMethods gameMethods = new GameMethods(context);
+                GameSearchMethods gameMethods = new GameSearchMethods(context);
 
                 // Act
                 context.Database.EnsureCreated();
