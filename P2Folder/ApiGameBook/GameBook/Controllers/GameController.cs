@@ -41,12 +41,12 @@ namespace GameBook.Controllers
             return _gameSearchMethods.SearchGame(id);
         }
 
-        // GET api/<GameController>/rpg
-        [HttpGet("{keyword}")]
-        public List<Game> Get(string keyword)
-        {
-            return _gameSearchMethods.SearchGameByKeyword(keyword);
-        }
+        //// GET api/<GameController>/rpg
+        //[HttpGet("{keyword}")]
+        //public List<Game> Get(string keyword)
+        //{
+        //    return _gameSearchMethods.SearchGameByKeyword(keyword);
+        //}
 
         // POST api/<GameController>
         [HttpPost]

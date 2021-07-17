@@ -28,10 +28,10 @@ namespace GameBook.Controllers
             _gameSearchMethods = gameSearchMethods;
         }
         // GET: api/<PlayHistoryController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("{userId}")]
+        public List<PlayHistory> Get(int userId)
         {
-            return new string[] { "value1", "value2" };
+            return _playHistoryMethods.GetUserPlayHistory(userId);
         }
 
         // GET api/<PlayHistoryController>/5
