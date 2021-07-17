@@ -41,19 +41,16 @@ namespace GameBook.Controllers
             return _gameSearchMethods.SearchGame(id);
         }
 
-        //// GET api/<GameController>/rpg
-        //[HttpGet("{keyword}")]
-        //public List<Game> Get(string keyword)
-        //{
-        //    return _gameSearchMethods.SearchGameByKeyword(keyword);
-        //}
-
         // POST api/<GameController>
         [HttpPost]
         public void Post()
         {
             // this method is only called to seed the database, comment out after we are done with it?
-            _populateDBRealQuickMethod.PopulateThatDb();
+            //_populateDBRealQuickMethod.PopulateThatDb();
+            
+            //seeding keywords table
+            //_populateDBRealQuickMethod.SeedKeywords();
+
         }
 
     }
