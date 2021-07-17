@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RepositoryLayer;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,15 @@ namespace BusinessLayer
     public class UserMethods : IUserMethods
     {
         private gamebookdbContext _context;
+        private readonly ILogger<UserMethods> _logger;
 
         public UserMethods(gamebookdbContext context)
         {
+            _context = context;
+        }
+        public UserMethods(ILogger<UserMethods> logger, gamebookdbContext context)
+        {
+            _logger = logger;
             _context = context;
         }
         /// <summary>
@@ -38,12 +45,12 @@ namespace BusinessLayer
                 }
                 else
                 {
-                    Console.WriteLine("Error, that username already exists");
+                    _logger.LogWarning("WARNING: That username already exists");
                 }
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine("Error, user not created");
+                _logger.LogError(e.Message);
             }
 
             return success;
@@ -63,7 +70,7 @@ namespace BusinessLayer
                 //check if user exists in database
                 if (SearchUserByUsername(user.Username) == null)
                 {
-                    Console.WriteLine("User not found");
+                    _logger.LogWarning("WARNING: User not found");
                     return success;
                 }
                 else
@@ -75,9 +82,9 @@ namespace BusinessLayer
                     return success;
                 }
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine("Error, user not deleted");
+                _logger.LogError(e.Message);
             }
 
             return success;
@@ -90,10 +97,17 @@ namespace BusinessLayer
         public User SearchUserByUsername(string username)
         {
             User temp = null;
-
-            // Search users table for user with matching name, returns null if not found
-            temp = _context.Users.Where(x => x.Username == username).FirstOrDefault();
-
+            try
+            {
+                // Search users table for user with matching name, returns null if not found
+                temp = _context.Users.Where(x => x.Username == username).FirstOrDefault();
+                if (temp == null)
+                    _logger.LogWarning("WARNING: User not found");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+            }
             return temp;
         }
 
@@ -107,16 +121,16 @@ namespace BusinessLayer
             User temp = null;
             try
             {
-                // Search users table for user with matching name, returns null if not found
+                // Search users table for user with matching id, returns null if not found
                 temp = _context.Users.Where(x => x.UserId == userId).FirstOrDefault();
-                return temp;
-
+                if (temp == null)
+                    _logger.LogWarning("WARNING: User not found");
             }
-            catch
+            catch (Exception e)
             {
-
-                return temp;
+                _logger.LogError(e.Message);
             }
+            return temp;
         }
 
         public List<User> UsersList()
@@ -125,8 +139,9 @@ namespace BusinessLayer
             {
                 return _context.Users.ToList();
             }
-            catch
+            catch(Exception e)
             {
+                _logger.LogError(e.Message);
                 return null;
             }
         }
@@ -145,7 +160,7 @@ namespace BusinessLayer
             {
                 if (newUser.Username == null || newUser.Password == null || newUser.FirstName == null || newUser.LastName == null || newUser.Email == null)
                 {
-                    Console.WriteLine("Error, the user model entered has missing data");
+                    _logger.LogWarning("WARNING: The user model entered has missing data");
                     return success;
                 }
                 else
@@ -161,9 +176,9 @@ namespace BusinessLayer
                     success = true;
                 }
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine("Error, user not created");
+                _logger.LogError(e.Message);
             }
             return success;
         }

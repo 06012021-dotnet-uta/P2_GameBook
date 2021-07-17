@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RepositoryLayer;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,18 @@ namespace BusinessLayer
     public class UserPlayHistoryMethods : IUserPlayHistoryMethods
     {
         private gamebookdbContext _context;
+        private readonly ILogger<UserPlayHistoryMethods> _logger;
 
         public UserPlayHistoryMethods(gamebookdbContext context)
         {
             _context = context;
         }
-        // Create play history
+        public UserPlayHistoryMethods(ILogger<UserPlayHistoryMethods> logger, gamebookdbContext context)
+        {
+            _logger = logger;
+            _context = context;
+        }
+
         /// <summary>
         /// Construction of play history of specific games
         /// </summary>
@@ -30,7 +37,7 @@ namespace BusinessLayer
             {
                 if (_context.Games.Where(x => x.GameId == game.GameId).FirstOrDefault() == null)
                 {
-                    Console.WriteLine("Game not found.");
+                    _logger.LogWarning("WARNING: Game not found.");
                     return success;
                 }
                 PlayHistory history = new PlayHistory()
@@ -43,14 +50,13 @@ namespace BusinessLayer
                 success = true;
                 return success;
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine("Error, play history not added");
+                _logger.LogError(e.Message);
             }
-
-
             return success;
         }
+
         /// <summary>
         /// Deletes a game from the history 
         /// </summary>
@@ -66,12 +72,13 @@ namespace BusinessLayer
                 success = true;
                 return success;
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine("Error, play hisotry not removed");
+                _logger.LogError(e.Message);
             }
             return success;
         }
+
         /// <summary>
         /// Allows search of play history 
         /// </summary>
@@ -81,7 +88,16 @@ namespace BusinessLayer
         public PlayHistory SearchPlayHistory(int userid, int gameid)
         {
             PlayHistory temp = null;
-            temp = _context.PlayHistories.Where(x => (x.UserId == userid && x.GameId == gameid)).FirstOrDefault();
+            try
+            {
+                temp = _context.PlayHistories.Where(x => (x.UserId == userid && x.GameId == gameid)).FirstOrDefault();
+                if (temp == null)
+                    _logger.LogWarning("WARNING: Play History match not found.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+            }
             return temp;
         }
     }
