@@ -35,13 +35,13 @@ namespace BusinessLayer
 				request.AddHeader("Client-ID", " q17vg91zyii02i7r72jjohbf0d6ggc");
 				request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
 				request.AddHeader("Content-Type", "text/plain");
-				var body = @"fields id, name; limit 50 ; sort rating asc; where rating > 97 & rating < 100  ;";
+				var body = @"fields id, name; limit 30 ; sort rating asc; where rating > 96 & rating < 98  ;";
 				request.AddParameter("text/plain", body, ParameterType.RequestBody);
 				IRestResponse response = client.Execute(request);
 				//Console.WriteLine(response.Content);
 				//Console.WriteLine(response.Content.GetType());
 				string doSomething = response.Content;
-				Console.WriteLine(doSomething);
+				//Console.WriteLine(doSomething);
 				string bracketsGoneDoSomething = doSomething.Replace("[","");
 				string startBracketsGoneDoSomething = bracketsGoneDoSomething.Replace("{","");
 				string endBracketsGoneDoSomething = startBracketsGoneDoSomething.Replace("}","");
@@ -98,7 +98,7 @@ namespace BusinessLayer
 						catch(Exception e)
 						{
 							Console.WriteLine("*******something bad happened******");
-							Console.WriteLine(e);
+							Console.WriteLine(e.InnerException.Message);
 							Console.WriteLine(temp1 + "** **" + gameID);
 						}
 

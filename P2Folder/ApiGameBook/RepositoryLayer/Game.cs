@@ -14,6 +14,7 @@ namespace RepositoryLayer
             KeywordJunctions = new HashSet<KeywordJunction>();
             PlayHistories = new HashSet<PlayHistory>();
             Ratings = new HashSet<Rating>();
+            Reviews = new HashSet<Review>();
         }
 
         public int GameId { get; set; }
@@ -24,5 +25,6 @@ namespace RepositoryLayer
         public virtual ICollection<KeywordJunction> KeywordJunctions { get; set; }
         public virtual ICollection<PlayHistory> PlayHistories { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
     }
 }

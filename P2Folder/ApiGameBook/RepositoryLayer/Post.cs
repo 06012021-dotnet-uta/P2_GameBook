@@ -10,6 +10,7 @@ namespace RepositoryLayer
         public Post()
         {
             InverseCommentParent = new HashSet<Post>();
+            Reviews = new HashSet<Review>();
         }
 
         public int PostId { get; set; }
@@ -21,5 +22,6 @@ namespace RepositoryLayer
         public virtual Post CommentParent { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<Post> InverseCommentParent { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
     }
 }
