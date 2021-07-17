@@ -32,14 +32,18 @@ namespace BusinessLayer
             list = _context.Games.ToList();
             return list;
         }
-        /// <summary>
-        /// Searches for games based on id
-        /// </summary>
-        /// <returns>Returns Game that matches the gameId</returns>
+        
         public Game SearchGame(int gameId)
         {
-            Game game = new Game();
-            game = _context.Games.Where(x => x.GameId == gameId).FirstOrDefault();
+            Game game = null;
+            try
+            {
+                game = _context.Games.Where(x => x.GameId == gameId).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+            }
             return game;
         }
         /// <summary>

@@ -106,5 +106,21 @@ namespace BusinessLayer
             }
             return temp;
         }
+
+        public List<PlayHistory> GetUserPlayHistory(int userid)
+        {
+            List<PlayHistory> temp = null;
+            try
+            {
+                temp = _context.PlayHistories.Where(x => x.UserId == userid).ToList();
+                if (temp == null)
+                    _logger.LogWarning("WARNING: Play History empty.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+            }
+            return temp;
+        }
     }
 }
