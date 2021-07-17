@@ -24,13 +24,6 @@ namespace GameBook.Controllers
             _gameRatingMethods = gameRatingMethods;
         }
 
-         
-        // GET: api/<RatingController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET api/<RatingController>/5
         [HttpGet("{userId}/{gameId}")]

@@ -28,13 +28,6 @@ namespace GameBook.Controllers
             _userMethods = userMethods;
         }
 
-        // GET: api/<FriendController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
         // GET api/<FriendController>/5
         [HttpGet("{id}")]
         public List<Friend> Get(int id)
@@ -48,12 +41,6 @@ namespace GameBook.Controllers
         {
             return _friendMethods.CreateFriend(_userMethods.SearchUserByID(user1id), _userMethods.SearchUserByID(user2id));
         }
-
-        // PUT api/<FriendController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
 
         // DELETE api/<FriendController>/5/1
         [HttpDelete(("{user1id}/{user2id}"))]

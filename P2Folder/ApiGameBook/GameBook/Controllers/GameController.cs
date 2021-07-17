@@ -56,16 +56,5 @@ namespace GameBook.Controllers
             _populateDBRealQuickMethod.PopulateThatDb();
         }
 
-        //// PUT api/<GameController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE api/<GameController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
