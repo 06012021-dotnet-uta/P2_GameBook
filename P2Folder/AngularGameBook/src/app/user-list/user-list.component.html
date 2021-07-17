@@ -1,6 +1,24 @@
 <h2>List of Game Book Members</h2>
-<ul class="users">
-    <li *ngFor="let user of users">
-    <span class="badge">{{user.Username}}</span> {{user.Password}}
-  </li>
-</ul>
+
+<div class="container">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Username</th>
+      <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td><span>{{user.userId}}</span></td>
+      <td><span>{{user.firstName}}</span></td>
+      <td><span>{{user.lastName}}</span></td>
+      <td><span>{{user.username}}</span></td>
+      <td><span>{{user.email}}</span></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
