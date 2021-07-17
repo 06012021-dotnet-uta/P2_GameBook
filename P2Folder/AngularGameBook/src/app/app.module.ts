@@ -12,6 +12,7 @@ import { GamesComponent } from './games/games.component';
 import { GenreDiscussionComponent } from './genre-discussion/genre-discussion.component';
 import { GameDiscussionComponent } from './game-discussion/game-discussion.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { UserListComponent } from './user-list/user-list.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
