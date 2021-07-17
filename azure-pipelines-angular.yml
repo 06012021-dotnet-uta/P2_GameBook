@@ -1,5 +1,6 @@
 trigger:
   - main
+pr: none
 
 pool:
   vmImage: 'windows-latest'
@@ -25,8 +26,6 @@ steps:
   inputs:
     versionSpec: '14.x'
   displayName: 'Install Node.js'
-
-
 
 - task: Npm@1
   displayName: 'NPM Install'
@@ -55,3 +54,14 @@ steps:
   displayName: 'SonarCloud Publish'
   inputs:
     pollingTimeoutSec: '300'
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(d6c8a8b1-d080-451c-a2a1-87677bde0d9f)'
+    appType: 'webApp'
+    WebAppName: 'Game-Book'
+    deployToSlotOrASE: true
+    ResourceGroupName: 'GameBookResourceGroup'
+    SlotName: 'production'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
