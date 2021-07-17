@@ -30,6 +30,11 @@ namespace BusinessLayer
             _context = context;
         }
 
+        /// <summary>
+        /// Gets friends list for a user
+        /// </summary>
+        /// <param name="userId">User id to get friend list for.</param>
+        /// <returns>List of Friend objects</returns>
         public List<Friend> FriendsList(int? userId)
         {
             List<Friend> friendsList = null;
@@ -86,6 +91,7 @@ namespace BusinessLayer
 
             return success;
         }
+
         /// <summary>
         /// DeleteFriend removes the id of a friend from your database however this has no effect if they friended you
         /// </summary>
@@ -107,6 +113,7 @@ namespace BusinessLayer
             }
             return success;
         }
+
         /// <summary>
         /// looks for users based on id
         /// </summary>

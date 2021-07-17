@@ -29,6 +29,7 @@ namespace BusinessLayer
             _logger = logger;
             _context = context;
         }
+
         /// <summary>
         /// Searches for users based on user name then allows creation of one if there is no double
         /// </summary>
@@ -62,6 +63,7 @@ namespace BusinessLayer
             return success;
 
         }
+
         /// <summary>
         /// Allows the ability to delete user
         /// </summary>
@@ -95,6 +97,7 @@ namespace BusinessLayer
 
             return success;
         }
+
         /// <summary>
         /// Searches type users by username
         /// </summary>
@@ -139,6 +142,10 @@ namespace BusinessLayer
             return temp;
         }
 
+        /// <summary>
+        /// Gets list of users.
+        /// </summary>
+        /// <returns>List of Users in database.</returns>
         public List<User> UsersList()
         {
             try

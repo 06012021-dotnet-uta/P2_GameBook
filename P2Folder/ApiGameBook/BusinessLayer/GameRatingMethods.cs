@@ -131,6 +131,5 @@ namespace BusinessLayer
                 _logger.LogWarning("WARNING: No rating pair found.");
             return temp;
         }
-
     }
 }
