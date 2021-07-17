@@ -25,12 +25,6 @@ namespace GameBook.Controllers
             _postMethods =  postMethods;
             _userMethods = userMethods;
         }
-        // GET: api/<PostController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET api/<PostController>/5
         [HttpGet("{id}")]
@@ -48,6 +42,25 @@ namespace GameBook.Controllers
 
 
             if (user == null)
+            {
+                return StatusCode(400);
+            }
+            else
+            {
+                return StatusCode(201, result);
+            }
+        }
+
+        // POST api/<PostController>
+        [HttpPost("{userId}/{parentId}/{content}")]
+        public IActionResult PostComment(int userId, int parentId, string content)
+        {
+            User user = _userMethods.SearchUserByID(userId);
+            Post parent = _postMethods.SearchPostById(parentId);
+            var result = _postMethods.CreateComment(user, content, parent);
+
+
+            if (user == null || parent == null)
             {
                 return StatusCode(400);
             }

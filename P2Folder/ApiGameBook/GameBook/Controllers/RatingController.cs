@@ -24,6 +24,7 @@ namespace GameBook.Controllers
             _gameRatingMethods = gameRatingMethods;
         }
 
+         
         // GET: api/<RatingController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -33,9 +34,18 @@ namespace GameBook.Controllers
 
         // GET api/<RatingController>/5
         [HttpGet("{userId}/{gameId}")]
-        public Rating Get(int userId, int gameId)
+        public IActionResult Get(int userId, int gameId)
         {
-            return _gameRatingMethods.SearchRatings(userId, gameId);
+            var result =  _gameRatingMethods.SearchRatings(userId, gameId);
+
+            if (result == null)
+            {
+                return StatusCode(400);
+            }
+            else
+            {
+                return StatusCode(201, result);
+            }
         }
 
         // POST api/<RatingController>
