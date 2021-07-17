@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RepositoryLayer;
 using System;
@@ -16,6 +17,11 @@ namespace BusinessLayer
 
         public UserPlayHistoryMethods(gamebookdbContext context)
         {
+            var serviceProvider = new ServiceCollection()
+                .AddLogging()
+                .BuildServiceProvider();
+            var factory = serviceProvider.GetService<ILoggerFactory>();
+            _logger = factory.CreateLogger<UserPlayHistoryMethods>();
             _context = context;
         }
         public UserPlayHistoryMethods(ILogger<UserPlayHistoryMethods> logger, gamebookdbContext context)

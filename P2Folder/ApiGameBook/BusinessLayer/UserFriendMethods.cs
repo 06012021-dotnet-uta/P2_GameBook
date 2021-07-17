@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RepositoryLayer;
 using System;
@@ -16,6 +17,11 @@ namespace BusinessLayer
 
         public UserFriendMethods(gamebookdbContext context)
         {
+            var serviceProvider = new ServiceCollection()
+                .AddLogging()
+                .BuildServiceProvider();
+            var factory = serviceProvider.GetService<ILoggerFactory>();
+            _logger = factory.CreateLogger<UserFriendMethods>();
             _context = context;
         }
         public UserFriendMethods(ILogger<UserFriendMethods> logger, gamebookdbContext context)
@@ -23,7 +29,7 @@ namespace BusinessLayer
             _logger = logger;
             _context = context;
         }
-        
+
         public List<Friend> FriendsList(int? userId)
         {
             List<Friend> friendsList = null;
@@ -50,10 +56,10 @@ namespace BusinessLayer
         public bool CreateFriend(User currentUser, User userToBefriend)
         {
             bool success = false;
-                        
+
             try
             {
-                if(currentUser == null || userToBefriend == null)
+                if (currentUser == null || userToBefriend == null)
                 {
                     _logger.LogError("ERROR: null user");
                     return false;
