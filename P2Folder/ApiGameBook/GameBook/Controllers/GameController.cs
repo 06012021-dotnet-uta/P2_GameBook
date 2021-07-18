@@ -55,7 +55,7 @@ namespace GameBook.Controllers
             //_populateDBRealQuickMethod.SeedKeywords();
 
             // seed games 
-            _populateDBRealQuickMethod.SeedGames();
+            //_populateDBRealQuickMethod.SeedGames();
         }
 
     }

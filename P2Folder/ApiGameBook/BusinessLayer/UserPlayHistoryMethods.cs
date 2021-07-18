@@ -13,6 +13,7 @@ namespace BusinessLayer
     public class UserPlayHistoryMethods : IUserPlayHistoryMethods
     {
         private gamebookdbContext _context;
+        private readonly CallIGDBAPI _igdbApi;
         private readonly ILogger<UserPlayHistoryMethods> _logger;
 
         public UserPlayHistoryMethods(gamebookdbContext context)
@@ -24,9 +25,10 @@ namespace BusinessLayer
             _logger = factory.CreateLogger<UserPlayHistoryMethods>();
             _context = context;
         }
-        public UserPlayHistoryMethods(ILogger<UserPlayHistoryMethods> logger, gamebookdbContext context)
+        public UserPlayHistoryMethods(ILogger<UserPlayHistoryMethods> logger, CallIGDBAPI igdbApi, gamebookdbContext context)
         {
             _logger = logger;
+            _igdbApi = igdbApi;
             _context = context;
         }
 
@@ -36,12 +38,12 @@ namespace BusinessLayer
         /// <param name="user">The user who is adding the game</param>
         /// <param name="game">The game to add</param>
         /// <returns>True if able to add game</returns>
-        public bool CreatePlayHistory(User user, Game game)
+        public bool CreatePlayHistory(User user, int gameId)
         {
             bool success = false;
             try
             {
-                if (_context.Games.Where(x => x.GameId == game.GameId).FirstOrDefault() == null)
+                if (_igdbApi.SearchGameById(gameId)[0] == null)
                 {
                     _logger.LogWarning("WARNING: Game not found.");
                     return success;
@@ -49,7 +51,7 @@ namespace BusinessLayer
                 PlayHistory history = new PlayHistory()
                 {
                     UserId = user.UserId,
-                    GameId = game.GameId,
+                    GameId = gameId
                 };
                 _context.PlayHistories.Add(history);
                 _context.SaveChanges();

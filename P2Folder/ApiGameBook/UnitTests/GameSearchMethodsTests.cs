@@ -21,26 +21,16 @@ namespace UnitTests
             using (var context = new gamebookdbContext(options))
             {
                 // Arrange
-                List<Game> result;
-                Game game1 = new Game()
-                {
-                    Name = "Zelda"
-                };
-                Game game2 = new Game()
-                {
-                    Name = "Final Fantasy"
-                };
-                GameSearchMethods gameMethods = new GameSearchMethods(context);
+                List<string> result;
+                CallIGDBAPI igdbApi = new CallIGDBAPI();
 
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                context.Games.Add(game1);
-                context.Games.Add(game1);
-                result = gameMethods.GetGameList();
+                result = igdbApi.GamesList(0);
 
                 // Assert
-                Assert.NotNull(result); // result is null if no game was found with matching id
+                Assert.NotNull(result); // result is null if no games returned
             }
         }
         [Fact]
@@ -49,21 +39,11 @@ namespace UnitTests
             using (var context = new gamebookdbContext(options))
             {
                 // Arrange
-                Game result;
-                int searchNum = 10;
-                Game game = new Game()
-                {
-                    GameId = searchNum,
-                    Name = "Zelda"
-                };
                 GameSearchMethods gameMethods = new GameSearchMethods(context);
+                CallIGDBAPI igdbApi = new CallIGDBAPI();
 
                 // Act
-                context.Database.EnsureCreated();
-                context.Database.EnsureDeleted();
-                context.Games.Add(game);
-                context.SaveChanges();
-                result = gameMethods.SearchGame(searchNum);
+                var result = igdbApi.SearchGameById(1);
 
                 // Assert
                 Assert.NotNull(result); // result is null if no game was found with matching id
@@ -75,20 +55,12 @@ namespace UnitTests
             using (var context = new gamebookdbContext(options))
             {
                 // Arrange
-                Game result;
-                string searchName = "Zelda";
-                Game game = new Game()
-                {
-                    Name = searchName
-                };
+                string searchName = "zelda";
                 GameSearchMethods gameMethods = new GameSearchMethods(context);
+                CallIGDBAPI igdbApi = new CallIGDBAPI();
 
                 // Act
-                context.Database.EnsureCreated();
-                context.Database.EnsureDeleted();
-                context.Games.Add(game);
-                context.SaveChanges();
-                result = gameMethods.SearchGame(searchName);
+                var result = gameMethods.SearchGame(searchName);
 
                 // Assert
                 Assert.NotNull(result); // result is null if no game was found with matching name
