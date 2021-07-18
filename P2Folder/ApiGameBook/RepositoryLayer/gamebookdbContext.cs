@@ -17,14 +17,7 @@ namespace RepositoryLayer
         {
         }
 
-        public virtual DbSet<Collection> Collections { get; set; }
-        public virtual DbSet<CollectionJunction> CollectionJunctions { get; set; }
         public virtual DbSet<Friend> Friends { get; set; }
-        public virtual DbSet<Game> Games { get; set; }
-        public virtual DbSet<Genre> Genres { get; set; }
-        public virtual DbSet<GenreJunction> GenreJunctions { get; set; }
-        public virtual DbSet<Keyword> Keywords { get; set; }
-        public virtual DbSet<KeywordJunction> KeywordJunctions { get; set; }
         public virtual DbSet<PlayHistory> PlayHistories { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Rating> Ratings { get; set; }
@@ -38,44 +31,6 @@ namespace RepositoryLayer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
-
-            modelBuilder.Entity<Collection>(entity =>
-            {
-                entity.ToTable("collection");
-
-                entity.Property(e => e.CollectionId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("collection_id");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(40)
-                    .HasColumnName("name");
-            });
-
-            modelBuilder.Entity<CollectionJunction>(entity =>
-            {
-                entity.HasKey(e => new { e.CollectionId, e.GameId })
-                    .HasName("PK__collecti__BC2DB4362A010B60");
-
-                entity.ToTable("collection_junction");
-
-                entity.Property(e => e.CollectionId).HasColumnName("collection_id");
-
-                entity.Property(e => e.GameId).HasColumnName("game_id");
-
-                entity.HasOne(d => d.Collection)
-                    .WithMany(p => p.CollectionJunctions)
-                    .HasForeignKey(d => d.CollectionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__collectio__colle__70DDC3D8");
-
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.CollectionJunctions)
-                    .HasForeignKey(d => d.GameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__collectio__game___71D1E811");
-            });
 
             modelBuilder.Entity<Friend>(entity =>
             {
@@ -101,95 +56,6 @@ namespace RepositoryLayer
                     .HasConstraintName("FK__friend__user2_id__5EBF139D");
             });
 
-            modelBuilder.Entity<Game>(entity =>
-            {
-                entity.ToTable("game");
-
-                entity.Property(e => e.GameId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("game_id");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(100)
-                    .HasColumnName("name");
-            });
-
-            modelBuilder.Entity<Genre>(entity =>
-            {
-                entity.ToTable("genre");
-
-                entity.Property(e => e.GenreId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("genre_id");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(40)
-                    .HasColumnName("name");
-            });
-
-            modelBuilder.Entity<GenreJunction>(entity =>
-            {
-                entity.HasKey(e => new { e.GenreId, e.GameId })
-                    .HasName("PK__genre_ju__F7BC9CBE3492656C");
-
-                entity.ToTable("genre_junction");
-
-                entity.Property(e => e.GenreId).HasColumnName("genre_id");
-
-                entity.Property(e => e.GameId).HasColumnName("game_id");
-
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.GenreJunctions)
-                    .HasForeignKey(d => d.GameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__genre_jun__game___6D0D32F4");
-
-                entity.HasOne(d => d.Genre)
-                    .WithMany(p => p.GenreJunctions)
-                    .HasForeignKey(d => d.GenreId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__genre_jun__genre__6C190EBB");
-            });
-
-            modelBuilder.Entity<Keyword>(entity =>
-            {
-                entity.ToTable("keyword");
-
-                entity.Property(e => e.KeywordId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("keyword_id");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(40)
-                    .HasColumnName("name");
-            });
-
-            modelBuilder.Entity<KeywordJunction>(entity =>
-            {
-                entity.HasKey(e => new { e.KeywordId, e.GameId })
-                    .HasName("PK__keyword___EC16C63392D04595");
-
-                entity.ToTable("keyword_junction");
-
-                entity.Property(e => e.KeywordId).HasColumnName("keyword_id");
-
-                entity.Property(e => e.GameId).HasColumnName("game_id");
-
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.KeywordJunctions)
-                    .HasForeignKey(d => d.GameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__keyword_j__game___76969D2E");
-
-                entity.HasOne(d => d.Keyword)
-                    .WithMany(p => p.KeywordJunctions)
-                    .HasForeignKey(d => d.KeywordId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__keyword_j__keywo__75A278F5");
-            });
-
             modelBuilder.Entity<PlayHistory>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.GameId })
@@ -200,12 +66,6 @@ namespace RepositoryLayer
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.Property(e => e.GameId).HasColumnName("game_id");
-
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.PlayHistories)
-                    .HasForeignKey(d => d.GameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__play_hist__game___68487DD7");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.PlayHistories)
@@ -259,12 +119,6 @@ namespace RepositoryLayer
 
                 entity.Property(e => e.Rating1).HasColumnName("rating");
 
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.Ratings)
-                    .HasForeignKey(d => d.GameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__rating__game_id__7F2BE32F");
-
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Ratings)
                     .HasForeignKey(d => d.UserId)
@@ -282,12 +136,6 @@ namespace RepositoryLayer
                 entity.Property(e => e.GameId).HasColumnName("game_id");
 
                 entity.Property(e => e.PostId).HasColumnName("post_id");
-
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.Reviews)
-                    .HasForeignKey(d => d.GameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__reviews__game_id__05D8E0BE");
 
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.Reviews)
