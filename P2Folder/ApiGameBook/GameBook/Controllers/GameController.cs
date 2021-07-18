@@ -34,6 +34,7 @@ namespace GameBook.Controllers
         public List<Game> Get()
         {
             //return _callIGDBAPI.searchByWordsInTitle("zelda"); // hardcorded zelda for testing
+            //return _callIGDBAPI.SearchGamesByGenre("Fighting"); //hardcoded for testing
             return _gameSearchMethods.GetGameList();
         }
 
