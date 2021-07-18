@@ -28,8 +28,8 @@ namespace GameBook.Controllers
             _userMethods = userMethods;
         }
 
-        // GET api/<FriendController>/5
-        [HttpGet("{id}")]
+        // GET api/<FriendController>/list/5
+        [HttpGet("list/{id}")]
         public List<Friend> Get(int id)
         {
             return _friendMethods.FriendsList(id);
@@ -42,8 +42,8 @@ namespace GameBook.Controllers
             return _friendMethods.CreateFriend(_userMethods.SearchUserByID(user1id), _userMethods.SearchUserByID(user2id));
         }
 
-        // DELETE api/<FriendController>/5/1
-        [HttpDelete(("{user1id}/{user2id}"))]
+        // DELETE api/<FriendController>/delete/5/1
+        [HttpDelete(("delete/{user1id}/{user2id}"))]
         public bool Delete(int user1id, int user2id)
         {
             Friend friend = _friendMethods.SearchFriend(user1id, user2id);

@@ -34,22 +34,22 @@ namespace GameBook.Controllers
             return _playHistoryMethods.GetUserPlayHistory(userId);
         }
 
-        // GET api/<PlayHistoryController>/5
-        [HttpGet("{userId}/{gameId}")]
+        // GET api/<PlayHistoryController>/user/5/game/1
+        [HttpGet("user/{userId}/game/{gameId}")]
         public PlayHistory Get(int userId, int gameId)
         {
             return _playHistoryMethods.SearchPlayHistory(userId,gameId);
         }
 
         // POST api/<PlayHistoryController>
-        [HttpPost("{userId}/{gameId}")]
+        [HttpPost("user/{userId}/game/{gameId}")]
         public bool Post(int userId, int gameId)
         {
             return _playHistoryMethods.CreatePlayHistory(_userMethods.SearchUserByID(userId), gameId);
         }
 
         // DELETE api/<PlayHistoryController>/5
-        [HttpDelete("{userId}/{gameId}")]
+        [HttpDelete("user/{userId}/game/{gameId}")]
         public bool Delete(int userId, int gameId)
         {
             var result = _playHistoryMethods.SearchPlayHistory(userId, gameId);

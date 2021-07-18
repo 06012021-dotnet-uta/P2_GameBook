@@ -41,7 +41,7 @@ namespace GameBook.Controllers
         }
 
         // POST api/<PostController>
-        [HttpPost("{userId}/{content}")]
+        [HttpPost("user/{userId}/{content}")]
         public IActionResult PostPost(int userId, string content)
         {
             User user = _userMethods.SearchUserByID(userId);
@@ -59,7 +59,7 @@ namespace GameBook.Controllers
         }
 
         // POST api/<PostController>
-        [HttpPost("{userId}/{parentId}/{content}")]
+        [HttpPost("user/{userId}/parent/{parentId}/{content}")]
         public IActionResult PostComment(int userId, int parentId, string content)
         {
             User user = _userMethods.SearchUserByID(userId);
