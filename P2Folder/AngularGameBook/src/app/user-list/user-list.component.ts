@@ -19,7 +19,7 @@ export class UserListComponent implements OnInit {
   }
 
   getUsers() {
-    this.httpClient.get<any>('https://localhost:44350/api/User').subscribe(
+    this.httpClient.get<any>('https://localhost:44350/api/User/list').subscribe(
       response => {
         console.log(response);
         this.users = response;
