@@ -27,6 +27,7 @@ namespace UnitTests
                 bool result;
                 //needed for method
                 int userRating = 5;
+                int gameId = 10;
                 User user = new()
                 {
                     Username = "user1",
@@ -34,10 +35,7 @@ namespace UnitTests
                     LastName = "last",
                     Email = "email@email.com"
                 };
-                Game game = new()
-                {
-                    Name = "Halo"
-                };
+
                 //the methods we will be using belond to these classes
                 GameRatingMethods gameMethods = new GameRatingMethods(context);
                 UserMethods userMethods = new UserMethods(context);
@@ -49,9 +47,8 @@ namespace UnitTests
                 context.Database.EnsureDeleted();
                 //creates things need creating
                 userMethods.CreateUser(user);
-                context.Games.Add(game);
                 //runs test
-                result = gameMethods.RateGame(user.UserId, game.GameId, userRating);
+                result = gameMethods.RateGame(user.UserId, gameId, userRating);
 
 
                 //Assert
@@ -74,16 +71,13 @@ namespace UnitTests
                 //needed for method
                 int userRating = 5;
                 int trueRating = 10;
+                int gameId = 10;
                 User user = new()
                 {
                     Username = "user1",
                     FirstName = "first",
                     LastName = "last",
                     Email = "email@email.com"
-                };
-                Game game = new()
-                {
-                    Name = "Halo"
                 };
                 //the methods we will be using belond to these classes
                 GameRatingMethods gameMethods = new GameRatingMethods(context);
@@ -96,12 +90,11 @@ namespace UnitTests
                 context.Database.EnsureDeleted();
                 //creates things need creating
                 userMethods.CreateUser(user);
-                context.Games.Add(game);
-                gameMethods.RateGame(user.UserId, game.GameId, userRating);
+                gameMethods.RateGame(user.UserId, gameId, userRating);
 
 
                 //Assert
-                result = gameMethods.RateGame(user.UserId, game.GameId, trueRating);
+                result = gameMethods.RateGame(user.UserId, gameId, trueRating);
                 //Asserts ;p
                 Assert.True(result);
                 Assert.Equal(10, trueRating);
@@ -118,16 +111,13 @@ namespace UnitTests
                 bool result;
                 //needed for method
                 int userRating = 5;
+                int gameId = 10;
                 User user = new()
                 {
                     Username = "user1",
                     FirstName = "first",
                     LastName = "last",
                     Email = "email@email.com"
-                };
-                Game game = new()
-                {
-                    Name = "Halo"
                 };
                 //the methods we will be using belond to these classes
                 GameRatingMethods gameMethods = new GameRatingMethods(context);
@@ -140,11 +130,10 @@ namespace UnitTests
                 context.Database.EnsureDeleted();
                 //creates things need creating
                 userMethods.CreateUser(user);
-                context.Games.Add(game);
-                gameMethods.RateGame(user.UserId, game.GameId, userRating);
+                gameMethods.RateGame(user.UserId, gameId, userRating);
 
                 //finds rating to delete
-                Rating temp = gameMethods.SearchRatings(user.UserId, game.GameId);
+                Rating temp = gameMethods.SearchRatings(user.UserId, gameId);
 
                 //runs test
                 result = gameMethods.DeleteRating(temp);

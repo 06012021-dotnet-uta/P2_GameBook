@@ -1,17 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-
-export class User {
-  constructor(
-    public userId: number,
-    public username: string,
-    public password: string,
-    public firstName: string,
-    public lastName: string,
-    public email: string,
-  ) {
-  }
-}
+import { UserService, User } from '../user.service';
 
 @Component({
   selector: 'app-user-list',
@@ -20,23 +9,21 @@ export class User {
 })
 
 export class UserListComponent implements OnInit {
-
-  users: User[] | undefined;
-  constructor(
-    private httpClient: HttpClient
-  ) { }
+  users: User[];
+  constructor(private httpClient: HttpClient, private userService: UserService) {
+    this.users = [];
+  }
 
   ngOnInit(): void {
     this.getUsers();
   }
 
-  getUsers(){
-    this.httpClient.get<any>('https://localhost:5001/api/User').subscribe(
+  getUsers() {
+    this.httpClient.get<any>('https://localhost:44350/api/User').subscribe(
       response => {
         console.log(response);
         this.users = response;
       }
     )
   }
-
 }
