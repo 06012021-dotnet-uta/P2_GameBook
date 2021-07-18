@@ -1,7 +1,20 @@
-<h1>
-    Search Games
-</h1>
-
+<h2>Games</h2>
 <p>
-    Games search options go here
+    put games search options here?
 </p>
+<div class="container">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let game of games">
+      <td><span>{{game.GameId}}</span></td>
+      <td><span>{{game.Name}}</span></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

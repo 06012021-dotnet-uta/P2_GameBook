@@ -202,11 +202,15 @@ namespace BusinessLayer
         /// Gets list of users.
         /// </summary>
         /// <returns>List of Users in database.</returns>
-        public List<Post> PostsList()
+        public List<int> PostsList()
         {
             try
             {
-                return _context.Posts.ToList();
+                List<Post> posts = _context.Posts.ToList();
+                List<int> ids = new List<int>();
+                foreach (var post in posts)
+                    ids.Add(post.PostId);
+                return ids;
             }
             catch (Exception e)
             {
