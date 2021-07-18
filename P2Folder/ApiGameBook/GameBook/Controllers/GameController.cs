@@ -70,5 +70,12 @@ namespace GameBook.Controllers
             // can't get it to work please fix
             return _callIGDBAPI.SearchGameById(gameID);
         }
+
+        [HttpGet("pix/{gameID}")]
+        public List<string> GetGamePix(int gameID)
+        {
+            // can't get it to work please fix
+            return _callIGDBAPI.PicturesForTheGame(gameID);
+        }
     }
 }
