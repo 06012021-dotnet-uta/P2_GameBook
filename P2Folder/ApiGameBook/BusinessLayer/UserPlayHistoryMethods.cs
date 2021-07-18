@@ -13,7 +13,7 @@ namespace BusinessLayer
     public class UserPlayHistoryMethods : IUserPlayHistoryMethods
     {
         private gamebookdbContext _context;
-        private readonly CallIGDBAPI _igdbApi;
+        private CallIGDBAPI _igdbApi = new CallIGDBAPI();
         private readonly ILogger<UserPlayHistoryMethods> _logger;
 
         public UserPlayHistoryMethods(gamebookdbContext context)
@@ -25,10 +25,9 @@ namespace BusinessLayer
             _logger = factory.CreateLogger<UserPlayHistoryMethods>();
             _context = context;
         }
-        public UserPlayHistoryMethods(ILogger<UserPlayHistoryMethods> logger, CallIGDBAPI igdbApi, gamebookdbContext context)
+        public UserPlayHistoryMethods(ILogger<UserPlayHistoryMethods> logger, gamebookdbContext context)
         {
             _logger = logger;
-            _igdbApi = igdbApi;
             _context = context;
         }
 
