@@ -26,6 +26,13 @@ namespace GameBook.Controllers
             _userMethods = userMethods;
         }
 
+        // GET: api/<PostController>
+        [HttpGet]
+        public List<Post> Get()
+        {
+            return _postMethods.PostsList();
+        }
+
         // GET api/<PostController>/5
         [HttpGet("{id}")]
         public Post Get(int id)

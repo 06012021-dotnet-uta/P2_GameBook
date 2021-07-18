@@ -1,6 +1,29 @@
 <h1>
     Game Discussion
 </h1>
-<p>
-    posts go in here
-</p>
+
+<form action="/action_page.php">
+    <label for="fname">Start A New Game Discussion:</label>
+    <br>
+    <textarea rows="4" cols="50">Write Here!</textarea>
+    <br>
+    <input type="submit" value="Submit">
+  </form>
+
+  <br>
+  <br>
+  
+  <div class="container" >
+    <table class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>Content</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let post of posts">
+        <td><span>{{post.content}}</span></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
