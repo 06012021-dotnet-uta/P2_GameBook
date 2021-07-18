@@ -12,17 +12,11 @@ namespace BusinessLayer
 {
     public class CallIGDBAPI
     {
-        private gamebookdbContext _context;
         private readonly ILogger<GameRatingMethods> _logger;
 
-        public CallIGDBAPI(gamebookdbContext context)
-        {
-            _context = context;
-        }
-        public CallIGDBAPI(ILogger<GameRatingMethods> logger, gamebookdbContext context)
+        public CallIGDBAPI(ILogger<GameRatingMethods> logger)
         {
             _logger = logger;
-            _context = context;
         }
 
         public CallIGDBAPI()
