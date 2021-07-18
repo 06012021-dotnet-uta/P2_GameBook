@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RepositoryLayer;
 using RestSharp;
@@ -54,7 +54,7 @@ namespace BusinessLayer
 
         public List<string> SearchByWordsInTitle(string wordToSearch)
         {
-            //	search "vegas"; fields name; limit 500;
+         
             var client = new RestClient("https://api.igdb.com/v4/games");
             client.Timeout = -1;
             var request = new RestRequest(Method.POST);
@@ -76,7 +76,7 @@ namespace BusinessLayer
             return gamesList;
         }
 
-        public string[] SearchGameById(int gameId)
+        public string SearchGameById(int gameId)
         {
             var client = new RestClient("https://api.igdb.com/v4/games");
             client.Timeout = -1;
@@ -88,12 +88,15 @@ namespace BusinessLayer
             request.AddParameter("text/plain", body, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
-            List<string> gamesList = new List<string>();
-
             dynamic myObject = JsonConvert.DeserializeObject(response.Content);
+
+
             if (myObject != null && myObject.Count != 0)
             {
-                return myObject[0];
+                var array = myObject[0];
+                string game = array.name;
+                return game;
+               
             }
             return null;
         }

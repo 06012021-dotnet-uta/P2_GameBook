@@ -43,7 +43,7 @@ namespace BusinessLayer
             bool success = false;
             try
             {
-                if (_igdbApi.SearchGameById(gameId)[0] == null)
+                if (_igdbApi.SearchGameById(gameId) == null)
                 {
                     _logger.LogWarning("WARNING: Game not found.");
                     return success;
