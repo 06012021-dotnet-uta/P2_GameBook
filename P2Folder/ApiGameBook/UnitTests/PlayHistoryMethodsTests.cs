@@ -119,8 +119,8 @@ namespace UnitTests
                 context.Database.EnsureDeleted();
                 context.SaveChanges();
                 userMethods.CreateUser(user);
-                playHistoryMethods.CreatePlayHistory(user, 10);
-                result = playHistoryMethods.DeletePlayHistory(playHistoryMethods.SearchPlayHistory(user.UserId, 10));
+                playHistoryMethods.CreatePlayHistory(user, 1);
+                result = playHistoryMethods.DeletePlayHistory(playHistoryMethods.SearchPlayHistory(user.UserId, 1));
 
                 // Assert
                 Assert.True(result); // result should be true if deletion of a play history entry was successful

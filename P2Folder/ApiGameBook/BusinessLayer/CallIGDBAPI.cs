@@ -96,14 +96,12 @@ namespace BusinessLayer
                 var array = myObject[0];
                 string game = array.name;
                 return game;
-               
             }
             return null;
         }
 
         public List<string> SearchGamesByGenre(string genreName)
         {
-            //search genre table
             int genreId = 0;
             var client = new RestClient("https://api.igdb.com/v4/genres");
             client.Timeout = -1;
@@ -128,7 +126,7 @@ namespace BusinessLayer
             request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
             request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
             request.AddHeader("Content-Type", "text/plain");
-            body = @"fields name, genres; where genres = ("+ genreId + "); limit 500;";
+            body = @"fields name; where genres = ("+ genreId + "); limit 500;";
             request.AddParameter("text/plain", body, ParameterType.RequestBody);
             response = client.Execute(request);
 
@@ -142,16 +140,84 @@ namespace BusinessLayer
             return gamesList;
         }
 
-        public List<string> SearchGamesByCollection(string genreName)
+        public List<string> SearchGamesByCollection(string collectionName)
         {
-            //put collection search here
-            return null;
+            int collectionId = 0;
+            var client = new RestClient("https://api.igdb.com/v4/collections");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
+            request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
+            request.AddHeader("Content-Type", "text/plain");
+            var body = @"fields name; where name = """ + collectionName + @""";";
+            request.AddParameter("text/plain", body, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+
+            dynamic myObject = JsonConvert.DeserializeObject(response.Content);
+            if (myObject != null && myObject.Count != 0)
+            {
+                var array = myObject[0];
+                collectionId = array.id;
+            }
+
+            client = new RestClient("https://api.igdb.com/v4/games");
+            client.Timeout = -1;
+            request = new RestRequest(Method.POST);
+            request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
+            request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
+            request.AddHeader("Content-Type", "text/plain");
+            body = @"fields name; where collection = " + collectionId + "; limit 500;";
+            request.AddParameter("text/plain", body, ParameterType.RequestBody);
+            response = client.Execute(request);
+
+            dynamic myObject2 = JsonConvert.DeserializeObject(response.Content);
+            List<string> gamesList = new List<string>();
+            foreach (var i in myObject2)
+            {
+                string str = i.name.ToString();
+                gamesList.Add(str);
+            }
+            return gamesList;
         }
 
-        public List<string> SearchGamesByKeyword(string genreName)
+        public List<string> SearchGamesByKeyword(string keywordName)
         {
-            //put keyword search here
-            return null;
+            int keywordId = 0;
+            var client = new RestClient("https://api.igdb.com/v4/keywords");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
+            request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
+            request.AddHeader("Content-Type", "text/plain");
+            var body = @"fields name; where name = """ + keywordName + @""";";
+            request.AddParameter("text/plain", body, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+
+            dynamic myObject = JsonConvert.DeserializeObject(response.Content);
+            if (myObject != null && myObject.Count != 0)
+            {
+                var array = myObject[0];
+                keywordId = array.id;
+            }
+
+            client = new RestClient("https://api.igdb.com/v4/games");
+            client.Timeout = -1;
+            request = new RestRequest(Method.POST);
+            request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
+            request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
+            request.AddHeader("Content-Type", "text/plain");
+            body = @"fields name; where keywords = (" + keywordId + "); limit 500;";
+            request.AddParameter("text/plain", body, ParameterType.RequestBody);
+            response = client.Execute(request);
+
+            dynamic myObject2 = JsonConvert.DeserializeObject(response.Content);
+            List<string> gamesList = new List<string>();
+            foreach (var i in myObject2)
+            {
+                string str = i.name.ToString();
+                gamesList.Add(str);
+            }
+            return gamesList;
         }
     }
 
