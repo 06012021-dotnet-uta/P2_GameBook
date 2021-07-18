@@ -214,6 +214,57 @@ namespace BusinessLayer
             return gamesList;
         }
 
+        public string GameCoverArt(int gameID)
+        {
+            var client = new RestClient("https://api.igdb.com/v4/covers");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Client-ID", " q17vg91zyii02i7r72jjohbf0d6ggc");
+            request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
+            request.AddHeader("Content-Type", "text/plain");
+            var body = @" fields url; where game = " + gameID + ";";
+            request.AddParameter("text/plain", body, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+
+            dynamic myObject = JsonConvert.DeserializeObject(response.Content);
+            if (myObject != null && myObject.Count != 0)
+            {
+                var array = myObject[0];
+                string url = array.url;
+                return url;
+            }
+            return null;
+        }
+
+        public List<string> GameScreenshots(int gameID)
+        {
+            var client = new RestClient("https://api.igdb.com/v4/screenshots");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Client-ID", " q17vg91zyii02i7r72jjohbf0d6ggc");
+            request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
+            request.AddHeader("Content-Type", "text/plain");
+            var body = @" fields * ; where game = " + gameID + ";";
+            request.AddParameter("text/plain", body, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+
+            dynamic myObject = JsonConvert.DeserializeObject(response.Content);
+
+            List<string> picsList = new List<string>();
+
+            if (myObject != null && myObject.Count != 0)
+            {
+                foreach (var i in myObject)
+                {
+                    string temp = i.url;
+                    picsList.Add(temp);
+                }
+                return picsList;
+            }
+
+            return null;
+        }
+
         public List<string> PicturesForTheGame(int gameID)
 		{
             var client = new RestClient("https://api.igdb.com/v4/artworks");

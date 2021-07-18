@@ -60,22 +60,31 @@ namespace GameBook.Controllers
         [HttpGet("KeyWord/{keyword}")]
         public List<string> GetGamesByKeyWord(string keyword)
         {
-            // can't get it to work please fix
             return _callIGDBAPI.SearchGamesByKeyword(keyword);
         }
 
         [HttpGet("GameID/{gameID}")]
         public string GetGamesById(int gameID)
         {
-            // can't get it to work please fix
             return _callIGDBAPI.SearchGameById(gameID);
         }
 
         [HttpGet("pix/{gameID}")]
         public List<string> GetGamePix(int gameID)
         {
-            // can't get it to work please fix
             return _callIGDBAPI.PicturesForTheGame(gameID);
+        }
+
+        [HttpGet("screenshots/{gameID}")]
+        public List<string> GetScreenshots(int gameID)
+        {
+            return _callIGDBAPI.GameScreenshots(gameID);
+        }
+
+        [HttpGet("cover/{gameID}")]
+        public string GetCover(int gameID)
+        {
+            return _callIGDBAPI.GameCoverArt(gameID);
         }
     }
 }
