@@ -1,25 +1,3 @@
-<h2>Games</h2>
-<p>
-    put games search options here?
-</p>
-<div class="container">
-  <!-- <input type="search" (search)="search()" placeholder="Search text"> -->
-  <!-- <input class="form-control mr-sm-2" type="text" placeholder="Search"> -->
-  <table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-    </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let game of games">
-        <td><span>{{game}}</span></td>
-      </tr>
-    <!-- <tr *ngFor="let game of games">
-      <td><span>{{game}}</span></td>
-      <td><span>{{game.Name}}</span></td>
-    </tr> -->
-    </tbody>
-  </table>
-</div>
+<h2>Games Search</h2>
+<app-search></app-search>
+<app-game-list></app-game-list>
