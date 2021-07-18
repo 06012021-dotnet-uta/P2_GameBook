@@ -25,7 +25,7 @@ namespace GameBook.Controllers
         }
 
         // GET: api/<UserController>
-        [HttpGet]
+        [HttpGet("list")]
         public List<User> Get()
         {
             return _userMethods.UsersList();

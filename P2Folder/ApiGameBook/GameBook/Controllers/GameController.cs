@@ -33,7 +33,6 @@ namespace GameBook.Controllers
         [HttpGet("GameList")]
         public List<string> GetGameList()
         {
-            
             return _callIGDBAPI.GamesList();
         }
 
@@ -58,26 +57,11 @@ namespace GameBook.Controllers
             return _callIGDBAPI.SearchGamesByCollection(series);
         }
 
-        //[HttpGet("KeyWord/{keyword}")]
-        //public List<string> GetGamesByKeyWord(string keyWord)
-        //{
-        //    // can't get it to work please fix
-        //    return _callIGDBAPI.SearchGamesByKeyword(keyWord);
-        //}
-
-        // POST api/<GameController>
-        [HttpPost]
-        public void Post()
+        [HttpGet("KeyWord/{keyword}")]
+        public List<string> GetGamesByKeyWord(string keyword)
         {
-            // this method is only called to seed the database, comment out after we are done with it?
-            //_populateDBRealQuickMethod.PopulateThatDb();
-
-            //seeding keywords table
-            //_populateDBRealQuickMethod.SeedKeywords();
-
-            // seed games 
-            //_populateDBRealQuickMethod.SeedGames();
+            // can't get it to work please fix
+            return _callIGDBAPI.SearchGamesByKeyword(keyword);
         }
-
     }
 }

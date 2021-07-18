@@ -57,13 +57,13 @@ steps:
     publishWebProjects: false
     projects: '$(solution)'
     zipAfterPublish: true
-    
+
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Azure subscription 1(d6c8a8b1-d080-451c-a2a1-87677bde0d9f)'
-    appType: 'apiApp'
-    WebAppName: 'Game-Book'
+    appType: 'webApp'
+    WebAppName: 'GameBookApi'
     deployToSlotOrASE: true
     ResourceGroupName: 'GameBookResourceGroup'
     SlotName: 'production'
