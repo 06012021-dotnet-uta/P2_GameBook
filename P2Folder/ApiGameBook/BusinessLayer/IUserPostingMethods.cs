@@ -10,6 +10,6 @@ namespace BusinessLayer
         bool DeletePost(int? postId);
         bool EditPost(Post post, string newContent);
         Post SearchPostById(int? postId);
-        List<Post> PostsList();
+        List<int> PostsList();
     }
 }

@@ -375,7 +375,7 @@ namespace UnitTests
             using (var context = new gamebookdbContext(options))
             {
                 // Arrange
-                List<Post> postList = null;
+                List<int> postList = null;
                 User user1 = new User()
                 {
                     Username = "username1",
