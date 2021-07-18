@@ -63,5 +63,12 @@ namespace GameBook.Controllers
             // can't get it to work please fix
             return _callIGDBAPI.SearchGamesByKeyword(keyword);
         }
+
+        [HttpGet("GameID/{gameID}")]
+        public string GetGamesById(int gameID)
+        {
+            // can't get it to work please fix
+            return _callIGDBAPI.SearchGameById(gameID);
+        }
     }
 }
