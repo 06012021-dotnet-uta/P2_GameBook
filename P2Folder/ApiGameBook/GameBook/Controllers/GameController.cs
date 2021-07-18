@@ -17,20 +17,23 @@ namespace GameBook.Controllers
     public class GameController : ControllerBase
     {
         private readonly PopulateDBRealQuickMethod _populateDBRealQuickMethod;
+        private readonly CallIGDBAPI _callIGDBAPI;
         private readonly IGameSearchMethods _gameSearchMethods;
         private readonly ILogger<GameController> _logger;
 
-        public GameController(PopulateDBRealQuickMethod populateDBRealQuickMethod, IGameSearchMethods gameSearchMethods, ILogger<GameController> logger)
+        public GameController(PopulateDBRealQuickMethod populateDBRealQuickMethod, CallIGDBAPI callIGDBAPI, IGameSearchMethods gameSearchMethods, ILogger<GameController> logger)
         {
             _logger = logger;
             _gameSearchMethods = gameSearchMethods;
             _populateDBRealQuickMethod = populateDBRealQuickMethod;
+            _callIGDBAPI = callIGDBAPI;
         }
 
         //GET: api/<GameController>
         [HttpGet]
         public List<Game> Get()
         {
+            //return _callIGDBAPI.searchByWordsInTitle("zelda"); // hardcorded zelda for testing
             return _gameSearchMethods.GetGameList();
         }
 
