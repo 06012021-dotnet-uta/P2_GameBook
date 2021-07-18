@@ -13,6 +13,9 @@ import { GenreDiscussionComponent } from './genre-discussion/genre-discussion.co
 import { GameDiscussionComponent } from './game-discussion/game-discussion.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { SearchComponent } from './search/search.component';
+import { GameListComponent } from './game-list/game-list.component';
 
 @NgModule({
   declarations: [
@@ -26,11 +29,14 @@ import { HttpClientModule } from '@angular/common/http';
     GenreDiscussionComponent,
     GameDiscussionComponent,
     UserListComponent,
+    SearchComponent,
+    GameListComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

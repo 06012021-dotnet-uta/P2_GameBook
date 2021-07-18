@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
 })
 export class GameService {
 
-  url: string = 'https://localhost:44350/api/User/';
+  url: string = 'https://localhost:5001/api/GetGameList/';
   httpOptions =
     {
       headers: new HttpHeaders
