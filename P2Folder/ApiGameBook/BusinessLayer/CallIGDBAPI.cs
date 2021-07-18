@@ -97,6 +97,24 @@ namespace BusinessLayer
             }
             return null;
         }
+
+        public List<string> SearchGamesByGenre(string genreName)
+        {
+            //put genre search here
+            return null;
+        }
+
+        public List<string> SearchGamesByCollection(string genreName)
+        {
+            //put collection search here
+            return null;
+        }
+
+        public List<string> SearchGamesByKeyword(string genreName)
+        {
+            //put keyword search here
+            return null;
+        }
     }
 
 }
