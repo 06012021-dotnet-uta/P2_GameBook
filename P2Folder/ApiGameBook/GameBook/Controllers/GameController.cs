@@ -47,10 +47,12 @@ namespace GameBook.Controllers
         {
             // this method is only called to seed the database, comment out after we are done with it?
             //_populateDBRealQuickMethod.PopulateThatDb();
-            
+
             //seeding keywords table
             //_populateDBRealQuickMethod.SeedKeywords();
 
+            // seed games 
+            _populateDBRealQuickMethod.SeedGames();
         }
 
     }

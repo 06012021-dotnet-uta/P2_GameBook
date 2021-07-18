@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using RepositoryLayer;
 using RestSharp;
 
@@ -13,68 +14,91 @@ namespace BusinessLayer
     {
         private gamebookdbContext _context;
 
-
-
         public PopulateDBRealQuickMethod(gamebookdbContext context)
         {
             _context = context;
         }
 
-        public void SeedKeywords()
+        public void SeedGames()
         {
-            var client = new RestClient("https://api.igdb.com/v4/keywords");
-            client.Timeout = -1;
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
-            request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
-            request.AddHeader("Content-Type", "text/plain");
-            var body = @"fields name;" + "\n" + @"sort name asc;" + "\n" +@"limit 500;";
-            request.AddParameter("text/plain", body, ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
-
-            string editString = response.Content;
-            string[] stringSeparators = new string[] { "\"", ": ", "[", "{", "}", "]", "\n", "," };
-            string[] splitStrings;
-            splitStrings = editString.Split(stringSeparators, StringSplitOptions.None);
-            List<string> formatedSplit = new List<string>();
-
-            foreach (string str in splitStrings)
+            for (int i = 2000; i < 5000; i++)
             {
-                if (str != "" && !String.IsNullOrWhiteSpace(str))
+                var client = new RestClient("https://api.igdb.com/v4/games");
+                client.Timeout = -1;
+                var request = new RestRequest(Method.POST);
+                request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
+                request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
+                request.AddHeader("Content-Type", "text/plain");
+                var body = @"fields name;" + "\n" + @"where id = " + i + ";";
+                request.AddParameter("text/plain", body, ParameterType.RequestBody);
+                IRestResponse response = client.Execute(request);
+
+                dynamic myObject = JsonConvert.DeserializeObject(response.Content);
+                if (myObject != null && myObject.Count != 0)
                 {
-                    formatedSplit.Add(str);
-                }
-            }
-            for (int i = 0; i < formatedSplit.Count; i++)
-            {
-                if (formatedSplit[i] == "id")
-                {
-                    //check if keyword in db
-                    if (Int32.TryParse(formatedSplit[i + 1], out int j))
+                    var array = myObject[0];
+                    int id = array.id;
+                    string name = array.name;
+                    Game temp = _context.Games.Where(x => x.GameId == id).FirstOrDefault();
+                    if (temp == null)
                     {
-                        Keyword temp = _context.Keywords.Where(x => x.KeywordId == j).FirstOrDefault();
-                        if (temp == null)
+                        Game game = new Game()
                         {
-                            Keyword keyword = new Keyword()
-                            {
-                                KeywordId = j,
-                                Name = formatedSplit[i + 3]
-                            };
-                            _context.Keywords.Add(keyword);
-                            _context.SaveChanges();
-                            Console.WriteLine("Success");
-                        }
-                        else
-                        {
-                            Console.WriteLine("keyword exists already");
-                        }
+                            GameId = id,
+                            Name = name
+                        };
+                        _context.Games.Add(game);
+                        _context.SaveChanges();
+                        Console.WriteLine($"Success game added: {name}");
                     }
                     else
                     {
-                        Console.WriteLine("not an integer");
+                        Console.WriteLine($"Game already exists: {name}");
                     }
                 }
             }
+            Console.WriteLine("Seed complete");
+        }
+
+        public void SeedKeywords()
+        {
+            for (int i = 501; i < 1000; i++)
+            {
+                var client = new RestClient("https://api.igdb.com/v4/keywords");
+                client.Timeout = -1;
+                var request = new RestRequest(Method.POST);
+                request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
+                request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
+                request.AddHeader("Content-Type", "text/plain");
+                var body = @"fields name;" + "\n" + @"where id = " + i + ";";
+                request.AddParameter("text/plain", body, ParameterType.RequestBody);
+                IRestResponse response = client.Execute(request);
+
+                dynamic myObject = JsonConvert.DeserializeObject(response.Content);
+                if (myObject != null && myObject.Count != 0)
+                {
+                    var array = myObject[0];
+                    int id = array.id;
+                    string name = array.name;
+                    Keyword temp = _context.Keywords.Where(x => x.KeywordId == id).FirstOrDefault();
+                    if (temp == null)
+                    {
+                        Keyword keyword = new Keyword()
+                        {
+                            KeywordId = id,
+                            Name = name
+                        };
+                        _context.Keywords.Add(keyword);
+                        _context.SaveChanges();
+                        Console.WriteLine("Success");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{name} Keyword already exists");
+                    }
+                }
+            }
+            Console.WriteLine("Seed complete");
         }
 
         public void PopulateThatDb()
