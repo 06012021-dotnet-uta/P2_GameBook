@@ -84,7 +84,7 @@ namespace BusinessLayer
             request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
             request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
             request.AddHeader("Content-Type", "text/plain");
-            var body = @"fields name; where id = """ + gameId + @""";";
+            var body = @"fields name; where id = " + gameId + @";";
             request.AddParameter("text/plain", body, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
@@ -103,13 +103,12 @@ namespace BusinessLayer
 
         public List<string> SearchGamesByGenre(string genreName)
         {
-            //put genre search here
+            
             return null;
         }
 
         public List<string> SearchGamesByCollection(string genreName)
         {
-            //put collection search here
             return null;
         }
 
