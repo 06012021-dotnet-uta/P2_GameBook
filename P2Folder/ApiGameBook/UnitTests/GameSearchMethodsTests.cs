@@ -72,32 +72,11 @@ namespace UnitTests
             using (var context = new gamebookdbContext(options))
             {
                 // Arrange
-                List<Game> result;
-                Game game = new Game()
-                {
-                    GameId = 20,
-                    Name = "Mario"
-                };
-                Genre genre = new Genre()
-                {
-                    GenreId = 20,
-                    Name = "Platformer"
-                };
-                GenreJunction genreJunction = new GenreJunction()
-                {
-                    GameId = 20,
-                    GenreId = 20
-                };
                 GameSearchMethods gameMethods = new GameSearchMethods(context);
+                CallIGDBAPI igdbApi = new CallIGDBAPI();
 
                 // Act
-                context.Database.EnsureCreated();
-                context.Database.EnsureDeleted();
-                context.Games.Add(game);
-                context.Genres.Add(genre);
-                context.GenreJunctions.Add(genreJunction);
-                context.SaveChanges();
-                result = gameMethods.SearchGameByGenre("Platformer");
+                var result = igdbApi.SearchGamesByGenre("rpg");
 
                 // Assert
                 Assert.NotNull(result); // result is null if no game was found with matching genre
@@ -109,35 +88,14 @@ namespace UnitTests
             using (var context = new gamebookdbContext(options))
             {
                 // Arrange
-                List<Game> result;
-                Game game = new Game()
-                {
-                    GameId = 20,
-                    Name = "Mario"
-                };
-                Collection collection = new Collection()
-                {
-                    CollectionId = 20,
-                    Name = "Mario Franchise"
-                };
-                CollectionJunction collectionJunction = new CollectionJunction()
-                {
-                    GameId = 20,
-                    CollectionId = 20
-                };
                 GameSearchMethods gameMethods = new GameSearchMethods(context);
+                CallIGDBAPI igdbApi = new CallIGDBAPI();
 
                 // Act
-                context.Database.EnsureCreated();
-                context.Database.EnsureDeleted();
-                context.Games.Add(game);
-                context.Collections.Add(collection);
-                context.CollectionJunctions.Add(collectionJunction);
-                context.SaveChanges();
-                result = gameMethods.SearchGameByCollection("Mario Franchise");
+                var result = igdbApi.SearchGamesByCollection("zelda");
 
                 // Assert
-                Assert.NotNull(result); // result is null if no game was found with matching collection
+                Assert.NotNull(result); // result is null if no game was found with matching genre
             }
         }
         [Fact]
@@ -146,37 +104,16 @@ namespace UnitTests
             using (var context = new gamebookdbContext(options))
             {
                 // Arrange
-                List<Game> result;
-                Game game = new Game()
-                {
-                    GameId = 20,
-                    Name = "Mario"
-                };
-                Keyword keyword = new Keyword()
-                {
-                    KeywordId = 20,
-                    Name = "Action"
-                };
-                KeywordJunction keywordJunction = new KeywordJunction()
-                {
-                    GameId = 20,
-                    KeywordId = 20
-                };
                 GameSearchMethods gameMethods = new GameSearchMethods(context);
+                CallIGDBAPI igdbApi = new CallIGDBAPI();
 
                 // Act
-                context.Database.EnsureCreated();
-                context.Database.EnsureDeleted();
-                context.Games.Add(game);
-                context.Keywords.Add(keyword);
-                context.KeywordJunctions.Add(keywordJunction);
-                context.SaveChanges();
-                result = gameMethods.SearchGameByKeyword("Action");
+                var result = igdbApi.SearchGamesByKeyword("action");
 
                 // Assert
-                Assert.NotNull(result); // result is null if no game was found with matching keyword
+                Assert.NotNull(result); // result is null if no game was found with matching genre
             }
-        }
 
+        }
     }
 }

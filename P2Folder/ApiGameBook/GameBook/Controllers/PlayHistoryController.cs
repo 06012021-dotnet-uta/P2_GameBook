@@ -45,7 +45,7 @@ namespace GameBook.Controllers
         [HttpPost("{userId}/{gameId}")]
         public bool Post(int userId, int gameId)
         {
-            return _playHistoryMethods.CreatePlayHistory(_userMethods.SearchUserByID(userId), _gameSearchMethods.SearchGame(gameId));
+            return _playHistoryMethods.CreatePlayHistory(_userMethods.SearchUserByID(userId), gameId);
         }
 
         // DELETE api/<PlayHistoryController>/5
