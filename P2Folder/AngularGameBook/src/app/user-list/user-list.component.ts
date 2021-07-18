@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { USERS } from '../mock-userList';
 
 export class User {
   constructor(

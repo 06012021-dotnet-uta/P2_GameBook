@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RepositoryLayer;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -366,6 +367,44 @@ namespace UnitTests
 
                 // Assert
                 Assert.Null(result); // result is null if comment not made
+            }
+        }
+        [Fact]
+        public void PostListPass()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                List<Post> postList = null;
+                User user1 = new User()
+                {
+                    Username = "username1",
+                    FirstName = "first",
+                    LastName = "last",
+                    Email = "email@email.com"
+                };
+                User user2 = new User()
+                {
+                    Username = "username2",
+                    FirstName = "first",
+                    LastName = "last",
+                    Email = "email@email.com"
+                };
+                string content1 = "content1";
+                string content2 = "content2";
+                UserMethods userMethods = new UserMethods(context);
+                UserPostingMethods userPostingMethods = new UserPostingMethods(context);
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                userMethods.CreateUser(user1);
+                userMethods.CreateUser(user2);
+                userPostingMethods.CreatePost(user1, content1);
+                userPostingMethods.CreatePost(user2, content2);
+                postList = userPostingMethods.PostsList();
+
+                // Assert
+                Assert.NotNull(postList);
             }
         }
     }

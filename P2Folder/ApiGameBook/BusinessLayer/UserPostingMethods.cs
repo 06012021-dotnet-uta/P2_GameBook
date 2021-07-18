@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RepositoryLayer;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -196,5 +197,23 @@ namespace BusinessLayer
             }
             return newPostId;
         }
+
+        /// <summary>
+        /// Gets list of users.
+        /// </summary>
+        /// <returns>List of Users in database.</returns>
+        public List<Post> PostsList()
+        {
+            try
+            {
+                return _context.Posts.ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
     }
+
 }
