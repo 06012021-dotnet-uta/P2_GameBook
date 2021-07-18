@@ -213,6 +213,35 @@ namespace BusinessLayer
             }
             return gamesList;
         }
+
+        public List<string> PicturesForTheGame(int gameID)
+		{
+            var client = new RestClient("https://api.igdb.com/v4/artworks");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Client-ID", " q17vg91zyii02i7r72jjohbf0d6ggc");
+            request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
+            request.AddHeader("Content-Type", "text/plain");
+            var body = @" fields * ; where game = " + gameID + @";";
+            request.AddParameter("text/plain", body, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+
+            dynamic myObject = JsonConvert.DeserializeObject(response.Content);
+
+            List<string> pixList = new List<string>();
+
+            if (myObject != null && myObject.Count != 0)
+            {
+                foreach (var i in myObject) {
+				//Console.WriteLine(i.url.typeOf());
+                string temp = i.url;
+                pixList.Add(temp);
+                }
+                return pixList;
+            }
+
+            return null;
+        }
     }
 
 }
