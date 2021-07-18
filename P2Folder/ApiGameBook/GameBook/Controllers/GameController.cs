@@ -86,5 +86,11 @@ namespace GameBook.Controllers
         {
             return _callIGDBAPI.GameCoverArt(gameID);
         }
+        
+        [HttpGet("details/{gameID}")]
+        public string GetDetails(int gameID)
+        {
+            return _callIGDBAPI.GameDetails(gameID);
+        }
     }
 }
