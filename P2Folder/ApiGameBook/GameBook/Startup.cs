@@ -33,7 +33,7 @@ namespace GameBook
             {
                 options.AddPolicy(name: "dev", builder =>
                 {
-                    builder.WithOrigins("http://127.0.0.1:5500", "http://localhost:4200", "http://localhost:44350", "https://game-book.azurewebsites.net")
+                    builder.WithOrigins("http://127.0.0.1:5500", "http://localhost:4200", "http://localhost:44350", "https://gamebookapi.azurewebsites.net")
                     .AllowAnyHeader()
                     .AllowAnyMethod();
                 });
