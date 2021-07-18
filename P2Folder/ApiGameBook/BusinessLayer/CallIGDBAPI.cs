@@ -29,7 +29,7 @@ namespace BusinessLayer
         {
         }
 
-        public List<string> GamesList(int page)
+        public List<string> GamesList()
         {
             var client = new RestClient("https://api.igdb.com/v4/games");
             client.Timeout = -1;

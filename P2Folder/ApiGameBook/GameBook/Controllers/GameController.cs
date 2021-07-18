@@ -30,20 +30,40 @@ namespace GameBook.Controllers
         }
 
         //GET: api/<GameController>
-        [HttpGet]
-        public List<Game> Get()
+        [HttpGet("GameList")]
+        public List<string> GetGameList()
         {
-            //return _callIGDBAPI.searchByWordsInTitle("zelda"); // hardcorded zelda for testing
-            //return _callIGDBAPI.SearchGamesByGenre("Fighting"); //hardcoded for testing
-            return _gameSearchMethods.GetGameList();
+            
+            return _callIGDBAPI.GamesList();
         }
 
         // GET api/<GameController>/5
-        [HttpGet("{id}")]
-        public Game Get(int id)
+        [HttpGet("title/{words}")]
+        public List<string> GetGamesByWordsInTitle(string words)
         {
-            return _gameSearchMethods.SearchGame(id);
+            return _callIGDBAPI.SearchByWordsInTitle(words);
         }
+
+        [HttpGet("genre/{genre}")]
+        public List<string> GetGamesByGenre(string genre)
+        {
+          
+            return _callIGDBAPI.SearchGamesByGenre(genre);
+        }
+
+        [HttpGet("Series/{series}")]
+        public List<string> GetGamesBySeries(string series)
+        {
+
+            return _callIGDBAPI.SearchGamesByCollection(series);
+        }
+
+        //[HttpGet("KeyWord/{keyword}")]
+        //public List<string> GetGamesByKeyWord(string keyWord)
+        //{
+        //    // can't get it to work please fix
+        //    return _callIGDBAPI.SearchGamesByKeyword(keyWord);
+        //}
 
         // POST api/<GameController>
         [HttpPost]

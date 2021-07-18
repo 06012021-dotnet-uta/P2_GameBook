@@ -27,7 +27,7 @@ namespace UnitTests
                 // Act
                 context.Database.EnsureCreated();
                 context.Database.EnsureDeleted();
-                result = igdbApi.GamesList(0);
+                result = igdbApi.GamesList();
 
                 // Assert
                 Assert.NotNull(result); // result is null if no games returned
