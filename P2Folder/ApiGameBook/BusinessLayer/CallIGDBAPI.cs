@@ -84,7 +84,7 @@ namespace BusinessLayer
             request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
             request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
             request.AddHeader("Content-Type", "text/plain");
-            var body = @"fields name; where id = "+ gameId + ";";
+            var body = @"fields name; where id = " + gameId + ";";
             request.AddParameter("text/plain", body, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
@@ -100,8 +100,43 @@ namespace BusinessLayer
 
         public List<string> SearchGamesByGenre(string genreName)
         {
-            //put genre search here
-            return null;
+            //search genre table
+            int genreId = 0;
+            var client = new RestClient("https://api.igdb.com/v4/genres");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
+            request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
+            request.AddHeader("Content-Type", "text/plain");
+            var body = @"fields name; where name = """ + genreName + @""";";
+            request.AddParameter("text/plain", body, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+
+            dynamic myObject = JsonConvert.DeserializeObject(response.Content);
+            if (myObject != null && myObject.Count != 0)
+            {
+                var array = myObject[0];
+                genreId = array.id;
+            }
+
+            client = new RestClient("https://api.igdb.com/v4/games");
+            client.Timeout = -1;
+            request = new RestRequest(Method.POST);
+            request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
+            request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
+            request.AddHeader("Content-Type", "text/plain");
+            body = @"fields name, genres; where genres = ("+ genreId + "); limit 500;";
+            request.AddParameter("text/plain", body, ParameterType.RequestBody);
+            response = client.Execute(request);
+
+            dynamic myObject2 = JsonConvert.DeserializeObject(response.Content);
+            List<string> gamesList = new List<string>();
+            foreach (var i in myObject2)
+            {
+                string str = i.name.ToString();
+                gamesList.Add(str);
+            }
+            return gamesList;
         }
 
         public List<string> SearchGamesByCollection(string genreName)
