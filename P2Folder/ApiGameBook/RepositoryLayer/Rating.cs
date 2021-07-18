@@ -11,7 +11,6 @@ namespace RepositoryLayer
         public int GameId { get; set; }
         public int Rating1 { get; set; }
 
-        public virtual Game Game { get; set; }
         public virtual User User { get; set; }
     }
 }
