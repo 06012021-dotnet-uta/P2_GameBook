@@ -54,7 +54,7 @@ namespace BusinessLayer
 
         public List<string> SearchByWordsInTitle(string wordToSearch)
         {
-            //	search "vegas"; fields name; limit 500;
+         
             var client = new RestClient("https://api.igdb.com/v4/games");
             client.Timeout = -1;
             var request = new RestRequest(Method.POST);
@@ -76,7 +76,7 @@ namespace BusinessLayer
             return gamesList;
         }
 
-        public string[] SearchGameById(int gameId)
+        public string SearchGameById(int gameId)
         {
             var client = new RestClient("https://api.igdb.com/v4/games");
             client.Timeout = -1;
@@ -84,16 +84,19 @@ namespace BusinessLayer
             request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
             request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
             request.AddHeader("Content-Type", "text/plain");
-            var body = @"fields name; where id = "+ gameId + ";";
+            var body = @"fields name; where id = """ + gameId + @""";";
             request.AddParameter("text/plain", body, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
-            List<string> gamesList = new List<string>();
-
             dynamic myObject = JsonConvert.DeserializeObject(response.Content);
+
+
             if (myObject != null && myObject.Count != 0)
             {
-                return myObject[0];
+                var array = myObject[0];
+                string game = array.name;
+                return game;
+               
             }
             return null;
         }
