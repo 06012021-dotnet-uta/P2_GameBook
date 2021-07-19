@@ -1,12 +1,14 @@
-<div>
-    <span id="demoId">{{title}}</span>
-    <a class="user-icon" routerLink="/login"><img src="assets/images/user.png" alt="user image" height="50"></a>
+<div id="title-bar">
+    <img src="assets/images/controller.png" style="margin-right: 1em;" height="90">{{title}}
+    <a style="float: right; margin: 25px;" routerLink="/login">
+        <img src="assets/images/user.png" alt="user image" height="50">
+    </a>
 </div>
 
-<nav class = "top-nav">
+<nav class="top-nav">
     <a routerLink="/home">Home </a>
     <a routerLink="/login">Login </a>
     <a routerLink="/forums">Forum </a>
-    <a routerLink="/games">Search Games </a>    
+    <a routerLink="/games">Search Games </a>
 </nav>
 <router-outlet></router-outlet>

@@ -31,6 +31,7 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   AddNewUser(): void {
     this.userevent.emit(this.newUser);
   }

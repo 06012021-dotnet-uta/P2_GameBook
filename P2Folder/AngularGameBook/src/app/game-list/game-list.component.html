@@ -3,8 +3,8 @@
 </h3>
 <div class="container">
     <table class="list-table">
-      <tbody>
-        <tr class="list-entry" *ngFor="let game of games">
+      <tbody *ngFor="let game of games">
+        <tr>
           <td>
             <span>{{game}}</span>
           </td>
