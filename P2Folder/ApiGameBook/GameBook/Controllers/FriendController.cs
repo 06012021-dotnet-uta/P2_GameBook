@@ -30,9 +30,20 @@ namespace GameBook.Controllers
 
         // GET api/<FriendController>/list/5
         [HttpGet("list/{id}")]
-        public List<Friend> Get(int id)
+        public List<string> Get(int id)
         {
-            return _friendMethods.FriendsList(id);
+            List<Friend> friends = _friendMethods.FriendsList(id);
+            List<string> usernames = new List<string>();
+
+            foreach(var friend in friends)
+            {
+                if (friend.User1Id == id)
+                    usernames.Add(_userMethods.SearchUserByID(friend.User2Id).Username);
+                else if(friend.User2Id == id)
+                    usernames.Add(_userMethods.SearchUserByID(friend.User1Id).Username);
+            }
+
+            return usernames;
         }
 
         // POST api/<FriendController>/1/5

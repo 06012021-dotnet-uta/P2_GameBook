@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BusinessLayer
@@ -117,7 +118,7 @@ namespace BusinessLayer
             request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
             request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
             request.AddHeader("Content-Type", "text/plain");
-            var body = @"fields name; where slug = """ + genreName + @""";";
+            var body = @"fields name; where slug = """ + Regex.Replace(genreName.ToLower(), "[^a-zA-Z0-9]", "-") + @""";";
             request.AddParameter("text/plain", body, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
@@ -157,7 +158,7 @@ namespace BusinessLayer
             request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
             request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
             request.AddHeader("Content-Type", "text/plain");
-            var body = @"fields name; where slug = """ + collectionName + @""";";
+            var body = @"fields name; where slug = """ + Regex.Replace(collectionName.ToLower(), "[^a-zA-Z0-9]", "-") + @""";";
             request.AddParameter("text/plain", body, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
@@ -197,7 +198,7 @@ namespace BusinessLayer
             request.AddHeader("Client-ID", "q17vg91zyii02i7r72jjohbf0d6ggc");
             request.AddHeader("Authorization", "Bearer b313017ewuy4acht8jascuje10i1sc");
             request.AddHeader("Content-Type", "text/plain");
-            var body = @"fields name; where slug = """ + keywordName + @""";";
+            var body = @"fields name; where slug = """ + Regex.Replace(keywordName.ToLower(), "[^a-zA-Z0-9]", "-") + @""";";
             request.AddParameter("text/plain", body, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 

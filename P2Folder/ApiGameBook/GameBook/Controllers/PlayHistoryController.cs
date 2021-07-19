@@ -18,18 +18,28 @@ namespace GameBook.Controllers
         private readonly IUserPlayHistoryMethods _playHistoryMethods;
         private readonly IUserMethods _userMethods;
         private readonly ILogger<PlayHistoryController> _logger;
+        private readonly CallIGDBAPI _igdbApi;
 
-        public PlayHistoryController(IUserPlayHistoryMethods playHistoryMethods, IUserMethods userMethods, ILogger<PlayHistoryController> logger)
+        public PlayHistoryController(IUserPlayHistoryMethods playHistoryMethods, IUserMethods userMethods, ILogger<PlayHistoryController> logger, CallIGDBAPI igdbApi)
         {
             _logger = logger;
             _playHistoryMethods = playHistoryMethods;
             _userMethods = userMethods;
+            _igdbApi = igdbApi;
         }
         // GET: api/<PlayHistoryController>
         [HttpGet("{userId}")]
-        public List<PlayHistory> Get(int userId)
+        public List<string> Get(int userId)
         {
-            return _playHistoryMethods.GetUserPlayHistory(userId);
+            List<PlayHistory> history = _playHistoryMethods.GetUserPlayHistory(userId);
+            List<string> games = new List<string>();
+
+            foreach (var game in history)
+            {
+                games.Add(_igdbApi.SearchGameById(game.GameId));
+            }
+
+            return games;
         }
 
         // GET api/<PlayHistoryController>/user/5/game/1
