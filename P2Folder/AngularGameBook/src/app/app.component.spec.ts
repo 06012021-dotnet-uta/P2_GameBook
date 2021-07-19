@@ -30,6 +30,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('#demoId').textContent).toContain('GameBook');
+    expect(compiled.querySelector('#title-bar').textContent).toContain('GameBook');
   });
 });

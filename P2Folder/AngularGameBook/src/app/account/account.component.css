@@ -1,6 +1,6 @@
 table, th, td {
     border: 1px solid aqua;
-    margin-left: 50px;
+    
   }
 
   #container { display:block; padding: 1em; margin-left: 1.5em; }
