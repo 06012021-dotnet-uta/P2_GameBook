@@ -4,8 +4,15 @@
 <br><br>
 <label for="Password">Password: </label>
 <input type="text" class="form-control" formControlName="Password" placeholder="Password">
-<br><br>       
-<nav>
-    <a routerLink="/signup">SignUp </a>
-    <a routerLink="/userlist">User List </a>
-</nav> 
+<br><br>
+<button>Login</button>
+<a routerLink="/signup"><button>Sign Up</button></a>
+<a routerLink="/userlist"><button>User List</button></a>
+<!-- <div>
+    <label for="Username">Username:</label>
+    <input type="text" [(ngModel)]="newPlayer.fname" name="fname" placeholder="first name">
+    <label for="Password">Password:</label>
+    <input type="text" [(ngModel)]="newPlayer.lname" name="lname" placeholder="last name">
+    <br><br>
+    <button (click)="UserLogin()">Login</button>
+  </div>  -->

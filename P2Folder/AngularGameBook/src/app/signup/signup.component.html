@@ -2,7 +2,7 @@
 
 <!-- <button (click)="AddNewPlayer()">Submit this new player!</button> -->
 <div>
-    <form >
+    <form [formGroup]="userForm" (ngSubmit)="UserReactiveFormSubmit($event)">
         <label for="FirstName">First name: </label>
         <!-- <input type="text" id="FirstName" placeholder="FirstName"> -->
         <input type="text" class="form-control" formControlName="FirstName" placeholder="FirstName">
@@ -18,8 +18,7 @@
         <br><br>
         <label for="Email">Email:     .......</label>
         <input type="text" class="form-control" formControlName="Email" placeholder="Email">
-        <!-- <div><span>id: </span>{{newUser.FirstName}}</div> -->
         <br><br>
-        <button type="submit">Submit</button>
+        <button (click)="AddNewUser()" type="submit">Submit</button>
     </form>
   </div>
