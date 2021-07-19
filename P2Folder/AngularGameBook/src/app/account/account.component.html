@@ -1,6 +1,73 @@
 <h1>
-    Account Component
+    Account Details
 </h1>
-<p>
-    Account details go here?
-</p>
+<div id = "container">
+    <div id = "left">
+    <table class="table table-bordered table-striped">
+        <caption>User Details</caption>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Edit</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="list-entry" *ngFor="let user of users">
+        <td><span>{{user.UserId}}</span></td>
+        <td><span>{{user.FirstName}}</span></td>
+        <td><span>{{user.LastName}}</span></td>
+        <td><span>{{user.Username}}</span></td>
+        <td><span>{{user.Email}}</span></td>
+        <td><span>{{user.Email}}</span></td>
+        <td><span><a>Edit</a></span></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id = "center">
+    <table class="table table-bordered table-striped">
+        <caption>Play History</caption>
+      <thead>
+      <tr>
+        <th>User ID</th>
+        <th>Game ID</th>
+        <th>Delete</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let playhistory of playHistory">
+        <td><span>{{playhistory.userId}}</span></td>
+        <td><span>{{playhistory.gameId}}</span></td>
+        <td><span><a> Remove Game</a></span></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id = "right">
+    <table class="table table-bordered table-striped">
+        <caption>Friends</caption>
+      <thead>
+      <tr>
+        <th>ID 1</th>
+        <th>ID 2</th>
+        <th>Delete</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let friend of friends">
+        <td><span>{{friend.user1Id}}</span></td>
+        <td><span>{{friend.user1Id}}</span></td>
+        <td><span><a> Remove Friend</a></span></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

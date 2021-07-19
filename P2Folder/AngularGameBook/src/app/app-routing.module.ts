@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AccountComponent } from './account/account.component';
 import { ForumsComponent } from './forums/forums.component';
 import { GameDiscussionComponent } from './game-discussion/game-discussion.component';
 import { GamesComponent } from './games/games.component';
@@ -14,7 +15,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'userlist', component: UserListComponent },
-  { path: 'account', component: GamesComponent },
+  { path: 'account', component: AccountComponent },
   { path: 'forums', component: ForumsComponent },
   { path: 'forums/genre-discussion', component: GenreDiscussionComponent },
   { path: 'forums/game-discussion', component: GameDiscussionComponent },

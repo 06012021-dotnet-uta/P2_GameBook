@@ -22,8 +22,19 @@
       </thead>
       <tbody>
       <tr *ngFor="let post of posts">
-        <td><span>{{post.content}}</span></td>
+        <td><span>{{post.postId}}</span></td>
       </tr>
       </tbody>
     </table>
   </div>
+
+<!-- 
+  <div>
+    <label for="new-post">Start A New Game Discussion: </label>
+    <input id="new-post" #post /> -->
+  
+    <!-- (click) passes input value to add() and then clears the input -->
+    <!-- <button class="add-button" (click)="add(post.value); post.value=''">
+      Add post
+    </button>
+  </div> -->

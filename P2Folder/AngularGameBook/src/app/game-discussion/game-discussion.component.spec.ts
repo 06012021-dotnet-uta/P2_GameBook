@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientModule } from '@angular/common/http';
 import { GameDiscussionComponent } from './game-discussion.component';
 
 describe('GameDiscussionComponent', () => {
@@ -8,6 +8,7 @@ describe('GameDiscussionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientModule],
       declarations: [ GameDiscussionComponent ]
     })
     .compileComponents();
@@ -19,7 +20,7 @@ describe('GameDiscussionComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
