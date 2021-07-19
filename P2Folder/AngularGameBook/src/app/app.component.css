@@ -3,6 +3,12 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     color: rgb(179, 179, 179);;
 }
+
+.user-icon{
+    float: right;
+    margin-right: 3em;
+}
+
 .top-nav{
     background-color: #222222;
 }

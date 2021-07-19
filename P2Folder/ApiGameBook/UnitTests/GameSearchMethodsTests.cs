@@ -39,7 +39,6 @@ namespace UnitTests
             using (var context = new gamebookdbContext(options))
             {
                 // Arrange
-                GameSearchMethods gameMethods = new GameSearchMethods(context);
                 CallIGDBAPI igdbApi = new CallIGDBAPI();
 
                 // Act
@@ -56,11 +55,10 @@ namespace UnitTests
             {
                 // Arrange
                 string searchName = "zelda";
-                GameSearchMethods gameMethods = new GameSearchMethods(context);
                 CallIGDBAPI igdbApi = new CallIGDBAPI();
 
                 // Act
-                var result = gameMethods.SearchGame(searchName);
+                var result = igdbApi.SearchByWordsInTitle(searchName);
 
                 // Assert
                 Assert.NotNull(result); // result is null if no game was found with matching name
@@ -72,7 +70,6 @@ namespace UnitTests
             using (var context = new gamebookdbContext(options))
             {
                 // Arrange
-                GameSearchMethods gameMethods = new GameSearchMethods(context);
                 CallIGDBAPI igdbApi = new CallIGDBAPI();
 
                 // Act
@@ -88,7 +85,6 @@ namespace UnitTests
             using (var context = new gamebookdbContext(options))
             {
                 // Arrange
-                GameSearchMethods gameMethods = new GameSearchMethods(context);
                 CallIGDBAPI igdbApi = new CallIGDBAPI();
 
                 // Act
@@ -104,7 +100,6 @@ namespace UnitTests
             using (var context = new gamebookdbContext(options))
             {
                 // Arrange
-                GameSearchMethods gameMethods = new GameSearchMethods(context);
                 CallIGDBAPI igdbApi = new CallIGDBAPI();
 
                 // Act

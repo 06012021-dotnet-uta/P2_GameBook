@@ -16,16 +16,12 @@ namespace GameBook.Controllers
     [ApiController]
     public class GameController : ControllerBase
     {
-        private readonly PopulateDBRealQuickMethod _populateDBRealQuickMethod;
         private readonly CallIGDBAPI _callIGDBAPI;
-        private readonly IGameSearchMethods _gameSearchMethods;
         private readonly ILogger<GameController> _logger;
 
-        public GameController(PopulateDBRealQuickMethod populateDBRealQuickMethod, CallIGDBAPI callIGDBAPI, IGameSearchMethods gameSearchMethods, ILogger<GameController> logger)
+        public GameController(CallIGDBAPI callIGDBAPI, ILogger<GameController> logger)
         {
             _logger = logger;
-            _gameSearchMethods = gameSearchMethods;
-            _populateDBRealQuickMethod = populateDBRealQuickMethod;
             _callIGDBAPI = callIGDBAPI;
         }
 
