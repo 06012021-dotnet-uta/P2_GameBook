@@ -3,12 +3,16 @@
 </h3>
 <div class="container">
     <table class="list-table">
-      <tbody>
+      <caption>Games</caption>
+      <thead>
         <tr class="list-entry" *ngFor="let game of games">
           <td>
             <span>{{game}}</span>
           </td>
         </tr>
+      </thead>
+      <tbody>
+        <th></th>
       </tbody>
     </table>
   </div>
