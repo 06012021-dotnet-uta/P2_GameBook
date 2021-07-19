@@ -2,10 +2,12 @@
     Games
 </h3>
 <div class="container">
-    <table class="table table-bordered table-striped">
+    <table class="list-table">
       <tbody>
-        <tr *ngFor="let game of games">
-          <td><span>{{game}}</span></td>
+        <tr class="list-entry" *ngFor="let game of games">
+          <td>
+            <span>{{game}}</span>
+          </td>
         </tr>
       </tbody>
     </table>
