@@ -17,15 +17,13 @@ namespace GameBook.Controllers
     {
         private readonly IUserPlayHistoryMethods _playHistoryMethods;
         private readonly IUserMethods _userMethods;
-        private readonly IGameSearchMethods _gameSearchMethods;
         private readonly ILogger<PlayHistoryController> _logger;
 
-        public PlayHistoryController(IUserPlayHistoryMethods playHistoryMethods, IUserMethods userMethods, IGameSearchMethods gameSearchMethods, ILogger<PlayHistoryController> logger)
+        public PlayHistoryController(IUserPlayHistoryMethods playHistoryMethods, IUserMethods userMethods, ILogger<PlayHistoryController> logger)
         {
             _logger = logger;
             _playHistoryMethods = playHistoryMethods;
             _userMethods = userMethods;
-            _gameSearchMethods = gameSearchMethods;
         }
         // GET: api/<PlayHistoryController>
         [HttpGet("{userId}")]

@@ -51,12 +51,10 @@ namespace GameBook
                 }
             });
             services.AddScoped<IGameRatingMethods, GameRatingMethods>();
-            services.AddScoped<IGameSearchMethods, GameSearchMethods>();
             services.AddScoped<IUserFriendMethods, UserFriendMethods>();
             services.AddScoped<IUserMethods, UserMethods>();
             services.AddScoped<IUserPlayHistoryMethods, UserPlayHistoryMethods>();
             services.AddScoped<IUserPostingMethods, UserPostingMethods>();
-            services.AddScoped<PopulateDBRealQuickMethod>();
             services.AddScoped<CallIGDBAPI>();
         }
 
