@@ -110,5 +110,77 @@ namespace UnitTests
             }
 
         }
+        [Fact]
+        public void GameDetailsPass()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                string result;
+                CallIGDBAPI igdbApi = new CallIGDBAPI();
+
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                result = igdbApi.GameDetails(1);
+
+                // Assert
+                Assert.NotNull(result); // result is null if no game details returned
+            }
+        }
+        [Fact]
+        public void GameCoverArtPass()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                string result;
+                CallIGDBAPI igdbApi = new CallIGDBAPI();
+
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                result = igdbApi.GameCoverArt(1);
+
+                // Assert
+                Assert.NotNull(result); // result is null if no cover art returned
+            }
+        }
+        [Fact]
+        public void GameScreenshotsPass()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                List<string> result;
+                CallIGDBAPI igdbApi = new CallIGDBAPI();
+
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                result = igdbApi.GameScreenshots(1);
+
+                // Assert
+                Assert.NotNull(result); // result is null if no screenshots returned
+            }
+        }
+        [Fact]
+        public void PicturesForTheGamePass()
+        {
+            using (var context = new gamebookdbContext(options))
+            {
+                // Arrange
+                List<string> result;
+                CallIGDBAPI igdbApi = new CallIGDBAPI();
+
+                // Act
+                context.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                result = igdbApi.PicturesForTheGame(790); //not all games have pics
+
+                // Assert
+                Assert.NotNull(result); // result is null if no pictures returned
+            }
+        }
     }
 }
