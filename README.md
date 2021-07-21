@@ -1,29 +1,35 @@
-# PROJECT NAME
+# GameBook
 
 ## Project Description
 
-Ethan Baker, WInston Grant, Adam Sepulveda, Malia Labor
+This is a ASP.NET Core Web API project utilizing Entity Framework Core and an Angular front-end to create a website where users can review and discuss video games.
 
 ## Technologies Used
 
-* Tech 1 - version 1.0
-* Tech 2 - version 2.0
-* Tech 3 - version 3.0
+* ASP.NET
+* C#
+* AzureDevOps
+* Angular
+* EF Core
+* xUnit Test
+* Azure Database
+* SonarCloud
+* GitHub
 
 ## Features
 
-List of features ready and TODOs for future development
-* Awesome feature 1
-* Awesome feature 2
-* Awesome feature 3
+List of features:
+* Extensive API functionality 
+* Complete and thoroughly tested business logic
+* Integrates a third party API to provide game data
 
 To-do list:
-* Wow improvement to be done 1
-* Wow improvement to be done 2
+* Complete front-end functionality  
+* Create a smoother, more enticing user interface
 
 ## Getting Started
    
-(include git clone command)
+git clone https://github.com/06012021-dotnet-uta/P2_GameBook.git
 (include all environment setup steps)
 
 > Be sure to include BOTH Windows and Unix command  
@@ -38,7 +44,7 @@ To-do list:
 
 ## Contributors
 
-> Here list the people who have contributed to this project. (ignore this section, if its a solo project)
+Ethan Baker, Winston Grant, Adam Sepulveda, Malia Labor
 
 ## License
 
