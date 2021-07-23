@@ -2,7 +2,7 @@
 
 ## Project Description
 
-This is a ASP.NET Core Web API project utilizing Entity Framework Core and an Angular front-end to create a website where users can review and discuss video games.
+GameBook is a ASP.NET Core Web API project utilizing Entity Framework Core and an Angular front-end to create a single-page web application where users can review and discuss video games. When fully implemented users will be able to create an account, search games, rate games, create play history lists and interact with other users. GameBook implements a third party API to supply data related to games.
 
 ## Technologies Used
 
@@ -30,17 +30,14 @@ To-do list:
 ## Getting Started
    
 git clone https://github.com/06012021-dotnet-uta/P2_GameBook.git
-(include all environment setup steps)
 
-> Be sure to include BOTH Windows and Unix command  
-> Be sure to mention if the commands only work on a specific platform (eg. AWS, GCP)
+> Use visual studio to run the API on IIS Express 
 
-- All the `code` required to get started
-- Images of what it should look like
+> Use visual studio code to run the angular front-end through CLI with `ng serve --open` (make sure sure are in the AngularGameBook folder)
 
 ## Usage
 
-> Here, you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
+> Use swagger to test out the API calls
 
 ## Contributors
 
@@ -48,5 +45,5 @@ Ethan Baker, Winston Grant, Adam Sepulveda, Malia Labor
 
 ## License
 
-This project uses the following license: [<license_name>](<link>).
+This project uses the following license: [MIT](https://opensource.org/licenses/MIT)
 
